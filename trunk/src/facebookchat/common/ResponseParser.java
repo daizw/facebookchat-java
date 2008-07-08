@@ -285,7 +285,7 @@ public class ResponseParser {
 					playAudio();
 				}
 				/**
-				 * 接收消息时播放提示音
+				 * 鎺ユ敹娑堟伅鏃舵挱鏀炬彁绀洪煶
 				 */
 				private void playAudio() {
 					

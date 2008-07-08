@@ -34,14 +34,14 @@ public class MiniProfilePane extends JPanel {
 	String lastSignStr = "";
 
 	/**
-	 * mini profile ×é¼ş
+	 * mini profile ç»„ä»¶
 	 * 
 	 * @param path_portrait
-	 *            Í·ÏñÍ¼Æ¬Â·¾¶
+	 *            å¤´åƒå›¾ç‰‡è·¯å¾„
 	 * @param nickname
-	 *            êÇ³Æ
+	 *            æ˜µç§°
 	 * @param sign
-	 *            Ç©Ãûµµ
+	 *            ç­¾åæ¡£
 	 */
 	public MiniProfilePane(final Cheyenne parent, ImageIcon portrait, String nickname, String sign) {
 		lastPortrait = portrait;
@@ -150,7 +150,7 @@ public class MiniProfilePane extends JPanel {
 	}
 	
 	/**
-	 * ÉèÖÃêÇ³Æ
+	 * è®¾ç½®æ˜µç§°
 	 * @param name
 	 */
 	public void setNickName(String name){
@@ -162,7 +162,7 @@ public class MiniProfilePane extends JPanel {
 		mySign.setForeground(color);
 	}
 	/**
-	 * ·µ»ØTooltipTxtµÄhtmlĞÎÊ½
+	 * è¿”å›TooltipTxtçš„htmlå½¢å¼
 	 * @param text
 	 * @return
 	 */

@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  */
 
 /**
- * ¿ÉÒÔÏÔÊ¾±³¾°Í¼Æ¬µÄÀà,¼Ì³Ğ×ÔJPanel
+ * å¯ä»¥æ˜¾ç¤ºèƒŒæ™¯å›¾ç‰‡çš„ç±»,ç»§æ‰¿è‡ªJPanel
  * 
  * @author shinysky
  * 
@@ -29,10 +29,10 @@ public class JImgPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * æ„é€ å‡½æ•°
 	 * 
 	 * @param img
-	 *            ±³¾°Í¼Æ¬
+	 *            èƒŒæ™¯å›¾ç‰‡
 	 */
 	public JImgPanel(Image img) {
 		modal = false;
@@ -51,17 +51,17 @@ public class JImgPanel extends JPanel {
 	}
 
 	/**
-	 * ÖØÔØ»æÖÆ×é¼şµÄ·½·¨£¬»æÖÆÍ¼Ïñ
+	 * é‡è½½ç»˜åˆ¶ç»„ä»¶çš„æ–¹æ³•ï¼Œç»˜åˆ¶å›¾åƒ
 	 * 
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	protected void paintComponent(Graphics g) {
 		/**
-		 * ÒÔÏÂNĞĞ´úÂë¿ÉÒÔÊµÏÖÍ¼Æ¬Ëæ´°¿Ú´óĞ¡¶¯Ì¬Ëõ·Å(9.4) ^_^
+		 * ä»¥ä¸‹Nè¡Œä»£ç å¯ä»¥å®ç°å›¾ç‰‡éšçª—å£å¤§å°åŠ¨æ€ç¼©æ”¾(9.4) ^_^
 		 */
 /*		int panelWidth = this.getWidth();
 		int panelHeight = this.getHeight();*/
-		if(modal)//Ö¸¶¨¿ªÊ¼Î»ÖÃºÍ»æÍ¼³ß´ç
+		if(modal)//æŒ‡å®šå¼€å§‹ä½ç½®å’Œç»˜å›¾å°ºå¯¸
 			g.drawImage(img_mp, (int)origin.getX(), (int)origin.getY(), 
 				(int)square.getWidth(), (int)square.getHeight(), this);
 					//this.getWidth(), this.getHeight(), this);
@@ -70,8 +70,8 @@ public class JImgPanel extends JPanel {
 					this.getWidth(), this.getHeight(), this);
 
 		/**
-		 * ×¢ÊÍÒÔÏÂÌõ¼şÅĞ¶Ï¾ä,¿ÉÒÔÔÚ±£³ÖÍ¼Æ¬¶¯Ì¬Ëõ·ÅµÄÍ¬Ê±,²»Ê¹¹ö¶¯Ìõ³öÏÖ (¼ÈÈ»ÕâÑù¾Í²»ÓÃ¹ö¶¯Ãæ°åËãÁË!)
-		 * µ«ÊÇµ±Á½¸ö¹ö¶¯Ìõ(X·½ÏòºÍY·½Ïò)¶¼³öÏÖÊ±,Í¼ÏñÎªÔ­´óĞ¡
+		 * æ³¨é‡Šä»¥ä¸‹æ¡ä»¶åˆ¤æ–­å¥,å¯ä»¥åœ¨ä¿æŒå›¾ç‰‡åŠ¨æ€ç¼©æ”¾çš„åŒæ—¶,ä¸ä½¿æ»šåŠ¨æ¡å‡ºç° (æ—¢ç„¶è¿™æ ·å°±ä¸ç”¨æ»šåŠ¨é¢æ¿ç®—äº†!)
+		 * ä½†æ˜¯å½“ä¸¤ä¸ªæ»šåŠ¨æ¡(Xæ–¹å‘å’ŒYæ–¹å‘)éƒ½å‡ºç°æ—¶,å›¾åƒä¸ºåŸå¤§å°
 		 */
 		if (firstInvoked) {
 			firstInvoked = false;
@@ -81,7 +81,7 @@ public class JImgPanel extends JPanel {
 	}
 
 	/**
-	 * »ñÈ¡Í¼Æ¬³ß´ç²¢²ÎÕÕËüÉèÖÃÃæ°åÊ×Ñ¡³ß´ç
+	 * è·å–å›¾ç‰‡å°ºå¯¸å¹¶å‚ç…§å®ƒè®¾ç½®é¢æ¿é¦–é€‰å°ºå¯¸
 	 * 
 	 */
 	private void getImageSizeAndSet() {
@@ -90,8 +90,8 @@ public class JImgPanel extends JPanel {
 
 		//System.out.println("In getImageSizeAndSet():" + img_width + " * " + img_height);
 		/**
-		 * Ï£ÍûÍ¨¹ı if ÅĞ¶ÏÀ´Ïû³ıµÚÒ»´ÎÔØÈëÍ¼ÏñÊ±µÄÉÁË¸ µ±È»ÊÇÔÚ"ÉÁË¸ÊÇÒòÎªÎ´µÃµ½Í¼Æ¬ÕıÈ·³ß´ç"Õâ¸öÅĞ¶ÏÕıÈ·µÄÇ°ÌáÏÂ;
-		 * But...ÓĞÊ±»¹ÊÇÓĞÉÁË¸; ÆäÊµÊÇÒòÎª»æÍ¼µÄÔ­Òò,¿ÉÒÔÍ¨¹ıÌáÇ°»æÍ¼À´½â¾öÕâ¸öÎÊÌâ.
+		 * å¸Œæœ›é€šè¿‡ if åˆ¤æ–­æ¥æ¶ˆé™¤ç¬¬ä¸€æ¬¡è½½å…¥å›¾åƒæ—¶çš„é—ªçƒ å½“ç„¶æ˜¯åœ¨"é—ªçƒæ˜¯å› ä¸ºæœªå¾—åˆ°å›¾ç‰‡æ­£ç¡®å°ºå¯¸"è¿™ä¸ªåˆ¤æ–­æ­£ç¡®çš„å‰æä¸‹;
+		 * But...æœ‰æ—¶è¿˜æ˜¯æœ‰é—ªçƒ; å…¶å®æ˜¯å› ä¸ºç»˜å›¾çš„åŸå› ,å¯ä»¥é€šè¿‡æå‰ç»˜å›¾æ¥è§£å†³è¿™ä¸ªé—®é¢˜.
 		 */
 		if (img_width == -1 || img_height == -1) {
 			this.setPreferredSize(new Dimension(800, 600));
@@ -103,33 +103,33 @@ public class JImgPanel extends JPanel {
 	}
 
 	/**
-	 * ÊÇ·ñµÚÒ»´Îµ÷ÓÃ
+	 * æ˜¯å¦ç¬¬ä¸€æ¬¡è°ƒç”¨
 	 */
 	private boolean firstInvoked = true;
 	/**
-	 * ±³¾°Í¼Æ¬
+	 * èƒŒæ™¯å›¾ç‰‡
 	 */
 	private Image img_mp;
 	/**
-	 * Í¼Æ¬¸ß¶È
+	 * å›¾ç‰‡é«˜åº¦
 	 */
 	private int img_height;
 	/**
-	 * Í¼Æ¬¿í¶È
+	 * å›¾ç‰‡å®½åº¦
 	 */
 	private int img_width;
 	/**
-	 * »æÍ¼Ä£Ê½
-	 * false: default, È«²¿¸²¸Ç
-	 * true: Ö¸¶¨¿ªÊ¼Î»ÖÃºÍ»æÍ¼³ß´ç
+	 * ç»˜å›¾æ¨¡å¼
+	 * false: default, å…¨éƒ¨è¦†ç›–
+	 * true: æŒ‡å®šå¼€å§‹ä½ç½®å’Œç»˜å›¾å°ºå¯¸
 	 */
 	private boolean modal;
 	/**
-	 * ¿ªÊ¼»æÍ¼Î»ÖÃ
+	 * å¼€å§‹ç»˜å›¾ä½ç½®
 	 */
 	private Point origin;
 	/**
-	 * »æÍ¼³ß´ç
+	 * ç»˜å›¾å°ºå¯¸
 	 */
 	 private Dimension square;
 }

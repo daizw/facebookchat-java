@@ -50,9 +50,9 @@ public class ListsPane extends JPanel {
 				if(buddy == null)
 					return;
 				if(me.getClickCount() == 2){
-					//TODO ÅĞ¶ÏËùµã»÷µÄcellµÄÔÚÏß×´Ì¬½øĞĞ¶ÔÓ¦´¦Àí, ÔİÊ±Ö±½Óµ¯³öµ¯³öÁÄÌì´°¿Ú.
+					//TODO åˆ¤æ–­æ‰€ç‚¹å‡»çš„cellçš„åœ¨çº¿çŠ¶æ€è¿›è¡Œå¯¹åº”å¤„ç†, æš‚æ—¶ç›´æ¥å¼¹å‡ºå¼¹å‡ºèŠå¤©çª—å£.
 					/**
-					 * TODO Ó¦¸Ã¶ÔÃ¿Ò»¸ö¶ÔÏóÖ»¿ªÒ»¸ö´°¿Ú, ¿ÉÒÔÉè¶¨±ê¼Ç, Èç¹ûÒÑ¾­´ò¿ªÁËÒ»¸öÔòÏÔÊ¾Ö®, ·ñÔò¿ªĞÂ´°¿Ú
+					 * TODO åº”è¯¥å¯¹æ¯ä¸€ä¸ªå¯¹è±¡åªå¼€ä¸€ä¸ªçª—å£, å¯ä»¥è®¾å®šæ ‡è®°, å¦‚æœå·²ç»æ‰“å¼€äº†ä¸€ä¸ªåˆ™æ˜¾ç¤ºä¹‹, å¦åˆ™å¼€æ–°çª—å£
 					 */
 					ListsPane.this.showChatroom(buddy.uid);
 				}else if(me.getButton() == MouseEvent.BUTTON3){
@@ -94,7 +94,7 @@ public class ListsPane extends JPanel {
 						els[i].getComponent().setBackground(Color.WHITE);
 					friendOprMenu.setLightWeightPopupEnabled(true);
 					friendOprMenu.pack();
-					// Î»ÖÃÓ¦¸ÃÊÇÏà¶ÔÓÚÔ´µÄÎ»ÖÃ
+					// ä½ç½®åº”è¯¥æ˜¯ç›¸å¯¹äºæºçš„ä½ç½®
 					friendOprMenu.show((Component) me.getSource(), me.getPoint().x, me.getPoint().y);
 				}
 			}
@@ -114,7 +114,7 @@ public class ListsPane extends JPanel {
 		this.setOpaque(false);
 	}
 	/**
-	 * ·µ»ØTooltipTxtµÄhtmlĞÎÊ½
+	 * è¿”å›TooltipTxtçš„htmlå½¢å¼
 	 * @param text
 	 * @return
 	 */
@@ -122,7 +122,7 @@ public class ListsPane extends JPanel {
 		return ("<html><BODY bgColor=#ffffff><Font color=black>" + text + "</Font></BODY></html>");
 	}
 	/**
-	 * (ÔÚÖ÷½çÃæË«»÷ºÃÓÑ»òÕß×éÊ±±»µ÷ÓÃ)µ¯³öÁÄÌì´°¿Ú.
+	 * (åœ¨ä¸»ç•Œé¢åŒå‡»å¥½å‹æˆ–è€…ç»„æ—¶è¢«è°ƒç”¨)å¼¹å‡ºèŠå¤©çª—å£.
 	 * @param listItem
 	 */
 	private void showChatroom(String uid) {

@@ -48,7 +48,7 @@ public class NoxFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -4611481416817988409L;
 	/**
-	 * Ä¬ÈÏ³ß´ç³£Á¿
+	 * é»˜è®¤å°ºå¯¸å¸¸é‡
 	 */
 	public static final int WIDTH_MIN = 120;
 	public static final int HEIGHT_MIN = 60;
@@ -56,27 +56,27 @@ public class NoxFrame extends JFrame {
 	public static final int FOOT_HEIGHT = 15;
 
 	/**
-	 * Ç°¾°±³¾°ÑÕÉ«
+	 * å‰æ™¯èƒŒæ™¯é¢œè‰²
 	 */
 	private Color foregrdColor = Color.WHITE;
 	private Color backgrdColor = Color.BLACK;
 
 	/**
-	 * ´°¿ÚÍ¸Ã÷¶È
+	 * çª—å£é€æ˜åº¦
 	 */
 	private float opacity = 100;
 	/**
-	 * ±ß¿ò
+	 * è¾¹æ¡†
 	 */
 	private MatteBorder paneEdge;
 	/**
-	 * ÓÃÀ´»ñÈ¡Í¼Æ¬
+	 * ç”¨æ¥è·å–å›¾ç‰‡
 	 */
 	private Toolkit tk;
 	private Image background;
 	private Image img_logo;
 	/**
-	 * ¸÷JPanel
+	 * å„JPanel
 	 */
 	private JImgPanel rootpane;
 	private JPanel fakeFace;
@@ -85,34 +85,34 @@ public class NoxFrame extends JFrame {
 	private FootPane footpane;
 
 	/**
-	 * NoxFrame »ùÀà, ¾ßÓĞ±êÌâÀ¸ºÍ×´Ì¬À¸; ÄÚÖÃ´°¿ÚÒÆ¶¯/×îĞ¡»¯/¹Ø±Õ/´°¿ÚËõ·Å¹¦ÄÜ
+	 * NoxFrame åŸºç±», å…·æœ‰æ ‡é¢˜æ å’ŒçŠ¶æ€æ ; å†…ç½®çª—å£ç§»åŠ¨/æœ€å°åŒ–/å…³é—­/çª—å£ç¼©æ”¾åŠŸèƒ½
 	 * 
 	 * @param title
-	 *            ´°¿Ú±êÌâ
+	 *            çª—å£æ ‡é¢˜
 	 * @param path_background
-	 *            ±³¾°Í¼Æ¬Â·¾¶
+	 *            èƒŒæ™¯å›¾ç‰‡è·¯å¾„
 	 * @param path_logo
-	 *            logoÍ¼Æ¬Â·¾¶
+	 *            logoå›¾ç‰‡è·¯å¾„
 	 * @param path_title
-	 *            ±êÌâÍ¼Æ¬Â·¾¶
+	 *            æ ‡é¢˜å›¾ç‰‡è·¯å¾„
 	 * @param path_minimize
-	 *            ×îĞ¡»¯°´Å¥Í¼Æ¬Â·¾¶
+	 *            æœ€å°åŒ–æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_minimize_rollover
-	 *            Êó±ê¾­¹ı×îĞ¡»¯°´Å¥Í¼Æ¬Â·¾¶
+	 *            é¼ æ ‡ç»è¿‡æœ€å°åŒ–æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_maximize
-	 *            ×î´ó»¯°´Å¥Í¼Æ¬Â·¾¶
+	 *            æœ€å¤§åŒ–æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_maximize_rollover
-	 *            Êó±ê¾­¹ı×î´ó»¯°´Å¥Í¼Æ¬Â·¾¶
+	 *            é¼ æ ‡ç»è¿‡æœ€å¤§åŒ–æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_normalimize
-	 *            »Ö¸´´°¿Ú°´Å¥Í¼Æ¬Â·¾¶
+	 *            æ¢å¤çª—å£æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_normalimize_rollover
-	 *            Êó±ê¾­¹ı»Ö¸´´°¿Ú°´Å¥Í¼Æ¬Â·¾¶
+	 *            é¼ æ ‡ç»è¿‡æ¢å¤çª—å£æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_close
-	 *            ¹Ø±Õ´°¿Ú°´Å¥Í¼Æ¬Â·¾¶
+	 *            å…³é—­çª—å£æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_close_rollover
-	 *            Êó±ê¾­¹ı¹Ø±Õ´°¿Ú°´Å¥Í¼Æ¬Â·¾¶
+	 *            é¼ æ ‡ç»è¿‡å…³é—­çª—å£æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param IAmBase
-	 *            true: ÊÇ¸ù´°¿Ú, ¹Ø±Õ°´Å¥ÍÆ³öÕû¸öÏµÍ³; false: ²»ÊÇ¸ù´°¿Ú, ¹Ø±Õ°´Å¥Ö»¹Ø±Õ±¾´°¿Ú
+	 *            true: æ˜¯æ ¹çª—å£, å…³é—­æŒ‰é’®æ¨å‡ºæ•´ä¸ªç³»ç»Ÿ; false: ä¸æ˜¯æ ¹çª—å£, å…³é—­æŒ‰é’®åªå…³é—­æœ¬çª—å£
 	 * 
 	 * @see Titlebar
 	 * @see JFrame
@@ -137,32 +137,32 @@ public class NoxFrame extends JFrame {
 		tk = Toolkit.getDefaultToolkit();
 		background = tk.getImage(path_background);
 		img_logo = tk.getImage(path_logo_big);
-		//³ÌĞòÍ¼±ê
+		//ç¨‹åºå›¾æ ‡
 		this.setIconImage(img_logo);
 
-		// ×¼±¸Í¼Æ¬
+		// å‡†å¤‡å›¾ç‰‡
 		this.prepareImage(background, rootpane);
 
 		// Container contentPane = getContentPane();
 
 		this.setMinimumSize(new Dimension(WIDTH_MIN, HEIGHT_MIN));
 		/**
-		 * ±êÌâÀ¸×é¼ş
+		 * æ ‡é¢˜æ ç»„ä»¶
 		 */
 		titlebar = new Titlebar(this, path_logo, path_title, IAmBase);
 		/**
-		 * ÖĞ²¿ÈİÆ÷
+		 * ä¸­éƒ¨å®¹å™¨
 		 */
 		container = new JPanel();
 		container.setOpaque(false);
 
 		/**
-		 * µ×²¿Àà×´Ì¬À¸×é¼ş, ÓÃÓÚ°²·Åresize°´Å¥
+		 * åº•éƒ¨ç±»çŠ¶æ€æ ç»„ä»¶, ç”¨äºå®‰æ”¾resizeæŒ‰é’®
 		 */
 		footpane = new FootPane(this);
 
 		/**
-		 * °²·Å ±êÌâÀ¸, miniprofile, ÁĞ±í´°¿Ú, ×´Ì¬À¸ µÄ×é¼ş
+		 * å®‰æ”¾ æ ‡é¢˜æ , miniprofile, åˆ—è¡¨çª—å£, çŠ¶æ€æ  çš„ç»„ä»¶
 		 */
 		rootpane = new JImgPanel(background);
 		rootpane.setLayout(new BoxLayout(rootpane, BoxLayout.Y_AXIS));
@@ -174,7 +174,7 @@ public class NoxFrame extends JFrame {
 		rootpane.setOpaque(false);
 
 		/*
-		 * ÉèÖÃÍ¼Æ¬±ß¿ò´úÂë ImageBorder image_border = new ImageBorder( new
+		 * è®¾ç½®å›¾ç‰‡è¾¹æ¡†ä»£ç  ImageBorder image_border = new ImageBorder( new
 		 * ImageIcon("resrc/upper_left.png").getImage(), new
 		 * ImageIcon("resrc/upper.png").getImage(), new
 		 * ImageIcon("resrc/upper_right.png").getImage(),
@@ -187,9 +187,9 @@ public class NoxFrame extends JFrame {
 		 * ImageIcon("resrc/bottom_right.png").getImage() );
 		 */
 
-		paneEdge = BorderFactory.createMatteBorder(2, 2, 2, 2, backgrdColor);// ÑÕÉ«¿¼ÂÇ×÷Îª²ÎÊıÉèÖÃ
+		paneEdge = BorderFactory.createMatteBorder(2, 2, 2, 2, backgrdColor);// é¢œè‰²è€ƒè™‘ä½œä¸ºå‚æ•°è®¾ç½®
 		/**
-		 * ´¦ÓÚ×îµ×²ãµÄJPanel, º¬¿í¶ÈÎª2µÄºÚÉ«±ß¿ò ÆäÉÏÊÇrootpane
+		 * å¤„äºæœ€åº•å±‚çš„JPanel, å«å®½åº¦ä¸º2çš„é»‘è‰²è¾¹æ¡† å…¶ä¸Šæ˜¯rootpane
 		 */
 		fakeFace = new JPanel();
 		fakeFace.setBorder(paneEdge);
@@ -200,14 +200,14 @@ public class NoxFrame extends JFrame {
 		// rootpane.setBorder(paneEdge);
 		this.setContentPane(fakeFace);
 		/**
-		 * Ìí¼ÓÊó±êÒÆ¶¯¼àÌıÆ÷ÒÔÊµÏÖ´°¿ÚÒÆ¶¯
+		 * æ·»åŠ é¼ æ ‡ç§»åŠ¨ç›‘å¬å™¨ä»¥å®ç°çª—å£ç§»åŠ¨
 		 */
 		MoveMouseListener mml = new MoveMouseListener(this.getRootPane(), this);
 		this.getRootPane().addMouseListener(mml);
 		this.getRootPane().addMouseMotionListener(mml);
 
 		/**
-		 * ÉèÖÃÄ¬ÈÏ´°¿Ú²Ù×÷(ALT+F4) TODO: Èç¹ûÊ¹ÓÃÍĞÅÌÍ¼±ê, ÔòÓ¦½«¹Ø±Õ²Ù×÷ÉèÎªdispose
+		 * è®¾ç½®é»˜è®¤çª—å£æ“ä½œ(ALT+F4) TODO: å¦‚æœä½¿ç”¨æ‰˜ç›˜å›¾æ ‡, åˆ™åº”å°†å…³é—­æ“ä½œè®¾ä¸ºdispose
 		 */
 		if (IAmBase)
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -219,7 +219,7 @@ public class NoxFrame extends JFrame {
 		titlebar.setTitleStr(title);
 	}
 	/**
-	 * ÉèÖÃ´°¿ÚÇ°¾°ÑÕÉ«
+	 * è®¾ç½®çª—å£å‰æ™¯é¢œè‰²
 	 */
 	public void setForegroundColor() {
 		if ((float) (backgrdColor.getRed() * 0.3f + backgrdColor.getGreen()
@@ -227,47 +227,47 @@ public class NoxFrame extends JFrame {
 			foregrdColor = Color.WHITE;
 		else
 			foregrdColor = Color.BLACK;
-		// ËÆºõÖ»ÓĞ±êÌâÀ¸ĞèÒª¸üĞÂ
+		// ä¼¼ä¹åªæœ‰æ ‡é¢˜æ éœ€è¦æ›´æ–°
 		titlebar.setForegroundColor(foregrdColor.equals(Color.WHITE));
 	}
 
 	/**
-	 * »ñÈ¡´°¿ÚÇ°¾°ÑÕÉ«
+	 * è·å–çª—å£å‰æ™¯é¢œè‰²
 	 * 
-	 * @return Ç°¾°É«
+	 * @return å‰æ™¯è‰²
 	 */
 	public Color getForegroundColor() {
 		return foregrdColor;
 	}
 
 	/**
-	 * ÉèÖÃ´°¿Ú±³¾°ÑÕÉ«, È»ºó¸ù¾İ±³¾°É«ÉèÖÃÇ°¾°É«
+	 * è®¾ç½®çª—å£èƒŒæ™¯é¢œè‰², ç„¶åæ ¹æ®èƒŒæ™¯è‰²è®¾ç½®å‰æ™¯è‰²
 	 * 
 	 * @param color
-	 *            ±³¾°É«
+	 *            èƒŒæ™¯è‰²
 	 */
 	public void setBackgroundColor(Color color) {
 		fakeFace.setBackground(color);
-		paneEdge = BorderFactory.createMatteBorder(2, 2, 2, 2, color);// ÑÕÉ«¿¼ÂÇ×÷Îª²ÎÊıÉèÖÃ
+		paneEdge = BorderFactory.createMatteBorder(2, 2, 2, 2, color);// é¢œè‰²è€ƒè™‘ä½œä¸ºå‚æ•°è®¾ç½®
 		fakeFace.setBorder(paneEdge);
 		backgrdColor = color;
-		// Í¬Ê±¸üĞÂÇ°¾°É«
+		// åŒæ—¶æ›´æ–°å‰æ™¯è‰²
 		setForegroundColor();
 	}
 
 	/**
-	 * »ñÈ¡´°¿Ú±³¾°ÑÕÉ«
+	 * è·å–çª—å£èƒŒæ™¯é¢œè‰²
 	 * 
-	 * @return ±³¾°É«
+	 * @return èƒŒæ™¯è‰²
 	 */
 	public Color getBackgroundColor() {
 		return backgrdColor;
 	}
 
 	/**
-	 * ÉèÖÃ²»Í¸Ã÷¶È
+	 * è®¾ç½®ä¸é€æ˜åº¦
 	 * 
-	 * @return ÊÇ·ñÉèÖÃ³É¹¦
+	 * @return æ˜¯å¦è®¾ç½®æˆåŠŸ
 	 */
 	public boolean setOpacity(float alpha) {
 		if (WindowUtils.isWindowAlphaSupported()) {
@@ -281,19 +281,19 @@ public class NoxFrame extends JFrame {
 	}
 
 	/**
-	 * »ñÈ¡²»Í¸Ã÷¶È
+	 * è·å–ä¸é€æ˜åº¦
 	 * 
-	 * @return ²»Í¸Ã÷¶ÈÖµ
+	 * @return ä¸é€æ˜åº¦å€¼
 	 */
 	public float getOpacity() {
 		return opacity;
 	}
 
 	/**
-	 * ½«JFrameÉèÎªÔ²½Ç Èç¹ûÃ¿´Îresize¶¼ÖØÉèÔò»áÔö¼ÓCPUÕ¼ÓÃÂÊ; Ä¿Ç°Ã»ÕÒµ½½ÏºÃµÄ½â¾ö·½·¨, ËùÒÔ¸Ã·½·¨ÔİÊ±ÏĞÖÃ.
+	 * å°†JFrameè®¾ä¸ºåœ†è§’ å¦‚æœæ¯æ¬¡resizeéƒ½é‡è®¾åˆ™ä¼šå¢åŠ CPUå ç”¨ç‡; ç›®å‰æ²¡æ‰¾åˆ°è¾ƒå¥½çš„è§£å†³æ–¹æ³•, æ‰€ä»¥è¯¥æ–¹æ³•æš‚æ—¶é—²ç½®.
 	 */
 	public void setFrameMask() {
-		// Ô²½ÇMask
+		// åœ†è§’Mask
 		RoundRectangle2D.Float mask = new RoundRectangle2D.Float(0, 0, this
 				.getWidth(), this.getHeight(), 5, 5);
 		WindowUtils.setWindowMask(this, mask);
@@ -312,7 +312,7 @@ public class NoxFrame extends JFrame {
 	}
 
 	/**
-	 * ¸Ã²Ù×÷ÔİÊ±²»¿ÉÄæ×ª; ¼´²»ÄÜÖØĞÂÌí¼Ó¼àÌıÆ÷
+	 * è¯¥æ“ä½œæš‚æ—¶ä¸å¯é€†è½¬; å³ä¸èƒ½é‡æ–°æ·»åŠ ç›‘å¬å™¨
 	 */
 	public void removeResizeListener() {
 		footpane.removeResizeListener();
@@ -320,7 +320,7 @@ public class NoxFrame extends JFrame {
 }
 
 /**
- * ±êÌâÀ¸×é¼ş Ó¦µ±ÖÁÉÙ¾ß±¸Á½ÖÖ¹¦ÄÜ: 1. Èç¹ûÊÇÖ÷´°¿Ú, Ôò±êÌâÀ¸ÎªÍ¼Æ¬ 2. Èç¹ûÊÇ·ÖÖ§´°¿Ú, Ôò±êÌâÀ¸ÎªÎÄ×Ö
+ * æ ‡é¢˜æ ç»„ä»¶ åº”å½“è‡³å°‘å…·å¤‡ä¸¤ç§åŠŸèƒ½: 1. å¦‚æœæ˜¯ä¸»çª—å£, åˆ™æ ‡é¢˜æ ä¸ºå›¾ç‰‡ 2. å¦‚æœæ˜¯åˆ†æ”¯çª—å£, åˆ™æ ‡é¢˜æ ä¸ºæ–‡å­—
  * 
  * @author shinysky
  * 
@@ -345,33 +345,33 @@ class Titlebar extends JPanel {
 	// boolean windowStateIsMax;
 
 	/**
-	 * ±êÌâÀ¸JPanelÀà, ¸ß¶È20;
+	 * æ ‡é¢˜æ JPanelç±», é«˜åº¦20;
 	 * 
 	 * @param parent
-	 *            ¸¸×é¼ş, ÓÃÓÚ¿ØÖÆÆä×î´ó×îĞ¡»¯
+	 *            çˆ¶ç»„ä»¶, ç”¨äºæ§åˆ¶å…¶æœ€å¤§æœ€å°åŒ–
 	 * @param path_logo
-	 *            logoÍ¼Æ¬Â·¾¶
+	 *            logoå›¾ç‰‡è·¯å¾„
 	 * @param title
-	 *            ±êÌâÍ¼Æ¬Â·¾¶(IAmBase==true)/±êÌâÎÄ×Ö(IAmBase==false)
+	 *            æ ‡é¢˜å›¾ç‰‡è·¯å¾„(IAmBase==true)/æ ‡é¢˜æ–‡å­—(IAmBase==false)
 	 * @param path_minimize
-	 *            ×îĞ¡»¯°´Å¥Í¼Æ¬Â·¾¶
+	 *            æœ€å°åŒ–æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_minimize_rollover
-	 *            Êó±ê¾­¹ı×îĞ¡»¯°´Å¥Í¼Æ¬Â·¾¶
+	 *            é¼ æ ‡ç»è¿‡æœ€å°åŒ–æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_maximize
-	 *            ×î´ó»¯°´Å¥Í¼Æ¬Â·¾¶
+	 *            æœ€å¤§åŒ–æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_maximize_rollover
-	 *            Êó±ê¾­¹ı×î´ó»¯°´Å¥Í¼Æ¬Â·¾¶
+	 *            é¼ æ ‡ç»è¿‡æœ€å¤§åŒ–æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_normalimize
-	 *            »Ö¸´´°¿Ú°´Å¥Í¼Æ¬Â·¾¶
+	 *            æ¢å¤çª—å£æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_normalimize_rollover
-	 *            Êó±ê¾­¹ı»Ö¸´´°¿Ú°´Å¥Í¼Æ¬Â·¾¶
+	 *            é¼ æ ‡ç»è¿‡æ¢å¤çª—å£æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_close
-	 *            ¹Ø±Õ´°¿Ú°´Å¥Í¼Æ¬Â·¾¶
+	 *            å…³é—­çª—å£æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param path_close_rollover
-	 *            Êó±ê¾­¹ı¹Ø±Õ´°¿Ú°´Å¥Í¼Æ¬Â·¾¶
+	 *            é¼ æ ‡ç»è¿‡å…³é—­çª—å£æŒ‰é’®å›¾ç‰‡è·¯å¾„
 	 * @param IAmBase
-	 *            true: ÊÇ¸ù´°¿Ú, ¹Ø±Õ°´Å¥ÍÆ³öÕû¸öÏµÍ³²¢ÇÒ±êÌâÀ¸ÏÔÊ¾Í¼Æ¬; false: ²»ÊÇ¸ù´°¿Ú,
-	 *            ¹Ø±Õ°´Å¥Ö»¹Ø±Õ±¾´°¿Ú²¢ÇÒ±êÌâÀ¸ÏÔÊ¾ÎÄ×Ö.
+	 *            true: æ˜¯æ ¹çª—å£, å…³é—­æŒ‰é’®æ¨å‡ºæ•´ä¸ªç³»ç»Ÿå¹¶ä¸”æ ‡é¢˜æ æ˜¾ç¤ºå›¾ç‰‡; false: ä¸æ˜¯æ ¹çª—å£,
+	 *            å…³é—­æŒ‰é’®åªå…³é—­æœ¬çª—å£å¹¶ä¸”æ ‡é¢˜æ æ˜¾ç¤ºæ–‡å­—.
 	 */
 	Titlebar(final NoxFrame parent, String path_logo, String title, final boolean IAmBase) {
 		transparencyConfigBar = new FrameConfigDialog(parent);
@@ -453,7 +453,7 @@ class Titlebar extends JPanel {
 						about.setPreferredSize(new Dimension(500, 350));
 						about.setLocation(new Point(300, 150));
 						about.setVisible(true);
-						dec.startShake();// ¶Ô»°¿ò±ØĞësetModal (false)²Å¿ÉÒÔ¶¶¶¯, ·ñÔò²»ĞĞ
+						dec.startShake();// å¯¹è¯æ¡†å¿…é¡»setModal (false)æ‰å¯ä»¥æŠ–åŠ¨, å¦åˆ™ä¸è¡Œ
 					}
 				});
 				m.add(new AbstractAction("Exit") {
@@ -477,18 +477,18 @@ class Titlebar extends JPanel {
 				//m.setBackground(Color.YELLOW);
 				//m.setForeground(Color.RED);
 				m.pack();
-				// Î»ÖÃÓ¦¸ÃÊÇÏà¶ÔÓÚJButtonµÄÎ»ÖÃ
+				// ä½ç½®åº”è¯¥æ˜¯ç›¸å¯¹äºJButtonçš„ä½ç½®
 				m.show((Component) e.getSource(), 0, NoxFrame.TITLE_HEIGHT);
 			}
 		});
 
 		ttl = title;
-		if (IAmBase) {// Èç¹ûÊÇÖ÷´°¿Ú
+		if (IAmBase) {// å¦‚æœæ˜¯ä¸»çª—å£
 			lab_title = new JLabel(new ImageIcon(title));
-		} else {// Èç¹û²»ÊÇÖ÷´°¿Ú
+		} else {// å¦‚æœä¸æ˜¯ä¸»çª—å£
 			// lab_title = new JLabel("NoX");
 			lab_title = new JLabel(title);
-			Font font = new Font("ËÎÌå-·½Õı³¬´ó×Ö·û¼¯", Font.BOLD, 24);
+			Font font = new Font("å®‹ä½“-æ–¹æ­£è¶…å¤§å­—ç¬¦é›†", Font.BOLD, 24);
 			// Font font = new Font("Times New Roman", Font.BOLD, 24);
 			lab_title.setForeground(Color.WHITE);
 			lab_title.setFont(font);
@@ -515,11 +515,11 @@ class Titlebar extends JPanel {
 		bminimize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int state = parent.getExtendedState();
-				// ÉèÖÃÍ¼±ê»¯(iconifies)Î»
+				// è®¾ç½®å›¾æ ‡åŒ–(iconifies)ä½
 				// Set the iconified bit
 				state |= JFrame.ICONIFIED;
 
-				// Í¼±ê»¯Frame
+				// å›¾æ ‡åŒ–Frame
 				// Iconify the frame
 				parent.setExtendedState(state);
 			}
@@ -539,17 +539,17 @@ class Titlebar extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int state = parent.getExtendedState();
 
-				// ÉèÖÃÍ¼±ê»¯(iconifies)Î»
+				// è®¾ç½®å›¾æ ‡åŒ–(iconifies)ä½
 				// Set the iconified bit
 				// System.out.println("window state: " + state);
 				switch (state) {
-				// Èç¹ûµ±Ç°ÊÇ×î´ó×´Ì¬, ÔòÕı³£»¯
+				// å¦‚æœå½“å‰æ˜¯æœ€å¤§çŠ¶æ€, åˆ™æ­£å¸¸åŒ–
 				case JFrame.MAXIMIZED_BOTH:
 					state &= JFrame.NORMAL;// '&', not '|'
 					// System.out.println("max->normal");
 					setToMaximizeIcon();
 					break;
-				// Èç¹ûµ±Ç°²»ÊÇ×î´ó×´Ì¬, Ôò×î´ó»¯
+				// å¦‚æœå½“å‰ä¸æ˜¯æœ€å¤§çŠ¶æ€, åˆ™æœ€å¤§åŒ–
 				default:
 					state |= JFrame.MAXIMIZED_BOTH;
 					// System.out.println("normal->max");
@@ -563,7 +563,7 @@ class Titlebar extends JPanel {
 				// System.out.println("system: " +
 				// Toolkit.getDefaultToolkit().isFrameStateSupported(JFrame.MAXIMIZED_BOTH)
 				// );
-				// ÉèÖÃ´°¿Ú×´Ì¬
+				// è®¾ç½®çª—å£çŠ¶æ€
 				parent.setExtendedState(state);
 			}
 		});
@@ -582,7 +582,7 @@ class Titlebar extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//parent.dispose();
 				parent.setVisible(false);
-				if (IAmBase)// Èç¹ûÊÇ¸ù´°¿Ú
+				if (IAmBase)// å¦‚æœæ˜¯æ ¹çª—å£
 				{
 					System.exit(0);// .............
 				}
@@ -590,7 +590,7 @@ class Titlebar extends JPanel {
 		});
 
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		this.setAlignmentX(JComponent.CENTER_ALIGNMENT);// ÉèÖÃ¶ÔÆë·½Ê½
+		this.setAlignmentX(JComponent.CENTER_ALIGNMENT);// è®¾ç½®å¯¹é½æ–¹å¼
 		this.add(blogo);
 		this.add(Box.createHorizontalGlue());
 		this.add(lab_title);
@@ -606,7 +606,7 @@ class Titlebar extends JPanel {
 	}
 	
 	/**
-	 * ·µ»ØTooltipTxtµÄhtmlĞÎÊ½
+	 * è¿”å›TooltipTxtçš„htmlå½¢å¼
 	 * @param text
 	 * @return
 	 */
@@ -625,7 +625,7 @@ class Titlebar extends JPanel {
 	}
 
 	public void setForegroundColor(boolean white) {
-		// »¹ĞèÒª¸Ä!!!!!!!!!!!!!!!
+		// è¿˜éœ€è¦æ”¹!!!!!!!!!!!!!!!
 		if (white)
 			lab_title.setIcon(new ImageIcon(ttl));
 		else
@@ -643,15 +643,15 @@ class FootPane extends JPanel {
 	 */
 	private static final long serialVersionUID = 9009828062432005570L;
 
-	// Î»ÓÚ´°¿ÚÓÒÏÂ½ÇÓÃÓÚresize
+	// ä½äºçª—å£å³ä¸‹è§’ç”¨äºresize
 	JLabel resizeArea;
 	ResizeListener resizer;
 
 	/**
-	 * µ×²¿×é¼ş, ÓÃÓÚ°²·ÅÖØÉè³ß´ç°´Å¥
+	 * åº•éƒ¨ç»„ä»¶, ç”¨äºå®‰æ”¾é‡è®¾å°ºå¯¸æŒ‰é’®
 	 * 
 	 * @param parent
-	 *            ¸¸×é¼ş, ÓÃÓÚÖØÉè³ß´ç
+	 *            çˆ¶ç»„ä»¶, ç”¨äºé‡è®¾å°ºå¯¸
 	 */
 	FootPane(JFrame parent) {
 		resizeArea = new JLabel(new AngledLinesWindowsCornerIcon());
@@ -676,7 +676,7 @@ class FootPane extends JPanel {
 	}
 
 	/**
-	 * ¸Ã²Ù×÷ÔİÊ±²»¿ÉÄæ×ª; ¼´²»ÄÜÖØĞÂÌí¼Ó¼àÌıÆ÷
+	 * è¯¥æ“ä½œæš‚æ—¶ä¸å¯é€†è½¬; å³ä¸èƒ½é‡æ–°æ·»åŠ ç›‘å¬å™¨
 	 */
 	public void removeResizeListener() {
 		resizeArea.removeMouseListener(resizer);
@@ -685,7 +685,7 @@ class FootPane extends JPanel {
 }
 
 /**
- * ´°¿ÚÍ¸Ã÷¶Èµ÷½Ú¶Ô»°¿ò
+ * çª—å£é€æ˜åº¦è°ƒèŠ‚å¯¹è¯æ¡†
  * 
  * @author shinysky
  * 
@@ -762,9 +762,9 @@ class FrameConfigDialog extends JDialog {
 
 	public void Show() {
 		Color color = parent.getBackgroundColor();
-		// ÏÈ°Ñ±³¾°É«RGBÖµ×ªÎª»Ò¶ÈÖµ, ÅĞ¶ÏÊÇ·ñÊÇÉîÉ«,
-		// Èç¹ûÊÇÉîÉ«Ôò°Ñ±êÇ©ÎÄ×ÖÉèÎª°×É«, ·ñÔòÉèÎªºÚÉ«
-		// ----------ÕæÈËĞÔ»¯, ft
+		// å…ˆæŠŠèƒŒæ™¯è‰²RGBå€¼è½¬ä¸ºç°åº¦å€¼, åˆ¤æ–­æ˜¯å¦æ˜¯æ·±è‰²,
+		// å¦‚æœæ˜¯æ·±è‰²åˆ™æŠŠæ ‡ç­¾æ–‡å­—è®¾ä¸ºç™½è‰², å¦åˆ™è®¾ä¸ºé»‘è‰²
+		// ----------çœŸäººæ€§åŒ–, ft
 		if ((float) (color.getRed() * 0.3f + color.getGreen() * 0.59f + color
 				.getBlue() * 0.11f) < 128) {
 			System.out

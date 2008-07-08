@@ -37,9 +37,9 @@ import javax.swing.border.EmptyBorder;
 import com.sun.jna.examples.BalloonManager;
 
 /**
- * ÓÃÓÚ²úÉúÌáÊ¾ÆøÅİ;
- * ÈçÌáÊ¾ÓÃ»§·¢ËÍµÄÊÇ¿ÕÏûÏ¢,
- * »òÕßÌáÊ¾ÓÃ»§ÓĞĞÂÏûÏ¢µ½´ï.
+ * ç”¨äºäº§ç”Ÿæç¤ºæ°”æ³¡;
+ * å¦‚æç¤ºç”¨æˆ·å‘é€çš„æ˜¯ç©ºæ¶ˆæ¯,
+ * æˆ–è€…æç¤ºç”¨æˆ·æœ‰æ–°æ¶ˆæ¯åˆ°è¾¾.
  * 
  * @author Timothy Wall, shinysky
  * 
@@ -119,8 +119,8 @@ public class JNABalloon {
 	}
 
 	public void showBalloon() {
-		//TODO requestFocus(), µ±Ê§È¥½¹µãÊ±×Ô¶¯ÏûÊ§.
-		//Ä¿Ç°ÓĞÎÊÌâ, ²»ÖªµÀÔ­Òò.
+		//TODO requestFocus(), å½“å¤±å»ç„¦ç‚¹æ—¶è‡ªåŠ¨æ¶ˆå¤±.
+		//ç›®å‰æœ‰é—®é¢˜, ä¸çŸ¥é“åŸå› .
 		//content.requestFocusInWindow();
 		//content.requestFocus(true);
 		content.requestFocus();

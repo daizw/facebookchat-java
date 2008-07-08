@@ -27,7 +27,7 @@ import facebookchat.common.SystemPath;
 import facebookchat.ui.common.JImgPanel;
 
 /**
- * ÏÔÊ¾±íÇéÍ¼Æ¬´°¿Ú
+ * æ˜¾ç¤ºè¡¨æƒ…å›¾ç‰‡çª—å£
  * 
  * @author shinysky
  * 
@@ -47,12 +47,12 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 	public static final int CACELBUTTONHEIGHT = 25;
 
 	/**
-	 * ±íÇé¶Ô»°¿ò¹¹Ôìº¯Êı
+	 * è¡¨æƒ…å¯¹è¯æ¡†æ„é€ å‡½æ•°
 	 * 
 	 * @param title
-	 *            ¶Ô»°¿ò±êÌâ
+	 *            å¯¹è¯æ¡†æ ‡é¢˜
 	 * @param modal
-	 *            ÊÇ·ñ½ûÖ¹ÆäËü½¹µã
+	 *            æ˜¯å¦ç¦æ­¢å…¶å®ƒç„¦ç‚¹
 	 */
 	public FaceDialog(String title, boolean modal, String path_faces) {
 		super((JFrame) null, title, modal);
@@ -76,11 +76,11 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 
 		Object[][] data = new Object[FACEROWS][FACECOLUMNS];
 		/**
-		 * ²»ĞèÒª½«±íÇéÍ¼Æ¬Êµ¼Ê²åÈëµ½±í¸ñÖĞ
+		 * ä¸éœ€è¦å°†è¡¨æƒ…å›¾ç‰‡å®é™…æ’å…¥åˆ°è¡¨æ ¼ä¸­
 		 */
 		tb_cr_faces = new JTable(new MyModel(data, columns)) {
 			/**
-			 * ×Ô¶¨ÒåJTable Cell Renderer
+			 * è‡ªå®šä¹‰JTable Cell Renderer
 			 */
 			private static final long serialVersionUID = -212708255423640437L;
 
@@ -89,13 +89,13 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 				Component c = super.prepareRenderer(renderer, row, column);
 				// We want renderer component to be transparent so background
 				// image is visible
-				// ÉèÖÃµ¥Ôª¸ñ±íÏÖĞÎÊ½ÎªÍ¸Ã÷
+				// è®¾ç½®å•å…ƒæ ¼è¡¨ç°å½¢å¼ä¸ºé€æ˜
 				if (c instanceof JComponent)
 					((JComponent) c).setOpaque(false);
 				return c;
 			}
 		};
-		// ÉèÖÃ±í¸ñÎªÍ¸Ã÷
+		// è®¾ç½®è¡¨æ ¼ä¸ºé€æ˜
 		tb_cr_faces.setOpaque(false);
 		
 		tb_cr_faces.setRowHeight(FACECELLHEIGHT);
@@ -108,13 +108,13 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 		tb_cr_faces.setMinimumSize(new Dimension(FACECELLWIDTH * FACECOLUMNS,
 				FACECELLHEIGHT * FACEROWS));
 		/**
-		 * ´Ë¶şĞĞ¿É±£Ö¤¿ÉÑ¡ÇÒÖ»¿ÉÑ¡Ò»¸ö
+		 * æ­¤äºŒè¡Œå¯ä¿è¯å¯é€‰ä¸”åªå¯é€‰ä¸€ä¸ª
 		 */
 		tb_cr_faces.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tb_cr_faces.setCellSelectionEnabled(true);
 
 		/**
-		 * Ìí¼ÓÊó±êÊÂ¼ş¼àÌıÆ÷,ÒÔÊµÏÖµ¥»÷²åÈë
+		 * æ·»åŠ é¼ æ ‡äº‹ä»¶ç›‘å¬å™¨,ä»¥å®ç°å•å‡»æ’å…¥
 		 */
 		tb_cr_faces.addMouseListener(this);
 		// tb_cr_faces.setSelectionBackground(Color.LIGHT_GRAY);
@@ -150,9 +150,9 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 	}
 
 	/**
-	 * »ñÈ¡ËùÑ¡±íÇéË÷Òı,Èç¹ûÎ´Ñ¡Ôò·µ»Ø-1
+	 * è·å–æ‰€é€‰è¡¨æƒ…ç´¢å¼•,å¦‚æœæœªé€‰åˆ™è¿”å›-1
 	 * 
-	 * @return ËùÑ¡±íÇéË÷Òı
+	 * @return æ‰€é€‰è¡¨æƒ…ç´¢å¼•
 	 */
 	public int getSelectedFaceIndex() {
 		return selectedFaceIndex;
@@ -163,43 +163,43 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 	}
 
 	/**
-	 * ÒÔÏÂÎª ´°¿Ú×é¼ş
+	 * ä»¥ä¸‹ä¸º çª—å£ç»„ä»¶
 	 */
 	private JImgPanel rootpane;
 	/**
-	 * ±íÇéJTable
+	 * è¡¨æƒ…JTable
 	 */
 	private JTable tb_cr_faces;
 	/**
-	 * °´Å¥Ãæ°å
+	 * æŒ‰é’®é¢æ¿
 	 */
 	private JPanel p_buttons;
 	/**
-	 * ²åÈë°´Å¥
+	 * æ’å…¥æŒ‰é’®
 	 */
 	private JButton b_cr_insert;
 	/**
-	 * È¡Ïû°´Å¥
+	 * å–æ¶ˆæŒ‰é’®
 	 */
 	private JButton b_cr_cancel;
 
 	/**
-	 * ÆäËü±äÁ¿
+	 * å…¶å®ƒå˜é‡
 	 */
 	/**
-	 * ÓÃÓÚÏÔÊ¾Í¼Æ¬
+	 * ç”¨äºæ˜¾ç¤ºå›¾ç‰‡
 	 */
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	/**
-	 * ËùÑ¡±íÇéË÷Òı
+	 * æ‰€é€‰è¡¨æƒ…ç´¢å¼•
 	 */
 	private int selectedFaceIndex = -1;
 	private ImageIcon selectedFace = null;
 
-	// Èç¹û²»¸³³õÖµ,ÔÚÓÃ»§Î´Ñ¡ÔñÍ¼±êÊ±,»áÄ¬ÈÏÎª0,´Ó¶øÍâ²¿º¯Êı»áÈÏÎªÑ¡ÔñÁËµÚÒ»¸ö:"0.gif"
+	// å¦‚æœä¸èµ‹åˆå€¼,åœ¨ç”¨æˆ·æœªé€‰æ‹©å›¾æ ‡æ—¶,ä¼šé»˜è®¤ä¸º0,ä»è€Œå¤–éƒ¨å‡½æ•°ä¼šè®¤ä¸ºé€‰æ‹©äº†ç¬¬ä¸€ä¸ª:"0.gif"
 
 	/**
-	 * MyModel ±í¸ñ¸ñÊ½Ä£ĞÍ
+	 * MyModel è¡¨æ ¼æ ¼å¼æ¨¡å‹
 	 * 
 	 * @author shinysky
 	 * 
@@ -213,32 +213,32 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 		private static final long serialVersionUID = 5422161155449098626L;
 
 		/**
-		 * constructor ¹¹Ôìº¯Êı
+		 * constructor æ„é€ å‡½æ•°
 		 * 
 		 * @param data
-		 *            Êı¾İ
+		 *            æ•°æ®
 		 * @param columns
-		 *            ÁĞ±êÌâ
+		 *            åˆ—æ ‡é¢˜
 		 */
 		public MyModel(Object[][] data, Object[] columns) {
 			super(data, columns);
 		}
 
 		/**
-		 * Ö¸¶¨µ¥Ôª¸ñÊÇ·ñ¿É±à¼­
+		 * æŒ‡å®šå•å…ƒæ ¼æ˜¯å¦å¯ç¼–è¾‘
 		 * 
 		 * @param row
-		 *            µ¥Ôª¸ñĞĞË÷Òı
+		 *            å•å…ƒæ ¼è¡Œç´¢å¼•
 		 * @param col
-		 *            µ¥Ôª¸ñÁĞË÷Òı
-		 * @return ±íÃ÷ÊÇ·ñ¿É±à¼­µÄ²¼¶ûÖµ (false)
+		 *            å•å…ƒæ ¼åˆ—ç´¢å¼•
+		 * @return è¡¨æ˜æ˜¯å¦å¯ç¼–è¾‘çš„å¸ƒå°”å€¼ (false)
 		 */
 		public boolean isCellEditable(int row, int col) {
 			return false;
 		}
 
 		/**
-		 * »ñµÃÁĞÀà
+		 * è·å¾—åˆ—ç±»
 		 */
 		/*
 		 * public Class getColumnClass(int column) { Vector v = (Vector)
@@ -247,7 +247,7 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 	}
 
 	/**
-	 * ±í¸ñµ¥Ôª¸ñäÖÈ¾Æ÷ ÔõÃ´ÓÃ??
+	 * è¡¨æ ¼å•å…ƒæ ¼æ¸²æŸ“å™¨ æ€ä¹ˆç”¨??
 	 */
 	class TransparentRenderer extends DefaultTableCellRenderer {
 		/**
@@ -276,7 +276,7 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 	}
 
 	/**
-	 * °´Å¥ÊÂ¼şÏìÓ¦
+	 * æŒ‰é’®äº‹ä»¶å“åº”
 	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
@@ -302,18 +302,18 @@ class FaceDialog extends JDialog implements ActionListener, MouseListener {
 			System.out.println("Didn't select a face !");
 		}
 
-		this.setVisible(false);// Òş²Ø,¶ø²»ÊÇÏú»Ù,¿¼ÂÇµ½¿ÉÄÜ»á¶à´Î´ò¿ª´Ë¶Ô»°¿òµÄÎÊÌâ
+		this.setVisible(false);// éšè—,è€Œä¸æ˜¯é”€æ¯,è€ƒè™‘åˆ°å¯èƒ½ä¼šå¤šæ¬¡æ‰“å¼€æ­¤å¯¹è¯æ¡†çš„é—®é¢˜
 	}
 
 	/**
-	 * Êó±êÊÂ¼şÏìÓ¦
+	 * é¼ æ ‡äº‹ä»¶å“åº”
 	 * 
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
 	public void mouseClicked(MouseEvent e) {
 		int clickcount = e.getClickCount();
 		/**
-		 * ´¦Àíµ¥»÷ÊÂ¼ş,µÈÍ¬ÓÚµ¥»÷b_cr_insert°´Å¥
+		 * å¤„ç†å•å‡»äº‹ä»¶,ç­‰åŒäºå•å‡»b_cr_insertæŒ‰é’®
 		 */
 		if (clickcount == 1) {
 			b_cr_insert.doClick();

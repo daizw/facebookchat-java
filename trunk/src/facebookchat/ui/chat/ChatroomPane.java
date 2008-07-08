@@ -52,15 +52,15 @@ import facebookchat.ui.common.JNABalloon;
  */
 
 /**
- * ¸ü¼Ó"ÍêÃÀ"µÄÁÄÌì´°¿Ú: ¿ÉÒÔÑ¡Ôñ×ÖÌå¼°ÑÕÉ«; ¿ÉÒÔ²åÈëÍ¼Æ¬
+ * æ›´åŠ "å®Œç¾"çš„èŠå¤©çª—å£: å¯ä»¥é€‰æ‹©å­—ä½“åŠé¢œè‰²; å¯ä»¥æ’å…¥å›¾ç‰‡
  * 
  * @author shinysky
  * 
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  * 
- * (ÒªÊ±¿Ì×¼±¸×Å´Ó·şÎñÆ÷½ÓÊÕĞÅÏ¢) ĞÅÏ¢¸ñÊ½: µÚÒ»²¿·Ö:who sayTo who at time µÚ¶ş²¿·Ö:the message
- * ½«ÏûÏ¢Ìí¼Óµ½ÏûÏ¢¼ÇÂ¼, È»ºóÍ¨¹ı¼ì²é·¢ĞÅÈËºÍnoDisturb±äÁ¿À´¾ö¶¨ÊÇ·ñÌí¼Ó¸ÃĞÅÏ¢µ½ÀúÊ·ÏûÏ¢´°¿Ú
+ * (è¦æ—¶åˆ»å‡†å¤‡ç€ä»æœåŠ¡å™¨æ¥æ”¶ä¿¡æ¯) ä¿¡æ¯æ ¼å¼: ç¬¬ä¸€éƒ¨åˆ†:who sayTo who at time ç¬¬äºŒéƒ¨åˆ†:the message
+ * å°†æ¶ˆæ¯æ·»åŠ åˆ°æ¶ˆæ¯è®°å½•, ç„¶åé€šè¿‡æ£€æŸ¥å‘ä¿¡äººå’ŒnoDisturbå˜é‡æ¥å†³å®šæ˜¯å¦æ·»åŠ è¯¥ä¿¡æ¯åˆ°å†å²æ¶ˆæ¯çª—å£
  */
 public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseListener
 {
@@ -70,45 +70,45 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	private static final long serialVersionUID = -1915394855935441419L;
 
 	/**
-	 * ÀúÊ·ÏûÏ¢JScrollPane
+	 * å†å²æ¶ˆæ¯JScrollPane
 	 */
 	private JScrollPane sp_historymsg;
 	/**
-	 * ÀúÊ·ÏûÏ¢JTextPane
+	 * å†å²æ¶ˆæ¯JTextPane
 	 */
 	private JTextPane tp_historymsg;
 	/**
-	 * ÏûÏ¢ÊäÈë´°¿Ú¼°Áã¼ş
+	 * æ¶ˆæ¯è¾“å…¥çª—å£åŠé›¶ä»¶
 	 */
 	private JPanel p_inputpaneAndButtons;
 	/**
-	 * ÏûÏ¢JScrollPane
+	 * æ¶ˆæ¯JScrollPane
 	 */
 	private JScrollPane sp_input;
 	/**
-	 * ÏûÏ¢ÊäÈë¿ò JTextPane
+	 * æ¶ˆæ¯è¾“å…¥æ¡† JTextPane
 	 */
 	private JTextPane tp_input;
 	/**
-	 * °´Å¥JPanel, º¬²åÈë±íÇé°´Å¥/ÉÁÆÁ°´Å¥/.../·¢ËÍ°´Å¥
+	 * æŒ‰é’®JPanel, å«æ’å…¥è¡¨æƒ…æŒ‰é’®/é—ªå±æŒ‰é’®/.../å‘é€æŒ‰é’®
 	 */
 	private JPanel p_buttons;
 	/**
-	 * ²åÈë±íÇéJButton
+	 * æ’å…¥è¡¨æƒ…JButton
 	 */
 	private JButton b_emotion;
 	/**
-	 * ±íÇéÑ¡Ôñ¶Ô»°¿ò
+	 * è¡¨æƒ…é€‰æ‹©å¯¹è¯æ¡†
 	 */
 	private FaceDialog selFace;
 	/**
-	 * ÉÁÆÁÕñ¶¯
+	 * é—ªå±æŒ¯åŠ¨
 	 */
 	private JButton b_shake;
 	private static final String shakeMsg = "[F:999]"; 
 
 	/**
-	 * ½ØÆÁ°´Å¥
+	 * æˆªå±æŒ‰é’®
 	 */
 	private JButton b_snapshot;
 	private JButton b_snapconfig;
@@ -116,78 +116,78 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	JMenuItem doSnap;
 	JCheckBoxMenuItem hideFrame;
 	/**
-	 * Í¼Æ¬Ë÷Òı¸ñÊ½»¯´¦Àí
+	 * å›¾ç‰‡ç´¢å¼•æ ¼å¼åŒ–å¤„ç†
 	 */
 	public static final DecimalFormat fmNum = new DecimalFormat("000");
 	
 	/**
-	 * ÏûÏ¢·¢ËÍJButton
+	 * æ¶ˆæ¯å‘é€JButton
 	 */
 	private JButton b_send;
 	/**
-	 * ÀúÊ·ÏûÏ¢,ÓÃÓÚ±£´æ²Ù×÷
+	 * å†å²æ¶ˆæ¯,ç”¨äºä¿å­˜æ“ä½œ
 	 */
 	String historymsg_save;
 	/**
-	 * µ±Ç°´¦ÓÚÊäÈë¿òÖĞµÄÏûÏ¢, ÓÃÓÚ±£´æ²Ù×÷
+	 * å½“å‰å¤„äºè¾“å…¥æ¡†ä¸­çš„æ¶ˆæ¯, ç”¨äºä¿å­˜æ“ä½œ
 	 */
 	String currentmsg_save;
 	/**
-	 * ÎÄ±¾·ç¸ñÄ£ĞÍ
+	 * æ–‡æœ¬é£æ ¼æ¨¡å‹
 	 */
 	StyledDocument styledDoc;
 	/**
-	 * ×ÖÌå·ç¸ñ
+	 * å­—ä½“é£æ ¼
 	 */
 	/**
-	 * ÆÕÍ¨
+	 * æ™®é€š
 	 */
 	Style normal;
 	/**
-	 * À¶É«
+	 * è“è‰²
 	 */
 	Style blue;
 	/**
-	 * ÂÌÉ«
+	 * ç»¿è‰²
 	 */
 	Style green;
 	/**
-	 * »ÒÉ«
+	 * ç°è‰²
 	 */
 	Style gray;
 	/**
-	 * ºìÉ«
+	 * çº¢è‰²
 	 */
 	Style red;
 	/**
-	 * ºÚÌå
+	 * é»‘ä½“
 	 */
 	Style bold;
 	/**
-	 * Ğ±Ìå
+	 * æ–œä½“
 	 */
 	Style italic;
 	/**
-	 * ´óºÅ
+	 * å¤§å·
 	 */
 	Style bigSize;
 	/**
-	 * ÆäËü±äÁ¿
+	 * å…¶å®ƒå˜é‡
 	 */
 	/**
-	 * ÈÕÆÚ±êÇ©¸ñÊ½
+	 * æ—¥æœŸæ ‡ç­¾æ ¼å¼
 	 */
 	private Format fmDate = new SimpleDateFormat("yyyy/MM/dd E HH:mm:ss");
 	/**
-	 * ×Ö·û´®´¦ÀíÖĞ¼ä±äÁ¿
+	 * å­—ç¬¦ä¸²å¤„ç†ä¸­é—´å˜é‡
 	 */
 	// private int position;
 	/**
-	 * ×Ö·û´®³¤¶È
+	 * å­—ç¬¦ä¸²é•¿åº¦
 	 */
 	// private int strLength;
 	/**
-	 * »¶Ó­ÏûÏ¢
+	 * æ¬¢è¿æ¶ˆæ¯
 	 */
 	private String sayHello;
 
@@ -195,10 +195,10 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	 * //
 	 */
 	/**
-	 * ×ÖÌåÇåÎúÉèÖÃ(Í¨¹ıÖØÔØpaintComponent()) (ÒÔÏÂÈı¶Î´úÂë) ...But CPUÕ¼ÓÃÂÊ´ïµ½100% !Faint! Ğû¸æÊ§°Ü;
+	 * å­—ä½“æ¸…æ™°è®¾ç½®(é€šè¿‡é‡è½½paintComponent()) (ä»¥ä¸‹ä¸‰æ®µä»£ç ) ...But CPUå ç”¨ç‡è¾¾åˆ°100% !Faint! å®£å‘Šå¤±è´¥;
 	 * 
-	 * ÔÚÒ»Ğ©¿ÉÄÜµ¼ÖÂÆÁÄ»Ë¢ĞÂµÄ°´Å¥ÏìÓ¦»ò¼üÅÌÏìÓ¦ÖĞÌí¼Ó setRenderingHints(hints); »á½â¾ö²¿·ÖÎÊÌâ µ«²»ÊÇ¸ù±¾µÄ·½·¨,
-	 * ÉõÖÁÓÃ»§µÄÑ¡ÔñÎÄ±¾²Ù×÷Ò²¿ÉÒÔÇáÒ×Ê¹ÇåÎúÊôĞÔ"¶ªÊ§" ÁíÍâ,Èç¹ûÎÄ±¾ÖĞ°üº¬¶¯Ì¬Í¼Æ¬,Ò²»áÊ¹ÊôĞÔ¶ªÊ§
+	 * åœ¨ä¸€äº›å¯èƒ½å¯¼è‡´å±å¹•åˆ·æ–°çš„æŒ‰é’®å“åº”æˆ–é”®ç›˜å“åº”ä¸­æ·»åŠ  setRenderingHints(hints); ä¼šè§£å†³éƒ¨åˆ†é—®é¢˜ ä½†ä¸æ˜¯æ ¹æœ¬çš„æ–¹æ³•,
+	 * ç”šè‡³ç”¨æˆ·çš„é€‰æ‹©æ–‡æœ¬æ“ä½œä¹Ÿå¯ä»¥è½»æ˜“ä½¿æ¸…æ™°å±æ€§"ä¸¢å¤±" å¦å¤–,å¦‚æœæ–‡æœ¬ä¸­åŒ…å«åŠ¨æ€å›¾ç‰‡,ä¹Ÿä¼šä½¿å±æ€§ä¸¢å¤±
 	 */
 	/*
 	 * public void paintComponent(Graphics g) { super.paintComponent(g);
@@ -208,7 +208,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	 * ChatRoomPane.this.setRenderingHints(hints_in); }
 	 * 
 	 *//**
-		 * ÉèÖÃ×ÖÌåÇåÎú²¢ÖØ»æ×é¼ş
+		 * è®¾ç½®å­—ä½“æ¸…æ™°å¹¶é‡ç»˜ç»„ä»¶
 		 * 
 		 * @param h
 		 *            RenderingHints
@@ -221,10 +221,10 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	Chatroom parent;
 	
 	/**
-	 * JSplitPane ÁÄÌì×é¼ş, º¬ÊäÈë¿ò/ÏûÏ¢´°¿Ú/±íÇé°´Å¥/ÉÁÆÁ°´Å¥/.../·¢ËÍ°´Å¥ µÈ
+	 * JSplitPane èŠå¤©ç»„ä»¶, å«è¾“å…¥æ¡†/æ¶ˆæ¯çª—å£/è¡¨æƒ…æŒ‰é’®/é—ªå±æŒ‰é’®/.../å‘é€æŒ‰é’® ç­‰
 	 * 
 	 * @param par
-	 *            ¸¸×é¼ş, ÓÃÓÚÊ¹´°¿ÚparÕñ¶¯
+	 *            çˆ¶ç»„ä»¶, ç”¨äºä½¿çª—å£paræŒ¯åŠ¨
 	 */
 	public ChatroomPane(Chatroom par) {
 		super(JSplitPane.VERTICAL_SPLIT);
@@ -236,14 +236,14 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		// strLength = sayHello.length();
 		// position = 0;
 		/**
-		 * ÀúÊ·ÏûÏ¢´°¿Ú
+		 * å†å²æ¶ˆæ¯çª—å£
 		 */
 		tp_historymsg = new JTextPane();
 		historymsg_save = new String();
 		historymsg_save += sayHello;
 		styledDoc = tp_historymsg.getStyledDocument();
 		/**
-		 * ĞÂ½¨·ç¸ñ
+		 * æ–°å»ºé£æ ¼
 		 */
 		normal = styledDoc.addStyle("normal", null);
 		StyleConstants.setFontFamily(normal, "SansSerif");
@@ -269,7 +269,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		bigSize = styledDoc.addStyle("bigSize", normal);
 		StyleConstants.setFontSize(bigSize, 24);
 		/**
-		 * Ìí¼Ó·ç¸ñ»¯ÎÄ±¾(»¶Ó­ÏûÏ¢)
+		 * æ·»åŠ é£æ ¼åŒ–æ–‡æœ¬(æ¬¢è¿æ¶ˆæ¯)
 		 */
 		styledDoc.setLogicalStyle(0, red);
 
@@ -279,11 +279,11 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		tp_historymsg.setBackground(new Color(180, 250, 250));
 		tp_historymsg.setSelectionColor(Color.YELLOW);
 		/**
-		 * Èç¹ûÉèÖÃÎª¿É±à¼­:ÓÃ»§Ôò¿ÉÒÔ×ÔÓÉ±à¼­ Èç¹ûÉèÖÃÎª²»¿É±à¼­:³ÌĞòÎŞ·¨ÏòÆäÖĞÌí¼ÓÎÄ±¾.ÔõÃ´°ì??
+		 * å¦‚æœè®¾ç½®ä¸ºå¯ç¼–è¾‘:ç”¨æˆ·åˆ™å¯ä»¥è‡ªç”±ç¼–è¾‘ å¦‚æœè®¾ç½®ä¸ºä¸å¯ç¼–è¾‘:ç¨‹åºæ— æ³•å‘å…¶ä¸­æ·»åŠ æ–‡æœ¬.æ€ä¹ˆåŠ??
 		 * 
-		 * ...ÒÑ½â¾ö(²»ÖªÊÇ·ñ×ã¹»°²È«): Í¨³£Çé¿öÏÂÉèÎª²»¿É±à¼­ µ±ÏòÆäÖĞÌí¼ÓÎÄ±¾Ê±,ÁÙÊ±ÉèÎª¿É±à¼­;
-		 * ²¢ÖØĞÂÉèÖÃ²åÈë·ûÎ»ÖÃ(±£Ö¤²åÈë·ûÎ»ÖÃÔÚÎÄ±¾Î²) (Èç¹û²»Ğ£Õı²åÈë·ûÎ»ÖÃ,ÓÃ»§¾¡¹Ü²»ÄÜ±à¼­,µ«»¹ÊÇ¿ÉÒÔ¸Ä±ä²åÈë·ûÎ»ÖÃ)
-		 * Ìí¼ÓÎÄ±¾ºó,ÖØĞÂÉèÖÃÎª²»¿É±à¼­. ¸ã¶¨!^-^ Ïê¼ûappendToHMsg();
+		 * ...å·²è§£å†³(ä¸çŸ¥æ˜¯å¦è¶³å¤Ÿå®‰å…¨): é€šå¸¸æƒ…å†µä¸‹è®¾ä¸ºä¸å¯ç¼–è¾‘ å½“å‘å…¶ä¸­æ·»åŠ æ–‡æœ¬æ—¶,ä¸´æ—¶è®¾ä¸ºå¯ç¼–è¾‘;
+		 * å¹¶é‡æ–°è®¾ç½®æ’å…¥ç¬¦ä½ç½®(ä¿è¯æ’å…¥ç¬¦ä½ç½®åœ¨æ–‡æœ¬å°¾) (å¦‚æœä¸æ ¡æ­£æ’å…¥ç¬¦ä½ç½®,ç”¨æˆ·å°½ç®¡ä¸èƒ½ç¼–è¾‘,ä½†è¿˜æ˜¯å¯ä»¥æ”¹å˜æ’å…¥ç¬¦ä½ç½®)
+		 * æ·»åŠ æ–‡æœ¬å,é‡æ–°è®¾ç½®ä¸ºä¸å¯ç¼–è¾‘. æå®š!^-^ è¯¦è§appendToHMsg();
 		 */
 		tp_historymsg.setEditable(false);
 		sp_historymsg = new JScrollPane(tp_historymsg);
@@ -292,7 +292,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		p_inputpaneAndButtons = new JPanel();
 
 		/**
-		 * ÏûÏ¢ÊäÈë´°¿Ú
+		 * æ¶ˆæ¯è¾“å…¥çª—å£
 		 */
 		tp_input = new JTextPane();
 		// tp_msg.setText(sayHello);
@@ -300,13 +300,13 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		.setToolTipText(getHtmlText("Input your message and press \"Send\" <br>or press Ctrl+Enter"));
 
 		/**
-		 * ¼üÅÌÊÂ¼ş¼àÌıÆ÷/ÊÂ¼ş´¦Àí
+		 * é”®ç›˜äº‹ä»¶ç›‘å¬å™¨/äº‹ä»¶å¤„ç†
 		 */
 		tp_input.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent event) {
 				int keyCode = event.getKeyCode();
 				/**
-				 * Èç¹û°´¼üÎªCtrl+EnterÔò·¢ËÍĞÅÏ¢
+				 * å¦‚æœæŒ‰é”®ä¸ºCtrl+Enteråˆ™å‘é€ä¿¡æ¯
 				 */
 				if (keyCode == KeyEvent.VK_ENTER && event.isControlDown()) {
 					System.out.println("You press the combo-key : Ctrl+Enter");
@@ -325,7 +325,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		sp_input = new JScrollPane(tp_input);
 
 		/**
-		 * ²åÈë±íÇé°´Å¥ ¼° ·¢ËÍ°´Å¥
+		 * æ’å…¥è¡¨æƒ…æŒ‰é’® åŠ å‘é€æŒ‰é’®
 		 */
 		p_buttons = new JPanel();
 
@@ -342,13 +342,13 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		b_emotion.setMinimumSize(buttonSize);
 
 		/**
-		 * Èç¹û²»×èÈûÆäËû´°¿ÚµÄ»°, »á³öÏÖÎŞ·¨»ñÈ¡ÒÑÑ¡ÔñµÄ±íÇéµÄÇé¿ö.
+		 * å¦‚æœä¸é˜»å¡å…¶ä»–çª—å£çš„è¯, ä¼šå‡ºç°æ— æ³•è·å–å·²é€‰æ‹©çš„è¡¨æƒ…çš„æƒ…å†µ.
 		 */
 		selFace = new FaceDialog("Insert a face", true, SystemPath.FACES_RESOURCE_PATH);
-		// ºÍFaceDialog.setDefaultLookAndFeelDecorated(true);²»ÄÜÍ¬Ê±Ê¹ÓÃ
+		// å’ŒFaceDialog.setDefaultLookAndFeelDecorated(true);ä¸èƒ½åŒæ—¶ä½¿ç”¨
 		selFace.setBounds(450, 350, FaceDialog.FACECELLWIDTH
 				* FaceDialog.FACECOLUMNS, FaceDialog.FACECELLHEIGHT
-				* FaceDialog.FACEROWS + 30);// 30Îªb_cr_cancelµÄ¸ß¶È
+				* FaceDialog.FACEROWS + 30);// 30ä¸ºb_cr_cancelçš„é«˜åº¦
 		selFace.pack();
 
 		b_shake = new JButton(new ImageIcon(SystemPath.ICONS_RESOURCE_PATH + "shake.png"));
@@ -385,7 +385,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 				true);
 		doSnap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (hideFrame.getState())// Èç¹ûÓÃ»§Ñ¡ÔñÒş²Ø´°¿Ú, ÔòÒş²Ø
+				if (hideFrame.getState())// å¦‚æœç”¨æˆ·é€‰æ‹©éšè—çª—å£, åˆ™éšè—
 				{
 					// parent.setVisible(false);
 					parent.setState(JFrame.ICONIFIED);
@@ -393,9 +393,9 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 					// you!" + hideFrame.isSelected());
 				}
 				try {
-					// ÒòÎªĞèÒªÖ´ĞĞÍêÊÂ¼ş´¦Àí³ÌĞò²Ëµ¥²ÅÄÜÏûÊ§, ËùÒÔÏÂÃæÕâ¾äÎŞÓÃ.
+					// å› ä¸ºéœ€è¦æ‰§è¡Œå®Œäº‹ä»¶å¤„ç†ç¨‹åºèœå•æ‰èƒ½æ¶ˆå¤±, æ‰€ä»¥ä¸‹é¢è¿™å¥æ— ç”¨.
 					// menuSnap.setVisible(false);
-					Thread.sleep(300);// Ë¯500ºÁÃëÊÇÎªÁËÈÃÖ÷´°ÍêÈ«²»¼û
+					Thread.sleep(300);// ç¡500æ¯«ç§’æ˜¯ä¸ºäº†è®©ä¸»çª—å®Œå…¨ä¸è§
 					Robot ro = new Robot();
 					Toolkit tk = Toolkit.getDefaultToolkit();
 					Dimension screenSize = tk.getScreenSize();
@@ -407,7 +407,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 						public void keyPressed(KeyEvent event) {
 							int keyCode = event.getKeyCode();
 							/**
-							 * Èç¹û°´¼üÎªESCÔòÍË³ö½ØÆÁ
+							 * å¦‚æœæŒ‰é”®ä¸ºESCåˆ™é€€å‡ºæˆªå±
 							 */
 							if (keyCode == KeyEvent.VK_ESCAPE) {
 								fakeWin.dispose();
@@ -486,7 +486,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		// msgPane.setContinuousLayout(true);
 		this.setSize(new Dimension(Chatroom.WIDTH_DEFLT,
 				Chatroom.HEIGHT_DEFLT - 35));
-		this.setDividerLocation(0.65);// ±ØĞëÏÈÖ¸¶¨³ß´ç²ÅÓĞĞ§
+		this.setDividerLocation(0.65);// å¿…é¡»å…ˆæŒ‡å®šå°ºå¯¸æ‰æœ‰æ•ˆ
 		this.setResizeWeight(0.62d);
 		this.setDividerSize(3);
 		// this.setOneTouchExpandable(true);
@@ -494,7 +494,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		this.add(p_inputpaneAndButtons);
 		// this.setLayout(new BorderLayout());
 		// this.add(msgPane, BorderLayout.CENTER);
-		// this.setOpaque(false);//ÔÚµ±Ç°Ê¹ÓÃµÄ±³¾°ÏÂ, ÉèÎªÍ¸Ã÷ËÆºõ²»Ì«ºÃ¿´...
+		// this.setOpaque(false);//åœ¨å½“å‰ä½¿ç”¨çš„èƒŒæ™¯ä¸‹, è®¾ä¸ºé€æ˜ä¼¼ä¹ä¸å¤ªå¥½çœ‹...
 	}
 
 	private String getHtmlText(String text) {
@@ -502,10 +502,10 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	}
 
 	/**
-	 * ÏÔÊ¾ÏµÍ³ÏûÏ¢
+	 * æ˜¾ç¤ºç³»ç»Ÿæ¶ˆæ¯
 	 * 
 	 * @param msg
-	 *            ÏµÍ³ÏûÏ¢
+	 *            ç³»ç»Ÿæ¶ˆæ¯
 	 */
 	public void showMsgDialog(String msg) {
 		JOptionPane.showMessageDialog((Component) null, msg,
@@ -531,11 +531,11 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	}
 	
 	/**
-	 * ÓÃÓÚÍâ²¿³ÌĞòµ÷ÓÃ,ÒÔÏÔÊ¾ÏûÏ¢
+	 * ç”¨äºå¤–éƒ¨ç¨‹åºè°ƒç”¨,ä»¥æ˜¾ç¤ºæ¶ˆæ¯
 	 * 
 	 * @param strs
 	 *            1:sender;2:receiver;3:time;4:msg
-	 * @param incomingPic ÍâÀ´Í¼Æ¬
+	 * @param incomingPic å¤–æ¥å›¾ç‰‡
 	 */	
 	public void incomingMsgProcessor(String sender, String time,
 			Object msgdata){
@@ -559,7 +559,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		playThd.start();
 		
 		/**
-		 * ´¦ÀíÍâ²¿´«À´µÄÏûÏ¢×Ö·û´®
+		 * å¤„ç†å¤–éƒ¨ä¼ æ¥çš„æ¶ˆæ¯å­—ç¬¦ä¸²
 		 */
 		String label = "[" + sender + "@" + time + "]";
 		
@@ -569,7 +569,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 			int caretPos = -1;
 
 			for (; (caretPos = strbuf_msg.indexOf("^n", caretPos + 1)) >= 0;) {
-				// °Ñ"^n"Ìæ»»Îª"\n"
+				// æŠŠ"^n"æ›¿æ¢ä¸º"\n"
 				strbuf_msg.replace(caretPos, caretPos + 2, "\n");
 			}
 		}
@@ -578,7 +578,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	}
 
 	/**
-	 * ½ÓÊÕÏûÏ¢Ê±²¥·ÅÌáÊ¾Òô
+	 * æ¥æ”¶æ¶ˆæ¯æ—¶æ’­æ”¾æç¤ºéŸ³
 	 * 
 	 */
 	public void playAudio() {
@@ -600,7 +600,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	}
  
 	/**
-	 * ½ÓÊÕ/·¢ËÍÉÁÆÁÊ±²¥·ÅÌáÊ¾Òô
+	 * æ¥æ”¶/å‘é€é—ªå±æ—¶æ’­æ”¾æç¤ºéŸ³
 	 */
 	public void playShakeAudio() {
 		final AudioClip msgBeep;
@@ -621,24 +621,24 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	}
 
 	/**
-	 * ÏòÀúÊ·ÏûÏ¢´°¿ÚÌí¼ÓÎÄ±¾
+	 * å‘å†å²æ¶ˆæ¯çª—å£æ·»åŠ æ–‡æœ¬
 	 * 
-	 * ×¢Òâ:Èç¹ûckb_nodisturb Îª true,±íÊ¾·À´òÈÅÄ£Ê½¿ªÆô, ´ËÊ±´Ó·şÎñÆ÷´«À´µÄÈºÁÄÏûÏ¢Ö»»á±»Ìí¼Óµ½ÀúÊ·ÏûÏ¢×Ö·û´®
-	 * ¶ø²»»á±»Ìí¼Óµ½´°¿ÚÖĞ Ö»ÓĞË½ÁÄ¶ÔÏóµÄÏûÏ¢²Å»á±»Ìí¼Óµ½´°¿ÚÖĞ
+	 * æ³¨æ„:å¦‚æœckb_nodisturb ä¸º true,è¡¨ç¤ºé˜²æ‰“æ‰°æ¨¡å¼å¼€å¯, æ­¤æ—¶ä»æœåŠ¡å™¨ä¼ æ¥çš„ç¾¤èŠæ¶ˆæ¯åªä¼šè¢«æ·»åŠ åˆ°å†å²æ¶ˆæ¯å­—ç¬¦ä¸²
+	 * è€Œä¸ä¼šè¢«æ·»åŠ åˆ°çª—å£ä¸­ åªæœ‰ç§èŠå¯¹è±¡çš„æ¶ˆæ¯æ‰ä¼šè¢«æ·»åŠ åˆ°çª—å£ä¸­
 	 * 
 	 * @param label
-	 *            ·¢ËÍÕß/½ÓÊÕÕß/·¢ËÍÊ±¼ä ±êÇ©
+	 *            å‘é€è€…/æ¥æ”¶è€…/å‘é€æ—¶é—´ æ ‡ç­¾
 	 * @param msg
-	 *            ÒªÌí¼Óµ½ÏûÏ¢¼ÇÂ¼µÄ×Ö·û´®
-	 * @param incomingPic ÍâÀ´Í¼Æ¬
+	 *            è¦æ·»åŠ åˆ°æ¶ˆæ¯è®°å½•çš„å­—ç¬¦ä¸²
+	 * @param incomingPic å¤–æ¥å›¾ç‰‡
 	 * @param visible
-	 *            ÊÇ·ñÒªÌí¼Óµ½ÀúÊ·ÏûÏ¢´°¿ÚÖĞ(¿É¼û)
+	 *            æ˜¯å¦è¦æ·»åŠ åˆ°å†å²æ¶ˆæ¯çª—å£ä¸­(å¯è§)
 	 * @param isFromMe
-	 *            ÊÇ·ñÊÇ×Ô¼ºÏòÍâ·¢ËÍµÄÏûÏ¢
+	 *            æ˜¯å¦æ˜¯è‡ªå·±å‘å¤–å‘é€çš„æ¶ˆæ¯
 	 * 
-	 * Ô­À´Õâ¸öº¯ÊıµÄ¹¦ÄÜÊÇ½«ÏûÏ¢ÊäÈë¿òµÄ×Ö·û´®²åÈëµ½ÀúÊ·ÏûÏ¢´°¿Ú, ÏÔÈ»ÕâÊÇ²»¹»µÄ.
-	 * Ìí¼Ó²ÎÊıºó,´Ó·şÎñÆ÷½ÓÊÜµ½µÄÀúÊ·ÏûÏ¢¿ÉÒÔÍ¨¹ıµ÷ÓÃÕâ¸öº¯ÊıÀ´²åÈëµ½ÀúÊ·ÏûÏ¢´°¿Ú.
-	 * ¼òÑÔÖ®,ÔöÇ¿ÁËÕâ¸öº¯ÊıµÄÍ¨ÓÃĞÔ.½«ÏûÏ¢Ìí¼Óµ½ÏûÏ¢¼ÇÂ¼µÄ¹¦ÄÜ´ÓÖĞÒÆ³ö.
+	 * åŸæ¥è¿™ä¸ªå‡½æ•°çš„åŠŸèƒ½æ˜¯å°†æ¶ˆæ¯è¾“å…¥æ¡†çš„å­—ç¬¦ä¸²æ’å…¥åˆ°å†å²æ¶ˆæ¯çª—å£, æ˜¾ç„¶è¿™æ˜¯ä¸å¤Ÿçš„.
+	 * æ·»åŠ å‚æ•°å,ä»æœåŠ¡å™¨æ¥å—åˆ°çš„å†å²æ¶ˆæ¯å¯ä»¥é€šè¿‡è°ƒç”¨è¿™ä¸ªå‡½æ•°æ¥æ’å…¥åˆ°å†å²æ¶ˆæ¯çª—å£.
+	 * ç®€è¨€ä¹‹,å¢å¼ºäº†è¿™ä¸ªå‡½æ•°çš„é€šç”¨æ€§.å°†æ¶ˆæ¯æ·»åŠ åˆ°æ¶ˆæ¯è®°å½•çš„åŠŸèƒ½ä»ä¸­ç§»å‡º.
 	 */
 	public void appendToHMsg(String label, String msg, ImageIcon incomingPic, boolean visible,
 			boolean isFromMe) {
@@ -648,19 +648,19 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		// System.out.println("msg_buf :" + msg_buf);
 
 		// playAudio();
-		// Èç¹ûÊÇ½«×Ô¼ºµÄÏûÏ¢Ìí¼Óµ½´°¿ÚÔòÎªÂÌ±êÇ©, ·ñÔòÎªÀ¶É«.
+		// å¦‚æœæ˜¯å°†è‡ªå·±çš„æ¶ˆæ¯æ·»åŠ åˆ°çª—å£åˆ™ä¸ºç»¿æ ‡ç­¾, å¦åˆ™ä¸ºè“è‰².
 		Style labelStyle = isFromMe ? green : blue;
 
 		/**
-		 * ½«ÏûÏ¢Ìí¼Óµ½ÏûÏ¢¼ÇÂ¼
+		 * å°†æ¶ˆæ¯æ·»åŠ åˆ°æ¶ˆæ¯è®°å½•
 		 */
 		historymsg_save += (label_buf + "\n");
 		
 		/**
-		 * ÊÇ·ñÊÇÉÁÆÁÕñ¶¯ÏûÏ¢
+		 * æ˜¯å¦æ˜¯é—ªå±æŒ¯åŠ¨æ¶ˆæ¯
 		 */
 		if (msg != null && msg.equals(shakeMsg)) {
-			// Ê¹ÓÃ»ÒÉ«±êÇ©
+			// ä½¿ç”¨ç°è‰²æ ‡ç­¾
 			labelStyle = gray;
 
 			DialogEarthquakeCenter dec = new DialogEarthquakeCenter(parent);
@@ -679,14 +679,14 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		}
 
 		/**
-		 * if ÅĞ¶ÏÊÇ·ñÓ¦¸ÃÌí¼Ó´ËÏûÏ¢µ½ÀúÊ·ÏûÏ¢´°¿Ú
+		 * if åˆ¤æ–­æ˜¯å¦åº”è¯¥æ·»åŠ æ­¤æ¶ˆæ¯åˆ°å†å²æ¶ˆæ¯çª—å£
 		 */
-		if (visible)// Ó¦¸ÃÌí¼Ó´ËÏûÏ¢µ½ÀúÊ·ÏûÏ¢´°¿Ú
+		if (visible)// åº”è¯¥æ·»åŠ æ­¤æ¶ˆæ¯åˆ°å†å²æ¶ˆæ¯çª—å£
 		{
 			tp_historymsg.setEditable(true);
 
-			// ÏûÏ¢·¢ËÍÈË/¶ÔÏó/·¢ËÍÊ±¼ä ĞÅÏ¢
-			// ²åÈëĞÅÏ¢±êÇ©
+			// æ¶ˆæ¯å‘é€äºº/å¯¹è±¡/å‘é€æ—¶é—´ ä¿¡æ¯
+			// æ’å…¥ä¿¡æ¯æ ‡ç­¾
 			tp_historymsg.setCaretPosition(styledDoc.getLength());
 			styledDoc.setLogicalStyle(tp_historymsg.getCaretPosition(),
 					labelStyle);
@@ -696,50 +696,50 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 			if(msg != null && !msg.equals("")){
 				StringBuffer msg_buf = new StringBuffer(msg);
 				historymsg_save += (msg_buf + "\n");
-				//ÓÃ»§·¢ËÍ¿ÕÏûÏ¢ÒÑ±»½ûÖ¹, ËùÒÔÈç¹û·¢¹ıÀ´µÄÊÇ¿ÕÏûÏ¢,
-				//ÔòËµÃ÷·¢ËÍ¹ıÀ´µÄÊÇÍ¼Æ¬.
-				//ËùÒÔµ±msg²»Îª¿ÕµÄÊ±ºòĞèÒªÏÔÊ¾ÏûÏ¢
+				//ç”¨æˆ·å‘é€ç©ºæ¶ˆæ¯å·²è¢«ç¦æ­¢, æ‰€ä»¥å¦‚æœå‘è¿‡æ¥çš„æ˜¯ç©ºæ¶ˆæ¯,
+				//åˆ™è¯´æ˜å‘é€è¿‡æ¥çš„æ˜¯å›¾ç‰‡.
+				//æ‰€ä»¥å½“msgä¸ä¸ºç©ºçš„æ—¶å€™éœ€è¦æ˜¾ç¤ºæ¶ˆæ¯
 				System.out.println("msg :" + msg);
 	
 				tp_historymsg.setCaretPosition(styledDoc.getLength());// !!!
 				styledDoc.setLogicalStyle(tp_historymsg.getCaretPosition(), bold);
 				// *****************************************************
 				/**
-				 * ½«×Ö·û´®±íÇéÍ¼Æ¬»¯,È»ºó²åÈëHMsgÖĞ Í¬Ê±Î¬»¤Ò»¸ö×Ö·û´®HMsg.
+				 * å°†å­—ç¬¦ä¸²è¡¨æƒ…å›¾ç‰‡åŒ–,ç„¶åæ’å…¥HMsgä¸­ åŒæ—¶ç»´æŠ¤ä¸€ä¸ªå­—ç¬¦ä¸²HMsg.
 				 */
 				int position = 0, caretPos = 0;
 	
-				// ´Óposition¿ªÊ¼Ñ°ÕÒ×Ö·û´®"[F:",ÕÒµ½·µ»Ø'['µÄÎ»ÖÃ,ÕÒ²»µ½"[F:"·µ»Ø-1
+				// ä»positionå¼€å§‹å¯»æ‰¾å­—ç¬¦ä¸²"[F:",æ‰¾åˆ°è¿”å›'['çš„ä½ç½®,æ‰¾ä¸åˆ°"[F:"è¿”å›-1
 				for (; (caretPos = msg_buf.indexOf("[F:", position)) >= 0;) {
 					// System.out.println("caretPos : " + caretPos);
 					// StringBuffer msgpiece = new
 					// StringBuffer(msg_buf.substring(caretPos, caretPos + 6));
 					// System.out.println("msgpiece : " + msgpiece);
 	
-					// 7: ´ú±í±íÇéµÄ×Ö·û´®µÄ³¤¶È
+					// 7: ä»£è¡¨è¡¨æƒ…çš„å­—ç¬¦ä¸²çš„é•¿åº¦
 					if (msg_buf.substring(caretPos, caretPos + 7).matches(
-							"\\[F\\:[0-9][0-9][0-9]\\]")) {// Èç¹û·ûºÏÕıÔò±í´ïÊ½
-						// ²åÈë´Ópositionµ½caretPosÇ°Ò»¸ö×Ö·ûµÄ×Ó×Ö·û´®
+							"\\[F\\:[0-9][0-9][0-9]\\]")) {// å¦‚æœç¬¦åˆæ­£åˆ™è¡¨è¾¾å¼
+						// æ’å…¥ä»positionåˆ°caretPoså‰ä¸€ä¸ªå­—ç¬¦çš„å­å­—ç¬¦ä¸²
 						tp_historymsg.setCaretPosition(styledDoc.getLength());
 						tp_historymsg.replaceSelection(msg_buf.substring(position,
 								caretPos));
-						// ²åÈë½ÓÏÂÀ´µÄ³¤¶ÈÎª7µÄ×Ó×Ö·û´®Ëù±íÊ¾µÄ±íÇéÍ¼Æ¬
+						// æ’å…¥æ¥ä¸‹æ¥çš„é•¿åº¦ä¸º7çš„å­å­—ç¬¦ä¸²æ‰€è¡¨ç¤ºçš„è¡¨æƒ…å›¾ç‰‡
 						tp_historymsg.setCaretPosition(styledDoc.getLength());
 						int faceindex = Integer.parseInt(msg_buf.substring(
 								caretPos + 3, caretPos + 6));
 						tp_historymsg.insertIcon(getImageIconFace(faceindex));
-						// ºóÒÆposition
+						// åç§»position
 						position = caretPos + 7;
-					} else {// Èç¹û²»·ûºÏÕıÔò±í´ïÊ½
-						// ²åÈë´Ópositionµ½caretPos+3Ç°Ò»¸ö×Ö·ûµÄ×Ó×Ö·û´®
+					} else {// å¦‚æœä¸ç¬¦åˆæ­£åˆ™è¡¨è¾¾å¼
+						// æ’å…¥ä»positionåˆ°caretPos+3å‰ä¸€ä¸ªå­—ç¬¦çš„å­å­—ç¬¦ä¸²
 						tp_historymsg.setCaretPosition(styledDoc.getLength());
 						tp_historymsg.replaceSelection(msg_buf.substring(position,
 								caretPos + 3));
-						// ºóÒÆposition
+						// åç§»position
 						position = caretPos + 3;
 					}
 				}
-				// ²åÈëÊ£Óà×Ó×Ö·û´®
+				// æ’å…¥å‰©ä½™å­å­—ç¬¦ä¸²
 				tp_historymsg.setCaretPosition(styledDoc.getLength());
 				tp_historymsg.replaceSelection(msg_buf.substring(position) + '\n');
 			}
@@ -752,64 +752,64 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 			// System.out.println("msg_buf.substring(position) :" +
 			// msg_buf.substring(position));
 			// *****************************************************
-			tp_historymsg.setEditable(false);// ÖØĞÂÉèÎª²»¿É±à¼­
+			tp_historymsg.setEditable(false);// é‡æ–°è®¾ä¸ºä¸å¯ç¼–è¾‘
 		}
 		this.repaint();
 	}
 
 	/**
-	 * Ìí¼Ó±íÇéÍ¼Æ¬µ½msgÊäÈë´°¿ÚÖĞ
+	 * æ·»åŠ è¡¨æƒ…å›¾ç‰‡åˆ°msgè¾“å…¥çª—å£ä¸­
 	 * 
 	 * @param selectedFace
-	 *            ±»Ñ¡ÔñµÄÍ¼Æ¬µÄË÷Òı
+	 *            è¢«é€‰æ‹©çš„å›¾ç‰‡çš„ç´¢å¼•
 	 */
 	private void appendFaceToInputPane(int selectedFace) {
 		tp_input.setEditable(true);
 		/**
-		 * ÒÔ²åÈë×Ö·û´®´úÌæÖ±½Ó²åÈëÍ¼Æ¬
+		 * ä»¥æ’å…¥å­—ç¬¦ä¸²ä»£æ›¿ç›´æ¥æ’å…¥å›¾ç‰‡
 		 */
 		// System.out.println("fmNum.format(selectedFace) :" +
 		tp_input.replaceSelection("[F:" + fmNum.format(selectedFace) + ']');
 	}
 
 	/**
-	 * Ìí¼Ó±íÇéÍ¼Æ¬µ½msgÊäÈë´°¿ÚÖĞ
+	 * æ·»åŠ è¡¨æƒ…å›¾ç‰‡åˆ°msgè¾“å…¥çª—å£ä¸­
 	 * 
 	 * @param selectedFace
-	 *            ±»Ñ¡ÔñµÄÍ¼Æ¬
+	 *            è¢«é€‰æ‹©çš„å›¾ç‰‡
 	 */
 	@SuppressWarnings("unused")
 	private void appendFaceToInputPane(ImageIcon selectedFace) {
 		tp_input.setEditable(true);
 		/**
-		 * Ö±½Ó²åÈëÍ¼Æ¬
+		 * ç›´æ¥æ’å…¥å›¾ç‰‡
 		 */
 		tp_input.insertIcon(selectedFace);
 	}
 
 	/**
-	 * »ñÈ¡ÀúÊ·ÏûÏ¢
+	 * è·å–å†å²æ¶ˆæ¯
 	 * 
 	 * @return history messages
 	 */
 	public String getHistoryMsgs() {
 		// return tp_hmsg.getText();
-		return historymsg_save;// ·µ»ØËùÎ¬»¤µÄ°æ±¾(º¬ÓĞ×Ö·û´®»¯±íÇé)
+		return historymsg_save;// è¿”å›æ‰€ç»´æŠ¤çš„ç‰ˆæœ¬(å«æœ‰å­—ç¬¦ä¸²åŒ–è¡¨æƒ…)
 	}
 
 	/**
-	 * ½«ÓÃ»§ÊäÈëµÄÏûÏ¢·¢ËÍµ½ÀúÊ·ÏûÏ¢´°¿Ú (»¹ÓĞ,Òª·¢ËÍµ½·şÎñÆ÷)
+	 * å°†ç”¨æˆ·è¾“å…¥çš„æ¶ˆæ¯å‘é€åˆ°å†å²æ¶ˆæ¯çª—å£ (è¿˜æœ‰,è¦å‘é€åˆ°æœåŠ¡å™¨)
 	 */
 	private void sendMessage() {
 		Thread sender = new Thread(new Runnable(){
 			public void run() {
 				//System.out.println("sendMessage(): >" + tp_input.getText() + "<");
 				String msg = tp_input.getText();
-				tp_input.setText("");// ÊäÈë¿òÇå¿Õ
+				tp_input.setText("");// è¾“å…¥æ¡†æ¸…ç©º
 				
 				if(msg.equals("")){
 					System.out.println("You're trying to send a empty message, it's not suggested.");
-					//TODO ¿ÉÒÔ³¢ÊÔµ¯³öÆøÅİÌáÊ¾
+					//TODO å¯ä»¥å°è¯•å¼¹å‡ºæ°”æ³¡æç¤º
 					final String BALLOON_TEXT = "<html><center>"
 			            + "You're trying to send an empty message<br>"
 			            + "which is not suggested/supported.<br>"
@@ -820,7 +820,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 					return;
 				}
 				/**
-				 * ¸ñÊ½»¯ÈÕÆÚ
+				 * æ ¼å¼åŒ–æ—¥æœŸ
 				 */
 				Date date = new Date();
 				// fmDate = new SimpleDateFormat("yyyy/MM/dd E HH:mm:ss");
@@ -829,14 +829,14 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 				appendToHMsg(label, msg, null, true, true);
 				
 				/**
-				 * Ïò¶Ô·½·¢ËÍÏûÏ¢
+				 * å‘å¯¹æ–¹å‘é€æ¶ˆæ¯
 				 */
 				StringBuffer strbuf_msg = new StringBuffer(msg);
 				int caretPos = -1;
 
-				// ´Óposition¿ªÊ¼Ñ°ÕÒ×Ö·û´®"[F:",ÕÒµ½·µ»Ø'['µÄÎ»ÖÃ,ÕÒ²»µ½"[F:"·µ»Ø-1
+				// ä»positionå¼€å§‹å¯»æ‰¾å­—ç¬¦ä¸²"[F:",æ‰¾åˆ°è¿”å›'['çš„ä½ç½®,æ‰¾ä¸åˆ°"[F:"è¿”å›-1
 				for (; (caretPos = strbuf_msg.indexOf("\r\n", caretPos + 1)) >= 0;) {
-					// °Ñ"\n"Ìæ»»Îª"^n"
+					// æŠŠ"\n"æ›¿æ¢ä¸º"^n"
 					strbuf_msg.replace(caretPos, caretPos + 2, "^n");
 				}
 				System.out.println("strbuf_msg :" + strbuf_msg);
@@ -853,7 +853,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 
 	private void sendAShakeEmotion() {
 		/**
-		 * ¸ñÊ½»¯ÈÕÆÚ
+		 * æ ¼å¼åŒ–æ—¥æœŸ
 		 */
 		Date date = new Date();
 		// fmDate = new SimpleDateFormat("yyyy/MM/dd E HH:mm:ss");
@@ -863,7 +863,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		//appendToHMsg(label, tp_input.getText(), null, true, true);
 		appendToHMsg(label, null, null, true, true);
 		/**
-		 * Ïò¶Ô·½·¢ËÍÏûÏ¢ 999:±íÊ¾±íÇéË÷Òı
+		 * å‘å¯¹æ–¹å‘é€æ¶ˆæ¯ 999:è¡¨ç¤ºè¡¨æƒ…ç´¢å¼•
 		 */
 		boolean succeed = parent.SendMsg(shakeMsg);
 		if(!succeed){
@@ -873,11 +873,11 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	}
 
 	/**
-	 * ¸ù¾İË÷Òı»ñÈ¡±íÇéÍ¼Æ¬
+	 * æ ¹æ®ç´¢å¼•è·å–è¡¨æƒ…å›¾ç‰‡
 	 * 
 	 * @param index
-	 *            Í¼Æ¬Ë÷Òı
-	 * @return ±íÇéÍ¼Æ¬
+	 *            å›¾ç‰‡ç´¢å¼•
+	 * @return è¡¨æƒ…å›¾ç‰‡
 	 */
 	private ImageIcon getImageIconFace(int index) {
 		if (index < 105)
@@ -888,7 +888,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	}
 
 	/**
-	 * (°´Å¥)ÊÂ¼şÏìÓ¦
+	 * (æŒ‰é’®)äº‹ä»¶å“åº”
 	 */
 	public void actionPerformed(ActionEvent e) {
 		JButton srcButton = (JButton) e.getSource();
@@ -898,13 +898,13 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 			sendMessage();
 		} else if (srcButton.getActionCommand().equals("Emotion")) {
 			/**
-			 * ²åÈë±íÇé: Ä¿Ç°Ö»ÄÜ²åÈëµ½ÊäÈë¿òÖĞ, ²åÈëµ½ÀúÊ·ÏûÏ¢¿òÖĞ»¹Ã»ÓĞÊµÏÖ. Èç¹ûÃ»ÓĞÖ±½Ó¿½±´µÄ·½·¨, ÄÇÃ´Ö»ºÃÓÃÁíÍâÒ»¸ö·½·¨:
-			 * ¾ÍÊÇ°Ñ±íÇéÓÃ×Ö·û±íÊ¾,ÔÚ²åÈëµ½ÀúÊ·ÏûÏ¢¿òÖĞÊ±½øĞĞ×Ö·û¹ıÂË ²»¹ıÕâÑù±È½ÏÂé·³
+			 * æ’å…¥è¡¨æƒ…: ç›®å‰åªèƒ½æ’å…¥åˆ°è¾“å…¥æ¡†ä¸­, æ’å…¥åˆ°å†å²æ¶ˆæ¯æ¡†ä¸­è¿˜æ²¡æœ‰å®ç°. å¦‚æœæ²¡æœ‰ç›´æ¥æ‹·è´çš„æ–¹æ³•, é‚£ä¹ˆåªå¥½ç”¨å¦å¤–ä¸€ä¸ªæ–¹æ³•:
+			 * å°±æ˜¯æŠŠè¡¨æƒ…ç”¨å­—ç¬¦è¡¨ç¤º,åœ¨æ’å…¥åˆ°å†å²æ¶ˆæ¯æ¡†ä¸­æ—¶è¿›è¡Œå­—ç¬¦è¿‡æ»¤ ä¸è¿‡è¿™æ ·æ¯”è¾ƒéº»çƒ¦
 			 * 
-			 * ...»¹²»ÊÇÌ«Âé·³,ÒÑ½â¾ö,ÓÃÉá³µ±£Ë§µÄ°ì·¨
+			 * ...è¿˜ä¸æ˜¯å¤ªéº»çƒ¦,å·²è§£å†³,ç”¨èˆè½¦ä¿å¸…çš„åŠæ³•
 			 */
 			System.out.println("You clicked the button : InsertImage");
-			// ÏÔÊ¾±íÇéÑ¡Ôñ´°¿Ú
+			// æ˜¾ç¤ºè¡¨æƒ…é€‰æ‹©çª—å£
 			selFace.setLocationRelativeTo(b_emotion);
 			selFace.setVisible(true);
 
@@ -922,11 +922,11 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 			 */
 		} else if (srcButton.getActionCommand().equals("Shake")) {
 			DialogEarthquakeCenter dec = new DialogEarthquakeCenter(parent);
-			dec.startShake();// ¶Ô»°¿ò±ØĞësetModal (false)²Å¿ÉÒÔ¶¶¶¯, ·ñÔò²»ĞĞ
-			//TODO ÕâÀïÓ¦¸Ã²¥·ÅÉùÒô, µ÷ÊÔÊ±½ûÖ¹, ·ÀÖ¹ÖØµş, ³åÍ».
+			dec.startShake();// å¯¹è¯æ¡†å¿…é¡»setModal (false)æ‰å¯ä»¥æŠ–åŠ¨, å¦åˆ™ä¸è¡Œ
+			//TODO è¿™é‡Œåº”è¯¥æ’­æ”¾å£°éŸ³, è°ƒè¯•æ—¶ç¦æ­¢, é˜²æ­¢é‡å , å†²çª.
 			// playShakeAudio();
 			/**
-			 * ·¢ËÍÒ»¸öÉÁÆÁÕñ¶¯
+			 * å‘é€ä¸€ä¸ªé—ªå±æŒ¯åŠ¨
 			 */
 			sendAShakeEmotion();
 		} else if (srcButton.getActionCommand().equals("SendPic")) {
@@ -934,11 +934,11 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		}  else if (srcButton.getActionCommand().equals("SendFile")) {
 			
 		} else if (srcButton.getActionCommand().equals("Snapshot")) {
-			// Î»ÖÃÓ¦¸ÃÊÇÏà¶ÔÓÚJButtonµÄÎ»ÖÃ
+			// ä½ç½®åº”è¯¥æ˜¯ç›¸å¯¹äºJButtonçš„ä½ç½®
 			//menuSnap.show((Component) e.getSource(), 0, 26);
 			doSnap.doClick();
 		} else if (srcButton.getActionCommand().equals("SnapshotConfig")) {
-			// Î»ÖÃÓ¦¸ÃÊÇÏà¶ÔÓÚJButtonµÄÎ»ÖÃ
+			// ä½ç½®åº”è¯¥æ˜¯ç›¸å¯¹äºJButtonçš„ä½ç½®
 			menuSnap.show((Component) e.getSource(), 0, 26);
 		}
 	}

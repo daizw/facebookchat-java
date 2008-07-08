@@ -65,4 +65,3 @@ public class FacebookBuddyList {
 		System.out.println("OnlineStatus:\t" + user.onlineStatus);
 	}
 }
-
