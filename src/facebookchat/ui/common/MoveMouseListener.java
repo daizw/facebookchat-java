@@ -24,19 +24,19 @@ public class MoveMouseListener implements MouseListener, MouseMotionListener {
 
 	public void mouseClicked(MouseEvent me) {
 		// TODO Auto-generated method stub
-		if(me.getClickCount() == 2)//Ë«»÷
+		if(me.getClickCount() == 2)//åŒå‡»
 		{
 			int state = frame.getExtendedState();
 
-			// ÉèÖÃÍ¼±ê»¯(iconifies)Î»
+			// è®¾ç½®å›¾æ ‡åŒ–(iconifies)ä½
 			// Set the iconified bit
 			switch (state) {
-			// Èç¹ûµ±Ç°ÊÇ×î´ó×´Ì¬, ÔòÕı³£»¯
+			// å¦‚æœå½“å‰æ˜¯æœ€å¤§çŠ¶æ€, åˆ™æ­£å¸¸åŒ–
 			case JFrame.MAXIMIZED_BOTH:
 				state &= JFrame.NORMAL;// '&', not '|'
 				frame.resetMaximizeIcon();
 				break;
-			// Èç¹ûµ±Ç°²»ÊÇ×î´ó×´Ì¬, Ôò×î´ó»¯
+			// å¦‚æœå½“å‰ä¸æ˜¯æœ€å¤§çŠ¶æ€, åˆ™æœ€å¤§åŒ–
 			default:
 				state |= JFrame.MAXIMIZED_BOTH;
 				frame.resetNormalizeIcon();
@@ -44,7 +44,7 @@ public class MoveMouseListener implements MouseListener, MouseMotionListener {
 				//parent.setBounds(0, 0, dim.width, dim.height );
 				break;
 			}
-			// ÉèÖÃ´°¿Ú×´Ì¬
+			// è®¾ç½®çª—å£çŠ¶æ€
 			frame.setExtendedState(state);
 		}		
 	}

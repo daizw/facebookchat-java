@@ -41,37 +41,37 @@ public class LoginDialog extends JDialog implements ActionListener{
 	public static final String CANCELCMD = "CANCEL";
 	
 	/**
-	 * ²Ù×÷ÏµÍ³µ×²¿ÈÎÎñÀ¸¸ß¶È
+	 * æ“ä½œç³»ç»Ÿåº•éƒ¨ä»»åŠ¡æ é«˜åº¦
 	 */
 	public static final int DOCKHEIGHT = 30;
 	
 	//JLabel l_logo = new JLabel();
 	/**
-	 * ÊäÈëÃæ°å
+	 * è¾“å…¥é¢æ¿
 	 */
 	JPanel p_input = new JPanel();
 	/**
-	 * ÓÃ»§ÃûJPanel
+	 * ç”¨æˆ·åJPanel
 	 */
 	JPanel p_name = new JPanel();
 	/**
-	 * ÃÜÂëJPanel
+	 * å¯†ç JPanel
 	 */
 	JPanel p_pwd = new JPanel();
 	/**
-	 * ÓÃ»§ÃûJLabel
+	 * ç”¨æˆ·åJLabel
 	 */
 	JLabel l_name = new JLabel("Email:");
 	/**
-	 * ÃÜÂëJLabel
+	 * å¯†ç JLabel
 	 */
 	JLabel l_pwd = new JLabel("Password:");
 	/**
-	 * ÓÃ»§ÃûJTextField
+	 * ç”¨æˆ·åJTextField
 	 */
 	final JTextField t_name = new JTextField(18);
 	/**
-	 * ÃÜÂëJPasswordField
+	 * å¯†ç JPasswordField
 	 */
 	final JPasswordField t_pwd = new JPasswordField("", 18);
 	
@@ -83,7 +83,7 @@ public class LoginDialog extends JDialog implements ActionListener{
 	char[] password;*/
 	
 	/**
-	 * ÓÃÀ´»ñÈ¡Í¼Æ¬
+	 * ç”¨æ¥è·å–å›¾ç‰‡
 	 */
 	private Toolkit tk;
 	private Image background;
@@ -102,7 +102,7 @@ public class LoginDialog extends JDialog implements ActionListener{
 		
 		this.prepareImage(background, rootpane);
 		
-		//¶ÔÓÚ¶Ô»°¿òËÆºõÃ»ÓÃ...
+		//å¯¹äºå¯¹è¯æ¡†ä¼¼ä¹æ²¡ç”¨...
 		//this.setIconImage(img_logo);
 		
 		rootpane = new JImgPanel(background);
@@ -113,7 +113,7 @@ public class LoginDialog extends JDialog implements ActionListener{
 		
 		t_name.setToolTipText("Input your name");
 		t_pwd.setToolTipText("Input your password");
-		t_pwd.setEchoChar('¡ñ');
+		t_pwd.setEchoChar('â—');
 		
 		p_name.add(l_name);
 		p_name.add(t_name);
@@ -129,7 +129,7 @@ public class LoginDialog extends JDialog implements ActionListener{
 		p_input.add(p_pwd);
 		p_input.setOpaque(false);
 		/**
-		 * Ìí¼Ó¿ì½İ¼ü
+		 * æ·»åŠ å¿«æ·é”®
 		 */
 		b_login.setMnemonic('L');
 		b_cancel.setMnemonic('C');
@@ -139,11 +139,11 @@ public class LoginDialog extends JDialog implements ActionListener{
 		p_buttons.add(b_cancel);
 		p_buttons.setOpaque(false);
 
-		//µÇÂ¼
+		//ç™»å½•
 		b_login.addActionListener(this);
 
-		//×¢²á:1.·µ»ØÖ÷º¯Êı,¹Ø±Õ±¾´°¿Ú->ÏÔÊ¾×¢²á´°¿Ú
-		//       2.ÏÔÊ¾×¢²á´°¿Ú(×¢²áºó·µ»ØµÇÂ¼´°¿Ú)
+		//æ³¨å†Œ:1.è¿”å›ä¸»å‡½æ•°,å…³é—­æœ¬çª—å£->æ˜¾ç¤ºæ³¨å†Œçª—å£
+		//       2.æ˜¾ç¤ºæ³¨å†Œçª—å£(æ³¨å†Œåè¿”å›ç™»å½•çª—å£)
 		b_cancel.addActionListener(this);
 
 		//rootpane.add(l_logo, BorderLayout.NORTH);
@@ -185,9 +185,9 @@ public class LoginDialog extends JDialog implements ActionListener{
     }
     
     /**
-	 * ÉèÖÃ²»Í¸Ã÷¶È
+	 * è®¾ç½®ä¸é€æ˜åº¦
 	 * 
-	 * @return ÊÇ·ñÉèÖÃ³É¹¦
+	 * @return æ˜¯å¦è®¾ç½®æˆåŠŸ
 	 */
 	public boolean setOpacity(float alpha) {
 		if (WindowUtils.isWindowAlphaSupported()) {
@@ -238,5 +238,3 @@ public class LoginDialog extends JDialog implements ActionListener{
     	this.dispose();
 	}
 }
-
-	

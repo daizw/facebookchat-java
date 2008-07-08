@@ -18,7 +18,7 @@ public class AboutDialog extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * ÏÔÊ¾¹ØÓÚĞÅÏ¢JEditorPane
+	 * æ˜¾ç¤ºå…³äºä¿¡æ¯JEditorPane
 	 */
 	private JEditorPane aboutDoc;
 
@@ -37,9 +37,9 @@ public class AboutDialog extends JDialog {
 			aboutDoc.setPage(url);
 		} catch (IOException e1) {
 		}
-		aboutDoc.setEditable(false);// ÉèÖÃÎª²»¿É±à¼­ÒÔÊ¹³¬Á´½Ó¼¤»î
+		aboutDoc.setEditable(false);// è®¾ç½®ä¸ºä¸å¯ç¼–è¾‘ä»¥ä½¿è¶…é“¾æ¥æ¿€æ´»
 		/**
-		 * Ìí¼Ó³¬Á´½Ó¼àÌıÆ÷
+		 * æ·»åŠ è¶…é“¾æ¥ç›‘å¬å™¨
 		 */
 		aboutDoc.addHyperlinkListener(new HyperlinkListener() {
 			public void hyperlinkUpdate(HyperlinkEvent e_m_hylink) {

@@ -3,12 +3,12 @@ package facebookchat.common;
 import javax.swing.ImageIcon;
 
 public enum OnlineStatus {
-	ONLINE(),//在线
-	OFFLINE(),//离线
-	INVISIBLE(),//隐身
-	UNAVAILABLE(),//离开
-	BUSY(),//忙碌
-	UNKNOWN;//未知
+	ONLINE(),//鍦ㄧ嚎
+	OFFLINE(),//绂荤嚎
+	INVISIBLE(),//闅愯韩
+	UNAVAILABLE(),//绂诲紑
+	BUSY(),//蹇欑
+	UNKNOWN;//鏈煡
 	
 	public static final String OnlineStr = "Online";
 	public static final String OfflineStr = "Offline";

@@ -1,7 +1,7 @@
 /*
  * ScreenCapturer.java
  *
- * Created on 2007Äê8ÔÂ30ÈÕ, ÏÂÎç12:46
+ * Created on 2007å¹´8æœˆ30æ—¥, ä¸‹åˆ12:46
  *
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
@@ -53,7 +53,7 @@ import javax.swing.SwingUtilities;
 
 import facebookchat.common.SystemPath;
 
-// Ò»¸öÔİÊ±Àà£¬ÓÃÓÚÏÔÊ¾µ±Ç°µÄÆÁÄ»Í¼Ïñ
+// ä¸€ä¸ªæš‚æ—¶ç±»ï¼Œç”¨äºæ˜¾ç¤ºå½“å‰çš„å±å¹•å›¾åƒ
 public class ScreenCapturer extends JPanel implements MouseListener,
 		MouseMotionListener {
 	/**
@@ -65,26 +65,26 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 	private int width, height;
 	private int startX, startY, endX, endY, tempX, tempY;
 	private JDialog fakewindow;
-	private Rectangle select = new Rectangle(0, 0, 0, 0);// ±íÊ¾Ñ¡ÖĞµÄÇøÓò
-	private Cursor cs = new Cursor(Cursor.CROSSHAIR_CURSOR);// ±íÊ¾Ò»°ãÇé¿öÏÂµÄÊó±ê×´Ì¬
-	private States current = States.DEFAULT;// ±íÊ¾µ±Ç°µÄ±à¼­×´Ì¬
-	private Rectangle[] rec;// ±íÊ¾°Ë¸ö±à¼­µãµÄÇøÓò
-	// ÏÂÃæËÄ¸ö³£Á¿,·Ö±ğ±íÊ¾Ë­ÊÇ±»Ñ¡ÖĞµÄÄÇÌõÏßÉÏµÄ¶Ëµã
+	private Rectangle select = new Rectangle(0, 0, 0, 0);// è¡¨ç¤ºé€‰ä¸­çš„åŒºåŸŸ
+	private Cursor cs = new Cursor(Cursor.CROSSHAIR_CURSOR);// è¡¨ç¤ºä¸€èˆ¬æƒ…å†µä¸‹çš„é¼ æ ‡çŠ¶æ€
+	private States current = States.DEFAULT;// è¡¨ç¤ºå½“å‰çš„ç¼–è¾‘çŠ¶æ€
+	private Rectangle[] rec;// è¡¨ç¤ºå…«ä¸ªç¼–è¾‘ç‚¹çš„åŒºåŸŸ
+	// ä¸‹é¢å››ä¸ªå¸¸é‡,åˆ†åˆ«è¡¨ç¤ºè°æ˜¯è¢«é€‰ä¸­çš„é‚£æ¡çº¿ä¸Šçš„ç«¯ç‚¹
 	public static final int START_X = 1;
 	public static final int START_Y = 2;
 	public static final int END_X = 3;
 	public static final int END_Y = 4;
-	private int currentX, currentY;// µ±Ç°±»Ñ¡ÖĞµÄXºÍY,Ö»ÓĞÕâÁ½¸öĞèÒª¸Ä±ä
-	private Point p = new Point();// µ±Ç°Êó±êÒÆµÄµØµã
-	private boolean showTip = true;// ÊÇ·ñÏÔÊ¾ÌáÊ¾.Èç¹ûÊó±ê×ó¼üÒ»°´,ÔòÌáÊ¾²»ÔÙÏÔÁË
+	private int currentX, currentY;// å½“å‰è¢«é€‰ä¸­çš„Xå’ŒY,åªæœ‰è¿™ä¸¤ä¸ªéœ€è¦æ”¹å˜
+	private Point p = new Point();// å½“å‰é¼ æ ‡ç§»çš„åœ°ç‚¹
+	private boolean showTip = true;// æ˜¯å¦æ˜¾ç¤ºæç¤º.å¦‚æœé¼ æ ‡å·¦é”®ä¸€æŒ‰,åˆ™æç¤ºä¸å†æ˜¾äº†
 
-	//±ß½ç¹¤¾ßÌõ
+	//è¾¹ç•Œå·¥å…·æ¡
 	JPanel editPane = new JPanel();
 	JButton b_send = new JButton(new ImageIcon(SystemPath.BUTTONS_RESOURCE_PATH + "send.png"));
 	JButton b_copy = new JButton(new ImageIcon(SystemPath.BUTTONS_RESOURCE_PATH + "copy.png"));
 	JButton b_save = new JButton(new ImageIcon(SystemPath.BUTTONS_RESOURCE_PATH + "save.png"));
 	JButton b_cancel = new JButton(new ImageIcon(SystemPath.BUTTONS_RESOURCE_PATH + "cancel.png"));
-	// ÓÒ¼ü²Ëµ¥
+	// å³é”®èœå•
 	JPopupMenu menuSnap = new JPopupMenu();
 	JMenuItem send = new JMenuItem("Send");
 	JMenuItem copy = new JMenuItem("Copy");
@@ -133,7 +133,7 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 			public void actionPerformed(ActionEvent e) {
 				whatWeGet();
 				doCopy(get);
-				//getÇå¿Õ
+				//getæ¸…ç©º
 				get = null;
 			}
 			;
@@ -141,9 +141,9 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 		b_save.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				whatWeGet();
-				//ÎÄ¼ş±£´æ¶Ô»°¿ò
+				//æ–‡ä»¶ä¿å­˜å¯¹è¯æ¡†
 				doSave(get);
-				//getÇå¿Õ
+				//getæ¸…ç©º
 				get = null;
 			}
 			;
@@ -208,16 +208,16 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 			public void actionPerformed(ActionEvent e) {
 				whatWeGet();
 				doCopy(get);
-				//getÇå¿Õ
+				//getæ¸…ç©º
 				get = null;
 			}
 		});
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				whatWeGet();
-				//ÎÄ¼ş±£´æ¶Ô»°¿ò
+				//æ–‡ä»¶ä¿å­˜å¯¹è¯æ¡†
 				doSave(get);
-				//getÇå¿Õ
+				//getæ¸…ç©º
 				get = null;
 			}
 		});
@@ -248,7 +248,7 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 	public  void doSave(BufferedImage get){
         try{
             if(get==null){
-                JOptionPane.showMessageDialog(this,"Í¼Æ¬²»ÄÜÎª¿Õ!!","´íÎó",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,"å›¾ç‰‡ä¸èƒ½ä¸ºç©º!!","é”™è¯¯",JOptionPane.ERROR_MESSAGE);
                 return;
             }
             JFileChooser jfc=new JFileChooser(".");
@@ -291,21 +291,21 @@ public class ScreenCapturer extends JPanel implements MouseListener,
                     }
                 }
                 if(ImageIO.write(get,about,file)){
-                    JOptionPane.showMessageDialog(this,"±£´æ³É¹¦£¡");
+                    JOptionPane.showMessageDialog(this,"ä¿å­˜æˆåŠŸï¼");
                 } else
-                    JOptionPane.showMessageDialog(this,"±£´æÊ§°Ü£¡");
+                    JOptionPane.showMessageDialog(this,"ä¿å­˜å¤±è´¥ï¼");
             }
         } catch(Exception exe){
             exe.printStackTrace();
         }
     }
     /**
-     *¹«¹²µÄ´¦Àí°Ñµ±Ç°µÄÍ¼Æ¬¼ÓÈë¼ôÌû°åµÄ·½·¨
+     *å…¬å…±çš„å¤„ç†æŠŠå½“å‰çš„å›¾ç‰‡åŠ å…¥å‰ªå¸–æ¿çš„æ–¹æ³•
      */
     public void doCopy(final BufferedImage image){
         try{
             if(get==null){
-                JOptionPane.showMessageDialog(this,"Í¼Æ¬²»ÄÜÎª¿Õ!!","´íÎó",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,"å›¾ç‰‡ä¸èƒ½ä¸ºç©º!!","é”™è¯¯",JOptionPane.ERROR_MESSAGE);
                 return;
             }
             Transferable trans = new Transferable(){
@@ -323,10 +323,10 @@ public class ScreenCapturer extends JPanel implements MouseListener,
                 
             };
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(trans, null);
-            JOptionPane.showMessageDialog(this,"ÒÑ¸´ÖÆµ½ÏµÍ³Õ³Ìû°å!!");
+            JOptionPane.showMessageDialog(this,"å·²å¤åˆ¶åˆ°ç³»ç»Ÿç²˜å¸–æ¿!!");
         }catch(Exception exe){
             exe.printStackTrace();
-            JOptionPane.showMessageDialog(this,"¸´ÖÆµ½ÏµÍ³Õ³Ìû°å³ö´í!!","´íÎó",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"å¤åˆ¶åˆ°ç³»ç»Ÿç²˜å¸–æ¿å‡ºé”™!!","é”™è¯¯",JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -338,23 +338,23 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 	}
 
 	public void paintComponent(Graphics g) {
-		// »­±³¾°
+		// ç”»èƒŒæ™¯
 		g.drawImage(bi, 0, 0, width, height, this);
 		g.setColor(Color.BLUE.darker().darker());
-		// »­ËÄÌõÏß
+		// ç”»å››æ¡çº¿
 		g.drawLine(startX, startY, endX, startY);
 		g.drawLine(startX, endY, endX, endY);
 		g.drawLine(startX, startY, startX, endY);
 		g.drawLine(endX, startY, endX, endY);
 		int x = startX < endX ? startX : endX;
 		int y = startY < endY ? startY : endY;
-		// Ñ¡Çø
+		// é€‰åŒº
 		select = new Rectangle(x, y, Math.abs(endX - startX), Math.abs(endY
 				- startY));
-		// ÖĞµã
+		// ä¸­ç‚¹
 		int x1 = (startX + endX) / 2;
 		int y1 = (startY + endY) / 2;
-		// »­8¸öÊµĞÄĞ¡Õı·½ĞÎ, ÓÃÓÚµ÷½ÚÑ¡È¡´óĞ¡
+		// ç”»8ä¸ªå®å¿ƒå°æ­£æ–¹å½¢, ç”¨äºè°ƒèŠ‚é€‰å–å¤§å°
 		g.fillRect(x1 - 2, startY - 2, 5, 5);
 		g.fillRect(x1 - 2, endY - 2, 5, 5);
 		g.fillRect(startX - 2, y1 - 2, 5, 5);
@@ -363,7 +363,7 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 		g.fillRect(startX - 2, endY - 2, 5, 5);
 		g.fillRect(endX - 2, startY - 2, 5, 5);
 		g.fillRect(endX - 2, endY - 2, 5, 5);
-		// ¼ÇÂ¼8¸öĞ¡·½¿éÎ»ÖÃ, ÓÃÓÚÅĞ¶ÏÊÇ·ñ´¦ÓÚµ÷½Ú³ß´ç×´Ì¬
+		// è®°å½•8ä¸ªå°æ–¹å—ä½ç½®, ç”¨äºåˆ¤æ–­æ˜¯å¦å¤„äºè°ƒèŠ‚å°ºå¯¸çŠ¶æ€
 		rec[0] = new Rectangle(x - 5, y - 5, 10, 10);
 		rec[1] = new Rectangle(x1 - 5, y - 5, 10, 10);
 		rec[2] = new Rectangle((startX > endX ? startX : endX) - 5, y - 5, 10,
@@ -384,15 +384,15 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 				0.3F));
 		g2d.setColor(Color.CYAN);
-		// Ñ¡È¡¿ªÊ¼Î»ÖÃ
+		// é€‰å–å¼€å§‹ä½ç½®
 		int sX = Math.min(startX, endX);
 		int sY = Math.min(endY, startY);
-		// Ìî³äÑ¡Çø
+		// å¡«å……é€‰åŒº
 		g2d.fillRect(sX, sY, Math.abs(endX - startX), Math.abs(endY - startY));
 		g2d.setComposite(AlphaComposite
 				.getInstance(AlphaComposite.SRC_OVER, 1F));
 
-		// »­³ß´çÌáÊ¾
+		// ç”»å°ºå¯¸æç¤º
 		boolean drawSizeTip = endX - startX != 0 && endY - startY != 0;
 		if (drawSizeTip) {
 			String cTip = String.format("%dX%d", Math.abs(endX - startX), Math
@@ -410,19 +410,19 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 		}
 		g2d.dispose();
 		if (showTip) {
-			// Ìî³ä¾ØĞÎ
+			// å¡«å……çŸ©å½¢
 			g.setColor(Color.CYAN);
 			g.fillRect(p.x, p.y, 225, 20);
-			// »­¾ØĞÎ¿ò
+			// ç”»çŸ©å½¢æ¡†
 			g.setColor(Color.BLUE);
 			g.drawRect(p.x, p.y, 225, 20);
-			// »­ÎÄ×Ö
+			// ç”»æ–‡å­—
 			g.setColor(Color.BLACK);
-			g.drawString(" Çë°´×¡Êó±ê×ó¼ü²»·ÅÑ¡Ôñ½ØÍ¼Çø, ÓÒ¼üÍË³ö", p.x, p.y + 15);
+			g.drawString(" è¯·æŒ‰ä½é¼ æ ‡å·¦é”®ä¸æ”¾é€‰æ‹©æˆªå›¾åŒº, å³é”®é€€å‡º", p.x, p.y + 15);
 		}
 	}
 
-	// ¸ù¾İ¶«ÄÏÎ÷±±µÈ°Ë¸ö·½Ïò¾ö¶¨Ñ¡ÖĞµÄÒªĞŞ¸ÄµÄXºÍYµÄ×ù±ê
+	// æ ¹æ®ä¸œå—è¥¿åŒ—ç­‰å…«ä¸ªæ–¹å‘å†³å®šé€‰ä¸­çš„è¦ä¿®æ”¹çš„Xå’ŒYçš„åº§æ ‡
 	private void initSelect(States state) {
 		switch (state) {
 		case DEFAULT:
@@ -477,16 +477,16 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 		}
 	}
 
-	// ÌØÒâ¶¨ÒåÒ»¸ö·½·¨´¦ÀíÊó±êÒÆ¶¯,ÊÇÎªÁËÃ¿´Î¶¼ÄÜ³õÊ¼»¯Ò»ÏÂËùÒªÑ¡ÔñµÄµØÇø
+	// ç‰¹æ„å®šä¹‰ä¸€ä¸ªæ–¹æ³•å¤„ç†é¼ æ ‡ç§»åŠ¨,æ˜¯ä¸ºäº†æ¯æ¬¡éƒ½èƒ½åˆå§‹åŒ–ä¸€ä¸‹æ‰€è¦é€‰æ‹©çš„åœ°åŒº
 	private void doMouseMoved(MouseEvent me) {
-		// Èç¹û´¦ÓÚÑ¡ÇøÄÚ, Ôò¸Ä±ä¹â±êĞÎ×´
+		// å¦‚æœå¤„äºé€‰åŒºå†…, åˆ™æ”¹å˜å…‰æ ‡å½¢çŠ¶
 		if (select.contains(me.getPoint())) {
 			this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
 			current = States.MOVE;
 		}else {
 			States[] st = States.values();
 			for (int i = 0; i < rec.length; i++) {
-				// Èç¹ûÊó±ê´¦ÓÚÄ³¸öĞ¡¿òÄÚ, ÔòÉèÎª¿Éµ÷½Ú×´Ì¬(¸Ä±ä¹â±ê)
+				// å¦‚æœé¼ æ ‡å¤„äºæŸä¸ªå°æ¡†å†…, åˆ™è®¾ä¸ºå¯è°ƒèŠ‚çŠ¶æ€(æ”¹å˜å…‰æ ‡)
 				if (rec[i].contains(me.getPoint())) {
 					current = st[i];
 					this.setCursor(st[i].getCursor());
@@ -566,16 +566,16 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 	}
 
 	public void mouseReleased(MouseEvent me) {
-		// ÒâË¼ËÆºõÊÇ: Èç¹ûÊÇÓÒ»÷
+		// æ„æ€ä¼¼ä¹æ˜¯: å¦‚æœæ˜¯å³å‡»
 		if (me.isPopupTrigger()) {
 			System.out.println("It is a popup trigger!");
-			// Èç¹û´¦ÓÚÑ¡ÔñÇø, Ôòxxx
+			// å¦‚æœå¤„äºé€‰æ‹©åŒº, åˆ™xxx
 			if (current == States.MOVE) {
 				// show menu here
 				menuSnap.show(fakewindow, me.getPoint().x, me.getPoint().y);
 			} else if ((select.getHeight() + select.getWidth()) != 0
 					&& !select.contains(me.getPoint())) {
-				// Èç¹ûÑ¡Çø´æÔÚ, ²¢ÇÒÓÒ»÷Ñ¡ÇøÍâµÄµØ·½
+				// å¦‚æœé€‰åŒºå­˜åœ¨, å¹¶ä¸”å³å‡»é€‰åŒºå¤–çš„åœ°æ–¹
 				HideEditPane();
 				showTip = true;
 				p = me.getPoint();
@@ -604,15 +604,15 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 		Point loc = new Point(select.x +select.width-editPane.getWidth(),
 				select.y + select.height +1);
 		
-		if(loc.x + editPane.getWidth() > bi.getWidth())//³¬³öÓÒ±ß½ç
+		if(loc.x + editPane.getWidth() > bi.getWidth())//è¶…å‡ºå³è¾¹ç•Œ
 			loc.x = bi.getWidth() - editPane.getWidth();
-		else if(loc.x < 0)//³¬³ö×ó±ß½ç
+		else if(loc.x < 0)//è¶…å‡ºå·¦è¾¹ç•Œ
 			loc.x = 0;
-		if(loc.y + editPane.getHeight() > bi.getHeight())//³¬³öÏÂ½ç
+		if(loc.y + editPane.getHeight() > bi.getHeight())//è¶…å‡ºä¸‹ç•Œ
 		{
-			//ÔÚÉÏ±ßÏÔÊ¾
+			//åœ¨ä¸Šè¾¹æ˜¾ç¤º
 			loc.y = select.y - editPane.getHeight() - 1;
-			if(loc.y < 0)//Èç¹ûÉÏ±ßÒ²ÏÔÊ¾²»ÁË...
+			if(loc.y < 0)//å¦‚æœä¸Šè¾¹ä¹Ÿæ˜¾ç¤ºä¸äº†...
 				loc.y = 0;
 		}
 		editPane.setLocation(loc);
@@ -649,7 +649,7 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 				het = this.getHeight() - select.y;
 			}
 			/**
-			 * ´¦ÀíÑ¡ÔñÇø³¬³öÆÁÄ»·¶Î§µÄ"±äÌ¬Çé¿ö"
+			 * å¤„ç†é€‰æ‹©åŒºè¶…å‡ºå±å¹•èŒƒå›´çš„"å˜æ€æƒ…å†µ"
 			 * 
 			 * @author shinysky
 			 */
@@ -665,7 +665,7 @@ public class ScreenCapturer extends JPanel implements MouseListener,
 			fakewindow.dispose();
 		}
 	}
-	//±£´æBMP¸ñÊ½µÄ¹ıÂËÆ÷
+	//ä¿å­˜BMPæ ¼å¼çš„è¿‡æ»¤å™¨
     private class BMPfilter extends javax.swing.filechooser.FileFilter{
         public BMPfilter(){
             
@@ -678,10 +678,10 @@ public class ScreenCapturer extends JPanel implements MouseListener,
                 return false;
         }
         public String getDescription(){
-            return "*.BMP(BMPÍ¼Ïñ)";
+            return "*.BMP(BMPå›¾åƒ)";
         }
     }
-    //±£´æJPG¸ñÊ½µÄ¹ıÂËÆ÷
+    //ä¿å­˜JPGæ ¼å¼çš„è¿‡æ»¤å™¨
     private class JPGfilter extends javax.swing.filechooser.FileFilter{
         public JPGfilter(){
             
@@ -694,10 +694,10 @@ public class ScreenCapturer extends JPanel implements MouseListener,
                 return false;
         }
         public String getDescription(){
-            return "*.JPG(JPGÍ¼Ïñ)";
+            return "*.JPG(JPGå›¾åƒ)";
         }
     }
-    //±£´æGIF¸ñÊ½µÄ¹ıÂËÆ÷
+    //ä¿å­˜GIFæ ¼å¼çš„è¿‡æ»¤å™¨
     private class GIFfilter extends javax.swing.filechooser.FileFilter{
         public GIFfilter(){
             
@@ -710,11 +710,11 @@ public class ScreenCapturer extends JPanel implements MouseListener,
                 return false;
         }
         public String getDescription(){
-            return "*.GIF(GIFÍ¼Ïñ)";
+            return "*.GIF(GIFå›¾åƒ)";
         }
     }
     
-    //±£´æPNG¸ñÊ½µÄ¹ıÂËÆ÷
+    //ä¿å­˜PNGæ ¼å¼çš„è¿‡æ»¤å™¨
     private class PNGfilter extends javax.swing.filechooser.FileFilter{
         public boolean accept(File file){
             if(file.toString().toLowerCase().endsWith(".png")||
@@ -724,13 +724,13 @@ public class ScreenCapturer extends JPanel implements MouseListener,
                 return false;
         }
         public String getDescription(){
-            return "*.PNG(PNGÍ¼Ïñ)";
+            return "*.PNG(PNGå›¾åƒ)";
         }
     }
 }
-//Ò»Ğ©±íÊ¾×´Ì¬µÄÃ¶¾Ù
+//ä¸€äº›è¡¨ç¤ºçŠ¶æ€çš„æšä¸¾
 enum States {
-	NORTH_WEST(new Cursor(Cursor.NW_RESIZE_CURSOR)), // ±íÊ¾Î÷±±½Ç
+	NORTH_WEST(new Cursor(Cursor.NW_RESIZE_CURSOR)), // è¡¨ç¤ºè¥¿åŒ—è§’
 	NORTH(new Cursor(Cursor.N_RESIZE_CURSOR)),
 	NORTH_EAST(new Cursor(Cursor.NE_RESIZE_CURSOR)),
 	EAST(new Cursor(Cursor.E_RESIZE_CURSOR)),

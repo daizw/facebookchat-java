@@ -42,7 +42,7 @@ public class ObjectList extends JList {
 	private int DEFAULT_FIELD_WIDTH = 20;
 
 	/**
-	 * Èç¹û±äÁ¿ÎªrenderÀàÄÚ²¿±äÁ¿, Ôò»á³öÏÖÁĞ±íÔªËØ±»Ìí¼Óµ½Í¬Ò»ĞĞ, ²¢ÇÒ¸ÃĞĞÖØ¸´N´ÎµÄÇé¿ö
+	 * å¦‚æœå˜é‡ä¸ºrenderç±»å†…éƒ¨å˜é‡, åˆ™ä¼šå‡ºç°åˆ—è¡¨å…ƒç´ è¢«æ·»åŠ åˆ°åŒä¸€è¡Œ, å¹¶ä¸”è¯¥è¡Œé‡å¤Næ¬¡çš„æƒ…å†µ
 	 */
 	JLabel portrait;
 	JLabel nick;
@@ -51,10 +51,10 @@ public class ObjectList extends JList {
 	Dimension portraitsize = new Dimension(40, 40);
 
 	/**
-	 * ¾ßÓĞ×Ô¶¨ÒåÁĞ±íÔªËØºÍ¹ıÂË¹¦ÄÜµÄÁĞ±í
+	 * å…·æœ‰è‡ªå®šä¹‰åˆ—è¡¨å…ƒç´ å’Œè¿‡æ»¤åŠŸèƒ½çš„åˆ—è¡¨
 	 * 
 	 * @param objs
-	 *            ÁĞ±íÔªËØ(FriendItemÀàĞÍ)Êı×é
+	 *            åˆ—è¡¨å…ƒç´ (FriendItemç±»å‹)æ•°ç»„
 	 */
 	public ObjectList() {
 		// super(objs);
@@ -77,14 +77,14 @@ public class ObjectList extends JList {
 			public void mouseClicked(MouseEvent me) {
 				if (me.getButton() == MouseEvent.BUTTON3) {
 					/*
-					 * ÊµÏÖÓÒ¼ü¿ÉÑ¡È¡JListItem
+					 * å®ç°å³é”®å¯é€‰å–JListItem
 					 */
 					int index = ObjectList.this.locationToIndex(me.getPoint());
 					ObjectList.this.setSelectedIndex(index);
 				}
 			}
 			public void mouseEntered(MouseEvent menter) {
-				// TODO ×Ô¶¯¸Ä±ä±³¾°É«
+				// TODO è‡ªåŠ¨æ”¹å˜èƒŒæ™¯è‰²
 				// int index =
 				// ObjectList.this.locationToIndex(menter.getPoint());
 				// ObjectList.this.set
@@ -104,7 +104,7 @@ public class ObjectList extends JList {
 		super.setModel(m);
 	}
 	/**
-	 * ÏµÍ³³õÊ¼»¯Ê±µ÷ÓÃ, ÓÃÓÚ½«Êı¾İ¿âÖĞÊı¾İÌí¼Óµ½ÁĞ±í<br>
+	 * ç³»ç»Ÿåˆå§‹åŒ–æ—¶è°ƒç”¨, ç”¨äºå°†æ•°æ®åº“ä¸­æ•°æ®æ·»åŠ åˆ°åˆ—è¡¨<br>
 	 * if item already exists, replace it with the new one.<br>
 	 *  
 	 * @param o
@@ -147,7 +147,7 @@ public class ObjectList extends JList {
 	
 	public class NoxJListCellRender extends JPanel implements ListCellRenderer {
 		/**
-		 * JListµ¥Ôª¸ñäÖÈ¾Æ÷
+		 * JListå•å…ƒæ ¼æ¸²æŸ“å™¨
 		 */
 		private static final long serialVersionUID = 1L;
 
@@ -315,7 +315,7 @@ public class ObjectList extends JList {
 		}
 		
 		public Object deleteElementAt(int index){
-			//ÕæÕıÉ¾³ıÖ®
+			//çœŸæ­£åˆ é™¤ä¹‹
 			FacebookUser ob = items.remove((int)indexes.elementAt(index));
 			refilter();
 			
@@ -351,7 +351,7 @@ public class ObjectList extends JList {
 
 		public FilterField(int width) {
 			super(width);
-			this.setToolTipText(getHtmlText("ÊäÈë¹Ø¼ü×ÖÒÔËÑË÷ÁĞ±í"));
+			this.setToolTipText(getHtmlText("è¾“å…¥å…³é”®å­—ä»¥æœç´¢åˆ—è¡¨"));
 			getDocument().addDocumentListener(this);
 		}
 

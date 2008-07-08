@@ -25,7 +25,7 @@ public class Cheyenne extends NoxFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Ä¬ÈÏ³ß´ç³£Á¿
+	 * é»˜è®¤å°ºå¯¸å¸¸é‡
 	 */
 	public static final int WIDTH_DEFLT = 260;
 	public static final int WIDTH_PREF = 260;
@@ -38,13 +38,13 @@ public class Cheyenne extends NoxFrame {
 	
 	public static final int InterStatusCheckingsSleepTime = 3 * 60 * 1000;
 	/**
-	 * ¸÷JPanel
+	 * å„JPanel
 	 */
 	private MiniProfilePane profile;
 	private ListsPane buddyListPane;
 
 	/**
-	 * ÂÖÁ÷pingËùÓĞºÃÓÑ»ñÈ¡Æä×´Ì¬ĞÅÏ¢
+	 * è½®æµpingæ‰€æœ‰å¥½å‹è·å–å…¶çŠ¶æ€ä¿¡æ¯
 	 */
 	Thread onlineBuddyListChecker;
 	/**
@@ -77,7 +77,7 @@ public class Cheyenne extends NoxFrame {
 		onlineBuddyListChecker.start();
 	}
 	/**
-	 * ³õÊ¼»¯¸öÈËÉèÖÃ
+	 * åˆå§‹åŒ–ä¸ªäººè®¾ç½®
 	 * @param conn
 	 * @param meSqltableName
 	 */
@@ -93,7 +93,7 @@ public class Cheyenne extends NoxFrame {
 		
 		String name = FacebookBuddyList.me.name;
 		/**
-		 * mini profile ×é¼ş º¬: Í·Ïñ, êÇ³Æ, ×´Ì¬, Ç©Ãû
+		 * mini profile ç»„ä»¶ å«: å¤´åƒ, æ˜µç§°, çŠ¶æ€, ç­¾å
 		 */
 		profile = new MiniProfilePane(this, portrait, name, "");
 		// profile.setBackground(new Color(0, 255, 0));
@@ -113,7 +113,7 @@ public class Cheyenne extends NoxFrame {
 		}
 		public void run() {
 			while(true){
-				//Ò»ÂÖÂÖÑ¯Ö®ºóĞİÏ¢Ò»¶ÎÊ±¼ä(InterStatusCheckingsSleepTime)
+				//ä¸€è½®è½®è¯¢ä¹‹åä¼‘æ¯ä¸€æ®µæ—¶é—´(InterStatusCheckingsSleepTime)
 				Launcher.getBuddyList();
 				System.out.println("Now refresh the buddy list");
 				buddyListPane.refresh();
@@ -128,7 +128,7 @@ public class Cheyenne extends NoxFrame {
 	}
 	
 	/**
-	 * ÉèÖÃ´°¿ÚÇ°¾°ÑÕÉ«
+	 * è®¾ç½®çª—å£å‰æ™¯é¢œè‰²
 	 */
 	public void setForegroundColor()
 	{
@@ -137,7 +137,7 @@ public class Cheyenne extends NoxFrame {
 		profile.setForegroundColor(color);
 	}
 	/**
-	 * ÉèÖÃ´°¿Ú±³¾°ÑÕÉ«
+	 * è®¾ç½®çª—å£èƒŒæ™¯é¢œè‰²
 	 */
 	public void setBackgroundColor(Color color)
 	{

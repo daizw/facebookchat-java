@@ -315,8 +315,8 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener
 
             AffineTransform toCenter = AffineTransform.getTranslateInstance(center.getX(), center.getY());
             /**
-             * param1: 偏离中心长度
-             * param2: 偏角?
+             * param1: 鍋忕涓績闀垮害
+             * param2: 鍋忚?
              */
             AffineTransform toBorder = AffineTransform.getTranslateInstance(45 * Scale, 0.0f);
             AffineTransform toCircle = AffineTransform.getRotateInstance(-i * 2.0d * Math.PI / ((double) barsCount), center.getX(), center.getY());

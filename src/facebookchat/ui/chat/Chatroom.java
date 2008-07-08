@@ -12,7 +12,7 @@ import facebookchat.ui.common.NoxFrame;
 @SuppressWarnings("serial")
 public class Chatroom extends NoxFrame{
 	/**
-	 * Ä¬ÈÏ³ß´ç³£Á¿
+	 * é»˜è®¤å°ºå¯¸å¸¸é‡
 	 */
 	public static final int WIDTH_DEFLT = 400;
 	public static final int WIDTH_PREF = 400;
@@ -29,8 +29,8 @@ public class Chatroom extends NoxFrame{
 	protected ChatroomPane chatroompane;
 	
 	/**
-	 * Ë½ÁÄ: ¸ÃÖµÎª¶Ô·½ID;
-	 * ÈºÁÄ:Îª×éID
+	 * ç§èŠ: è¯¥å€¼ä¸ºå¯¹æ–¹ID;
+	 * ç¾¤èŠ:ä¸ºç»„ID
 	 */
 	protected String roomID;
 	protected String roomname;
@@ -60,8 +60,8 @@ public class Chatroom extends NoxFrame{
 		super.container = chatroompane;
 	}*/
 	/**
-	 * »ñÈ¡ÁÄÌìÊÒÃû³Æ(¶Ô·½êÇ³Æ»ò×éÃû)
-	 * @return ¶Ô·½êÇ³Æ»ò×éÃû
+	 * è·å–èŠå¤©å®¤åç§°(å¯¹æ–¹æ˜µç§°æˆ–ç»„å)
+	 * @return å¯¹æ–¹æ˜µç§°æˆ–ç»„å
 	 */
 	public String getRoomName(){
 		return roomname;
@@ -75,7 +75,7 @@ public class Chatroom extends NoxFrame{
 		this.setTitleStr(name);
 	}
 	/**
-	 * ÏòÍâ·¢ËÍÎÄ±¾ÏûÏ¢
+	 * å‘å¤–å‘é€æ–‡æœ¬æ¶ˆæ¯
 	 * 
 	 * @param strmsg
 	 *            string msg

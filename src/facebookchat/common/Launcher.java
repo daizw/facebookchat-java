@@ -77,7 +77,7 @@ public class Launcher {
 	}*/
 	
 	public static void main(String[] args){
-		System.setProperty("sun.java2d.noddraw", "true");// Îª°ëÍ¸Ã÷×ö×¼±¸
+		System.setProperty("sun.java2d.noddraw", "true");// ä¸ºåŠé€æ˜åšå‡†å¤‡
 		System.setProperty("net.jxta.logging.Logging", "INFO");
 		System.setProperty("net.jxta.level", "INFO");
 		System.setProperty("java.util.logging.config.file",
@@ -145,7 +145,7 @@ public class Launcher {
 
         HttpClientParams clientParams = new HttpClientParams();
 
-        // Òş²Ø×Ô¼ºÇëÇóÏà¹ØµÄĞÅÏ¢
+        // éšè—è‡ªå·±è¯·æ±‚ç›¸å…³çš„ä¿¡æ¯
         clientParams.setParameter("http.useragent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9) Gecko/2008052906 Firefox/3.0");
 
         httpClient.getHttpConnectionManager().getParams().setSoTimeout(30 * 1000);
@@ -361,7 +361,7 @@ public class Launcher {
 		String url = "http://www.facebook.com/ajax/chat/send.php";
 		PostMethod postMethod = new PostMethod(url);
 
-		// ÌîÈë¸÷¸ö±íµ¥ÓòµÄÖµ
+		// å¡«å…¥å„ä¸ªè¡¨å•åŸŸçš„å€¼
 		NameValuePair[] data = {
 				new NameValuePair("msg_text", msg),
 				new NameValuePair("msg_id", new Random().nextInt(999999999)
@@ -369,11 +369,11 @@ public class Launcher {
 				new NameValuePair("client_time", new Date().getTime() + ""),
 				new NameValuePair("to", uid),
 				new NameValuePair("post_form_id", post_form_id) };
-		// ½«±íµ¥µÄÖµ·ÅÈëpostMethodÖĞ
+		// å°†è¡¨å•çš„å€¼æ”¾å…¥postMethodä¸­
 		postMethod.setRequestBody(data);
 		System.out.println("executeMethod ing...");
 		try {
-			// Ö´ĞĞpostMethod
+			// æ‰§è¡ŒpostMethod
 			int statusCode;
 
 			statusCode = httpClient.executeMethod(postMethod);
@@ -520,7 +520,7 @@ public class Launcher {
 		String url = "http://www.facebook.com/ajax/presence/update.php";
 		PostMethod postMethod = new PostMethod(url);
 
-		// ÌîÈë¸÷¸ö±íµ¥ÓòµÄÖµ
+		// å¡«å…¥å„ä¸ªè¡¨å•åŸŸçš„å€¼
 		NameValuePair[] data = {
 				new NameValuePair("buddy_list", "1"),
 				new NameValuePair("notifications", "1"),
@@ -528,11 +528,11 @@ public class Launcher {
 				//new NameValuePair("popped_out", "false"),
 				new NameValuePair("post_form_id", post_form_id),
 				new NameValuePair("user", uid)};
-		// ½«±íµ¥µÄÖµ·ÅÈëpostMethodÖĞ
+		// å°†è¡¨å•çš„å€¼æ”¾å…¥postMethodä¸­
 		postMethod.setRequestBody(data);
 		System.out.println("executeMethod ing...");
 		try {
-			// Ö´ĞĞpostMethod
+			// æ‰§è¡ŒpostMethod
 			int statusCode;
 
 			statusCode = httpClient.executeMethod(postMethod);
@@ -564,12 +564,12 @@ public class Launcher {
 		String url = "http://www.facebook.com/ajax/presence/update.php";
 		PostMethod postMethod = new PostMethod(url);
 
-		// ÌîÈë¸÷¸ö±íµ¥ÓòµÄÖµ
+		// å¡«å…¥å„ä¸ªè¡¨å•åŸŸçš„å€¼
 		NameValuePair[] data = {
 				new NameValuePair("notifications", 1 + ""),
 				new NameValuePair("post_form_id", post_form_id),
 				new NameValuePair("user", uid)};
-		// ½«±íµ¥µÄÖµ·ÅÈëpostMethodÖĞ
+		// å°†è¡¨å•çš„å€¼æ”¾å…¥postMethodä¸­
 		postMethod.setRequestBody(data);
 	}
 }
