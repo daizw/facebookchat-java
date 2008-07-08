@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!-- Created by DaiZW(shinysky) on Jul 2, 2008 22:00:00 PM-->
+
+<project name="Facebook Chat (Java)" default="ant-usage" basedir=".">
+
+	<!-- =================================================================== -->
+	<!-- Initialization target                                               -->
+	<!-- =================================================================== -->
+	<target name="init">
+		<tstamp />
+		<property file="${basedir}/build.properties" />
+
+		<echo message="----------- ${application.Name} ${version} [${year}] ------------" />
+
+		<path id="classpath">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+
+		<fileset id="lib.files" dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+
+		<fileset id="facebookchat.files" dir="${release.dir}">
+			<include name="*.jar" />
+		</fileset>
+
+		<filter token="year" value="${year}" />
+		<filter token="version" value="${version}" />
+		<filter token="date" value="${TODAY}" />
+		<filter token="log" value="true" />
+		<filter token="verbose" value="true" />
+	</target>
+
+	<!-- default Ant target does nothing except print helpful options -->
+	<!-- Ant-external target will appear in -projecthelp output       -->
+	<target name="ant-usage" description="Simply execute 'ant' to discover the most useful targets.">
+		<echo message="Useful ant commands for Facebook Chat (Java):" />
+		<echo message="'ant build' to compile the source directory" />
+		<echo message="'ant facebookchat' to run Facebook Chat (Java) GUI" />
+		<echo message="'ant run -DAPP [classname]' to run the specified thread" />
+		<echo message="'ant jar' to build the jar package(s)" />
+		<echo message="'ant release' to build a release package" />
+		<echo message="'ant source-zip' to creates source zip file" />
+		<echo message="'ant source-tgz' to creates source tar.gz file" />
+		<echo message="'ant javadocs' to create javadocs" />
+		<echo message="'ant clean-classes-and-jars' to clean classes and jars" />
+		<echo message="'ant clean-javadocs' to clean javadocs" />
+		<echo message="'ant clean-all' to clean classes, jars, and javadocs" />
+		<echo message="'ant -projecthelp' for other useful build targets" />
+		<echo message="'ant -help' for Ant help" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Prepares the directories                                            -->
+	<!-- =================================================================== -->
+	<target name="prepare-dirs" depends="init">
+		<!-- create directories -->
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${release.dir}" />
+		<!-- set up version property -->
+		<condition property="build.version" value="${DSTAMP}">
+			<not>
+				<isset property="build.version" />
+			</not>
+		</condition>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Compiles the source directory                                       -->
+	<!-- =================================================================== -->
+	<target name="build" depends="clean-classes-and-jars,prepare-dirs" description="Compiles the source directory">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="${debug}" optimize="${optimize}">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Run                                                                 -->
+	<!-- =================================================================== -->
+	<target name="run-logging" depends="build" description="Run the Facebook Chat (Java)" if="java.util.logging.config.file">
+		<java classname="${APP}" failonerror="yes" fork="yes">
+			<classpath>
+				<!--fileset refid="facebookchat.files" /-->
+				<fileset refid="lib.files" />
+				<pathelement location="${classes.dir}" />
+			</classpath>
+			<sysproperty key="java.util.logging.config.file" value="${java.util.logging.config.file}" />
+		</java>
+	</target>
+
+	<target name="run-default-logging" depends="build" description="Run the Facebook Chat (Java)" unless="java.util.logging.config.file">
+		<java classname="${APP}" failonerror="yes" fork="yes">
+			<classpath>
+				<!--fileset refid="facebookchat.files" /-->
+				<fileset refid="lib.files" />
+				<pathelement location="${classes.dir}" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="run" description="Run the Facebook Chat (Java)" depends="run-logging,run-default-logging" />
+	
+	<target name="facebookchat" depends="build" description="Run the Facebook Chat (Java) UI" if="java.util.logging.config.file">
+		<java classname="facebookchat.common.Launcher" failonerror="yes" fork="yes">
+			<classpath>
+				<!--fileset refid="facebookchat.files" /-->
+				<fileset refid="lib.files" />
+				<pathelement location="${classes.dir}" />
+			</classpath>
+			<sysproperty key="java.util.logging.config.file" value="${java.util.logging.config.file}" />
+		</java>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates source zip file                                             -->
+	<!-- =================================================================== -->
+	<target name="source-zip" depends="prepare-dirs" description="Creates source zip file">
+		<zip destfile="${release.dir}/${application.name}-src-${build.version}.zip">
+			<zipfileset dir="${basedir}" prefix="facebookchat-java-src-${build.version}">
+				<include name="src/**" />
+				<include name="*.xml" />
+				<include name="*.properties" />
+				<exclude name="**/.*" />
+				<exclude name="**/.*" />
+				<exclude name="**/*.bak" />
+				<exclude name="**/classes/**" />
+				<exclude name="lib/**" />
+				<exclude name="resources/**" />
+				<exclude name="bin/**" />
+				<exclude name="build/**" />
+				<exclude name="release/**" />
+				<exclude name="**/.*/**" />
+			</zipfileset>
+		</zip>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates source tar.gz file                                          -->
+	<!-- =================================================================== -->
+	<target name="source-tgz" depends="prepare-dirs" description="Creates source tar.gz file">
+		<delete file="${release.dir}/${application.name}-src-${build.version}.tar.gz" />
+
+		<tar destfile="${release.dir}/${application.name}-src-${build.version}.tar.gz" compression="gzip" longfile="gnu">
+			<tarfileset dir="${basedir}" prefix="facebookchat-java-src-${build.version}">
+				<include name="src/**" />
+				<include name="*.xml" />
+				<include name="*.properties" />
+				<exclude name="**/.*" />
+				<exclude name="**/*.bak" />
+				<exclude name="**/classes/**" />
+				<exclude name="lib/**" />
+				<exclude name="resources/**" />
+				<exclude name="bin/**" />
+				<exclude name="build/**" />
+				<exclude name="release/**" />
+				<exclude name="**/.*/**" />
+			</tarfileset>
+		</tar>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates the jar package(s)                                          -->
+	<!-- =================================================================== -->
+	<target name="jar" depends="build" description="Creates the jar package(s)">
+		<jar jarfile="${release.dir}/${application.name}.jar" basedir="${classes.dir}" manifest="./MANIFEST.MF" includes="**" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates the release package                                         -->
+	<!-- =================================================================== -->
+	<target name="release" depends="build, source-zip, source-tgz" description="Creates the release package">
+		<jar jarfile="${release.dir}/${application.name}.jar" basedir="${classes.dir}" manifest="./MANIFEST.MF" includes="**" />
+		<!-- create directories -->
+		<mkdir dir="${release.resrc.dir}" />
+		<mkdir dir="${release.lib.dir}" />
+
+		<!-- copy resource files -->
+		<copy todir="${release.resrc.dir}">
+			<fileset dir="${resrc.dir}" />
+		</copy>
+		<!-- copy lib files -->
+		<copy todir="${release.lib.dir}">
+			<fileset dir="${lib.dir}" />
+		</copy>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates the API documentation                                       -->
+	<!-- =================================================================== -->
+	<target name="javadocs" depends="init" description="Create javadocs">
+		<mkdir dir="${javadocs.dir}" />
+		<javadoc packagenames="${packages}" sourcepath="${src.dir}" destdir="${javadocs.dir}" author="true" version="true" use="true" splitindex="true" windowtitle="${application.Name} Component API" doctitle="${application.Name} Component" bottom="Copyright ${sign.copyright} ${year} 
+					${author}. All Rights Reserved.">
+			<classpath refid="classpath" />
+		</javadoc>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Clean targets                                                       -->
+	<!-- =================================================================== -->
+	<target name="clean-classes-and-jars" depends="init" description="Clean classes and jars">
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${classes.dir}" />
+			<fileset dir="${release.dir}" />
+		</delete>
+		<mkdir dir="${release.dir}" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Clean javadocs                                                      -->
+	<!-- =================================================================== -->
+	<target name="clean-javadocs" depends="init" description="Clean javadocs">
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${javadocs.dir}" />
+		</delete>
+	</target>
+	<!-- =================================================================== -->
+	<!-- Clean All                                                           -->
+	<!-- =================================================================== -->
+	<target name="clean-all" depends="init" description="Clean classes, jars, and javadocs">
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${classes.dir}" />
+			<fileset dir="${javadocs.dir}" />
+			<fileset dir="${release.dir}" />
+		</delete>
+		<mkdir dir="${release.dir}" />
+	</target>
+
+	<target name="clean" depends="clean-all" description="Clean classes, jars, and javadocs" />
+
+</project>
+
+
