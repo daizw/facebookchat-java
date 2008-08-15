@@ -113,7 +113,7 @@ public class LoginDialog extends JDialog implements ActionListener{
 		
 		t_name.setToolTipText("Input your name");
 		t_pwd.setToolTipText("Input your password");
-		t_pwd.setEchoChar('●');
+		t_pwd.setEchoChar('*');
 		
 		p_name.add(l_name);
 		p_name.add(t_name);

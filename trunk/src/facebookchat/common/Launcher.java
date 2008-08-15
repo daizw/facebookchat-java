@@ -1,25 +1,52 @@
 package facebookchat.common;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpState;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.AuthState;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.scheme.SocketFactory;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.message.BasicHttpRequest;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,10 +55,8 @@ import facebookchat.ui.main.Cheyenne;
 import facebookchat.ui.main.LoginDialog;
 
 public class Launcher {
-	public static MultiThreadedHttpConnectionManager connectionManager;
-	public static HttpClient httpClient;
-	public static HttpState initialState;
-	
+    private static HttpClient httpClient;
+        
 	public static String loginPageUrl = "http://www.facebook.com/login.php";
 	public static String homePageUrl = "http://www.facebook.com/home.php?";
 	
@@ -45,7 +70,23 @@ public class Launcher {
 	
 	//public static Queue<Object> requestQ;
 	
-	
+	private String Proxy_Host = "ISASRV";
+    private int Proxy_Port = 80;
+    private String Proxy_Username = "daizw";
+    private String Proxy_Password = "xxxxxx";
+    
+    /**
+     * The default parameters.
+     * Instantiated in {@link #setup setup}.
+     */
+    private static HttpParams defaultParameters = null;
+
+    /**
+     * The scheme registry.
+     * Instantiated in {@link #setup setup}.
+     */
+    private static SchemeRegistry supportedSchemes;
+    
 	public static Chatroom getChatroomAnyway(String uid){
 		uid = uid.trim();
 		System.out.println("%%%%%%>"+uid+"<%%%%%%");
@@ -77,7 +118,7 @@ public class Launcher {
 	}*/
 	
 	public static void main(String[] args){
-		System.setProperty("sun.java2d.noddraw", "true");// 为半透明做准备
+		System.setProperty("sun.java2d.noddraw", "true");
 		System.setProperty("net.jxta.logging.Logging", "INFO");
 		System.setProperty("net.jxta.level", "INFO");
 		System.setProperty("java.util.logging.config.file",
@@ -88,16 +129,141 @@ public class Launcher {
 	}
 	
 	public Launcher(){
-		connectionManager = new MultiThreadedHttpConnectionManager();
-		httpClient = new HttpClient(connectionManager);
 		msgIDCollection = new HashSet<String>();
 		msgIDCollection.clear();
 		
 		chatroomCache = new Hashtable<String, Chatroom>();
 		chatroomCache.clear();
 		
-		//requestQ = new LinkedList<Object>();
+		// make sure to use a proxy that supports CONNECT
+        final HttpHost target =
+            new HttpHost("www.google.com", 80, "http");
+        setup(); // some general setup
+
+        httpClient = createHttpClient();
+
+        HttpRequest req = createRequest();
+        HttpEntity entity = null;
+        try {
+            HttpResponse rsp = httpClient.execute(target, req, null);
+            entity = rsp.getEntity();
+
+            System.out.println("========================================");
+            System.out.println(rsp.getStatusLine());
+            Header[] headers = rsp.getAllHeaders();
+            for (int i=0; i<headers.length; i++) {
+                System.out.println(headers[i]);
+            }
+            System.out.println("----------------------------------------");
+
+            if (rsp.getEntity() != null) {
+                System.out.println(EntityUtils.toString(rsp.getEntity()));
+            }
+
+        }
+        catch (HttpException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            // If we could be sure that the stream of the entity has been
+            // closed, we wouldn't need this code to release the connection.
+            // However, EntityUtils.toString(...) can throw an exception.
+
+            // if there is no entity, the connection is already released
+            if (entity != null)
+                try
+                {
+                    entity.consumeContent();
+                }
+                catch (IOException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } // release connection gracefully
+            
+            System.out.println("------Constructor END-------");
+        }
 	}
+	private final HttpClient createHttpClient() {
+
+        ClientConnectionManager ccm =
+            new ThreadSafeClientConnManager(getParams(), supportedSchemes);
+        //  new SingleClientConnManager(getParams(), supportedSchemes);
+
+        DefaultHttpClient dhc =
+            new DefaultHttpClient(ccm, getParams());
+        
+        dhc.getParams().setParameter(
+            ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
+        
+        // ------------------- Proxy Setting Block BEGINE -------------------
+        // If we needn't a proxy, just comment this block
+        //setUpProxy(dhc);
+        // --------------------- Proxy Setting Block END --------------------
+        
+        return dhc;
+    }
+	private void setUpProxy(DefaultHttpClient dhc){
+	    final HttpHost proxy =
+            new HttpHost(Proxy_Host, Proxy_Port, "http");
+        
+        dhc.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+        AuthState authState = new AuthState();
+        authState.setAuthScope(new AuthScope(proxy.getHostName(), 
+            proxy.getPort()));
+        AuthScope authScope = authState.getAuthScope();
+        
+        Credentials creds = new UsernamePasswordCredentials(Proxy_Username, Proxy_Password);
+        dhc.getCredentialsProvider().setCredentials(authScope, creds);
+        System.out.println("executing request via " + proxy);
+	}
+	/**
+     * Performs general setup.
+     * This should be called only once.
+     */
+    private final static void setup() {
+
+        supportedSchemes = new SchemeRegistry();
+
+        // Register the "http" and "https" protocol schemes, they are
+        // required by the default operator to look up socket factories.
+        SocketFactory sf = PlainSocketFactory.getSocketFactory();
+        supportedSchemes.register(new Scheme("http", sf, 80));
+        sf = SSLSocketFactory.getSocketFactory();
+        supportedSchemes.register(new Scheme("https", sf, 80));
+
+        // prepare parameters
+        HttpParams params = new BasicHttpParams();
+        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+        HttpProtocolParams.setContentCharset(params, "UTF-8");
+        HttpProtocolParams.setUseExpectContinue(params, true);
+        HttpProtocolParams.setHttpElementCharset(params, "UTF-8");
+        HttpProtocolParams.setUserAgent(params, "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9) Gecko/2008052906 Firefox/3.0");
+        defaultParameters = params;
+    } // setup
+    
+    private final static HttpParams getParams() {
+        return defaultParameters;
+    }
+    /**
+     * Creates a request to execute in this example.
+     *
+     * @return  a request without an entity
+     */
+    private final static HttpRequest createRequest() {
+
+        HttpRequest req = new BasicHttpRequest
+            ("GET", "/", HttpVersion.HTTP_1_1);
+          //("OPTIONS", "*", HttpVersion.HTTP_1_1);
+
+        return req;
+    }
 	public void go(){
 		LoginDialog login = new LoginDialog();
 		String action = (String)login.showDialog();
@@ -106,27 +272,61 @@ public class Launcher {
 
 		String email = login.getUsername();
 		String pass = new String(login.getPassword());
+	    
+	    /*String email = "username@email.com.cn";
+	    String pass = "password";*/
+	    
 		System.out.println(email + ":" + pass);
 		
-		Long loginErrorCode = doLogin(email, pass);
-		if(loginErrorCode.equals(ErrorCode.Error_Global_NoError)){
-			if(doParseHomePage().equals(ErrorCode.Error_Global_NoError)){
-				getBuddyList();
-				//TODO get
-				Thread msgRequester = new Thread(new Runnable(){
-					public void run() {
-						System.out.println("Keep requesting...");
-						keepRequesting();
-					}
-				});
-				msgRequester.start();
+		int loginErrorCode = doLogin(email, pass);
+		if(loginErrorCode == ErrorCode.Error_Global_NoError){
+			if(doParseHomePage() == ErrorCode.Error_Global_NoError){
+			    getBuddyList();
+			    
+			  //keep requesting message from the server
+                Thread msgRequester = new Thread(new Runnable(){
+                    public void run() {
+                        System.out.println("Keep requesting...");
+                        while(true){
+                            try{
+                                keepRequesting();
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                msgRequester.start();
+                
+                //requests buddy list every 90 seconds
+                Thread buddyListRequester = new Thread(new Runnable(){
+                    public void run() {
+                        System.out.println("Keep requesting buddylist...");
+                        while(true){
+                            try{
+                                getBuddyList();
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            // it's said that the buddy list is updated every 3 minutes at the server end.
+                            // we refresh the buddy list every 1.5 minutes
+                            try {
+                                Thread.sleep(90 * 1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                buddyListRequester.start();
 				//TODO post
 				//Init GUI
 				System.out.println("Init GUI...");
+				//必须在getbuddylist之后
 				Cheyenne fbc = new Cheyenne();
 				fbc.setVisible(true);
 			}
-		} else if(loginErrorCode.equals(ErrorCode.kError_Async_NotLoggedIn)){
+		} else if(loginErrorCode == ErrorCode.kError_Async_NotLoggedIn){
 			//TODO handle the error derived from this login
 			JOptionPane.showMessageDialog(
 					null,"Not logged in, please check your input!",
@@ -140,112 +340,54 @@ public class Launcher {
 		}
 	}
 
-	private Long doLogin(String email, String pass) {
+	private int doLogin(String email, String pass) {
 		System.out.println("Target URL: " + loginPageUrl);
-
-        HttpClientParams clientParams = new HttpClientParams();
-
-        // 隐藏自己请求相关的信息
-        clientParams.setParameter("http.useragent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9) Gecko/2008052906 Firefox/3.0");
-
-        httpClient.getHttpConnectionManager().getParams().setSoTimeout(30 * 1000);
-        clientParams.setHttpElementCharset("utf-8");
-
-        httpClient.setParams(clientParams);
-        httpClient.getParams().setParameter(HttpClientParams.HTTP_CONTENT_CHARSET, "utf-8");
-        //clientParams.setVersion(HttpVersion.HTTP_1_1);
-        
-		initialState = new HttpState();
-
-		httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(
-				30000);
-		httpClient.setState(initialState);
-
-		// RFC 2101 cookie management spec is used per default
-		// to parse, validate, format & match cookies
-		httpClient.getParams().setCookiePolicy(CookiePolicy.RFC_2109);
-
-		GetMethod loginGet = new GetMethod(loginPageUrl);
-
 		try{
-			int statusCode = httpClient.executeMethod(loginGet);
+		    HttpGet loginGet = new HttpGet(loginPageUrl);
+		    HttpResponse response = httpClient.execute(loginGet);
+		    HttpEntity entity = response.getEntity();
 
-			String httpResponseBody = loginGet.getResponseBodyAsString();
-			System.out.println("=========httpResponseBody begin===========");
-			//System.out.println(httpResponseBody);
-			System.out.println("+++++++++httpResponseBody end+++++++++");
-
-			System.out.println("Response status code: " + statusCode);
-
-			Cookie[] initCookies = httpClient.getState().getCookies();
-
-			System.out.println("Initial cookies: ");
-			for (int i = 0; i < initCookies.length; i++) {
-				System.out.println(" - " + initCookies[i].toExternalForm());
-			}
-		} catch (HttpException httpe) {
-			System.err.print("HttpException");
-			System.err.println(httpe.getMessage());
-			httpe.printStackTrace();
-			return ErrorCode.kError_Login_GenericError;
-		} catch (IOException ioe) {
-			System.err.print("IOException");
-			System.err.println(ioe.getMessage());
-			ioe.printStackTrace();
-			return ErrorCode.kError_Global_ValidationError;
-		}
-
-		loginGet.releaseConnection();
-		
-		PostMethod loginPost = new PostMethod(loginPageUrl);
-
-		NameValuePair[] postData = new NameValuePair[3];
-		postData[0] = new NameValuePair("email", email);
-		postData[1] = new NameValuePair("pass", pass);
-		postData[2] = new NameValuePair("login", "");
-
-		loginPost.addParameters(postData);
-		
-		try {
-			httpClient.executeMethod(loginPost);
-
-			Cookie[] cookies = httpClient.getState().getCookies();
-
-			System.out.println("Present cookies: ");
-			for (int i = 0; i < cookies.length; i++) {
-				System.out.println(" - " + cookies[i].toExternalForm());
-			}
-			for (int i = 0; i < cookies.length; i++) {
-				initialState.addCookie(cookies[i]);
-			}
-			httpClient.setState(initialState);
-			
-			String redirectLocation;
-	        Header locationHeader = loginPost.getResponseHeader("location");
-	        if (locationHeader != null) {
-	        	//it should be "http://www.facebook.com/home.php?"
-	            redirectLocation = locationHeader.getValue();
-	            System.out.println("Redirect Location: " + redirectLocation);
-	            
-	            //homePageUrl = redirectLocation;
-	            
-	        } else {
-	            // The response is invalid and did not provide the new location for
-	            // the resource.  Report an error or possibly handle the response
-	            // like a 404 Not Found error.
-	        	
-	        	//TODO login error!
-	        	System.out.println("Login error!");
-	        	return ErrorCode.kError_Async_NotLoggedIn;
+		    System.out.println("Login form get: " + response.getStatusLine());
+	        if (entity != null) {
+	            System.out.println(EntityUtils.toString(entity));
+	            entity.consumeContent();
 	        }
-	        
-			String postMethodResponsStr = loginPost.getResponseBodyAsString();
+	        System.out.println("Initial set of cookies:");
+	        List<Cookie> cookies = ((DefaultHttpClient) httpClient).getCookieStore().getCookies();
+	        if (cookies.isEmpty()) {
+	            System.out.println("None");
+	        } else {
+	            for (int i = 0; i < cookies.size(); i++) {
+	                System.out.println("- " + cookies.get(i).toString());
+	            }
+	        }
 
-			System.out
-					.println("=========Login: postMethodResponsStr begin===========");
-			System.out.println(postMethodResponsStr);
-			System.out.println("+++++++++Login: postMethodResponsStr end+++++++++");
+	        HttpPost httpost = new HttpPost(loginPageUrl);
 
+	        List <NameValuePair> nvps = new ArrayList <NameValuePair>();
+	        nvps.add(new BasicNameValuePair("email", email));
+	        nvps.add(new BasicNameValuePair("pass", pass));
+
+	        httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+
+	        HttpResponse responsePost = httpClient.execute(httpost);
+	        entity = responsePost.getEntity();
+
+	        System.out.println("Login form get: " + responsePost.getStatusLine());
+	        if (entity != null) {
+	            System.out.println(EntityUtils.toString(entity));
+	            entity.consumeContent();
+	        }
+
+	        System.out.println("Post logon cookies:");
+	        cookies = ((DefaultHttpClient) httpClient).getCookieStore().getCookies();
+	        if (cookies.isEmpty()) {
+	            System.out.println("None");
+	        } else {
+	            for (int i = 0; i < cookies.size(); i++) {
+	                System.out.println("- " + cookies.get(i).toString());
+	            }
+	        }
 		} catch (HttpException httpe) {
 			System.err.print("HttpException");
 			System.err.println(httpe.getMessage());
@@ -256,97 +398,94 @@ public class Launcher {
 			System.err.println(ioe.getMessage());
 			ioe.printStackTrace();
 			return ErrorCode.kError_Global_ValidationError;
-		}
+		} catch (URISyntaxException e)
+        {
+            System.err.print("IOException");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return ErrorCode.kError_Global_ValidationError;
+        }
 
-		loginPost.releaseConnection();
 		return ErrorCode.Error_Global_NoError;
 	}
 	
-	private Long doParseHomePage(){
+	private int doParseHomePage(){
+	    String getMethodResponseBody = facebookGetMethod(homePageUrl);
+	    System.out.print("=========HomePage: getMethodResponseBody begin=========");
+	    System.out.print(getMethodResponseBody);
+	    System.out.print("+++++++++HomePage: getMethodResponseBody end+++++++++");
 
-		GetMethod homeGet = new GetMethod(homePageUrl);
+        //deal with the cookies
+	    System.out.print("The final cookies:");
+        List<Cookie> finalCookies = ((DefaultHttpClient) httpClient).getCookieStore().getCookies();
+        if (finalCookies.isEmpty()) {
+            System.out.print("None");
+        } else {
+            for (int i = 0; i < finalCookies.size(); i++) {
+                System.out.print("- " + finalCookies.get(i).toString());
+                //looking for our uid
+                if(finalCookies.get(i).getName().equals("c_user"))
+                    uid = finalCookies.get(i).getValue();
+            }
+        }
+        
+        if(getMethodResponseBody == null){
+            System.out.print("Can't get the home page! Exit.");
+            return ErrorCode.Error_Async_UnexpectedNullResponse;
+        }
+        if(uid == null){
+            System.out.print("Can't get the user's id! Exit.");
+            return ErrorCode.Error_System_UIDNotFound;
+        }
+        //<a href="http://www.facebook.com/profile.php?id=xxxxxxxxx" class="profile_nav_link">
+        /*String uidPrefix = "<a href=\"http://www.facebook.com/profile.php?id=";
+        String uidPostfix = "\" class=\"profile_nav_link\">";
+        //getMethodResponseBody.lastIndexOf(str, fromIndex)
+        int uidPostFixPos = getMethodResponseBody.indexOf(uidPostfix);
+        if(uidPostFixPos >= 0){
+            int uidBeginPos = getMethodResponseBody.lastIndexOf(uidPrefix, uidPostFixPos) + uidPrefix.length();
+            if(uidBeginPos < uidPrefix.length()){
+                logger.error("Can't get the user's id! Exit.");
+                return FacebookErrorCode.Error_System_UIDNotFound;
+            }
+            uid = getMethodResponseBody.substring(uidBeginPos, uidPostFixPos);
+            logger.info("UID: " + uid);
+        }else{
+            logger.error("Can't get the user's id! Exit.");
+            return FacebookErrorCode.Error_System_UIDNotFound;
+        }*/
+        
+        //find the channel
+        String channelPrefix = " \"channel";
+        int channelBeginPos = getMethodResponseBody.indexOf(channelPrefix)
+                + channelPrefix.length();
+        if (channelBeginPos < channelPrefix.length()){
+            System.out.println("Error: Can't find channel!");
+            return ErrorCode.Error_System_ChannelNotFound;
+        }
+        else {
+            channel = getMethodResponseBody.substring(channelBeginPos,
+                    channelBeginPos + 2);
+            System.out.println("Channel: " + channel);
+        }
 
-		try {
-			httpClient.executeMethod(homeGet);
-			
-			String getMethodResponseBody = homeGet.getResponseBodyAsString();
-			System.out.println("=========HomePage: getMethodResponseBody begin=========");
-			//System.out.println(getMethodResponseBody);
-			System.out.println("+++++++++HomePage: getMethodResponseBody end+++++++++");
-
-			Cookie[] finalCookies = httpClient.getState().getCookies();
-
-			System.out.println("Final cookies: ");
-			for (int i = 0; i < finalCookies.length; i++) {
-				System.out.println(" - " + finalCookies[i].toExternalForm());
-			}
-			for (int i = 0; i < finalCookies.length; i++) {
-				initialState.addCookie(finalCookies[i]);
-			}
-			httpClient.setState(initialState);
-			
-			if(getMethodResponseBody == null){
-				System.out.println("Can't get the home page! Exit.");
-				return ErrorCode.Error_Async_UnexpectedNullResponse;
-			}
-			
-			//<a href="http://www.facebook.com/profile.php?id=xxxxxxxxx" class="profile_nav_link">
-			String uidPrefix = "<a href=\"http://www.facebook.com/profile.php?id=";
-			String uidPostfix = "\" class=\"profile_nav_link\">";
-			//getMethodResponseBody.lastIndexOf(str, fromIndex)
-			int uidPostFixPos = getMethodResponseBody.indexOf(uidPostfix);
-			if(uidPostFixPos >= 0){
-				int uidBeginPos = getMethodResponseBody.lastIndexOf(uidPrefix, uidPostFixPos) + uidPrefix.length();
-				if(uidBeginPos < uidPrefix.length()){
-					System.out.println("Can't get the user's id! Exit.");
-					return ErrorCode.Error_System_UIDNotFound;
-				}
-				uid = getMethodResponseBody.substring(uidBeginPos, uidPostFixPos);
-				System.out.println("UID: " + uid);
-			}else{
-				System.out.println("Can't get the user's id! Exit.");
-				return ErrorCode.Error_System_UIDNotFound;
-			}
-			
-
-			String channelPrefix = " \"channel";
-			int channelBeginPos = getMethodResponseBody.indexOf(channelPrefix)
-					+ channelPrefix.length();
-			if (channelBeginPos < channelPrefix.length()){
-				System.out.println("Error: Can't find channel!");
-				return ErrorCode.Error_System_ChannelNotFound;
-			}
-			else {
-				channel = getMethodResponseBody.substring(channelBeginPos,
-						channelBeginPos + 2);
-				System.out.println("Channel: " + channel);
-			}
-
-			// <input type="hidden" id="post_form_id" name="post_form_id"
-			// value="3414c0f2db19233221ad8c2374398ed6" />
-			String postFormIDPrefix = "<input type=\"hidden\" id=\"post_form_id\" name=\"post_form_id\" value=\"";
-			int formIdBeginPos = getMethodResponseBody.indexOf(postFormIDPrefix)
-					+ postFormIDPrefix.length();
-			if (formIdBeginPos < postFormIDPrefix.length()){
-				System.out.println("Error: Can't find post form ID!");
-				return ErrorCode.Error_System_PostFornIDNotFound;
-			}
-			else {
-				post_form_id = getMethodResponseBody.substring(formIdBeginPos,
-						formIdBeginPos + 32);
-				System.out.println("post_form_id: " + post_form_id);
-			}
-		} catch (HttpException httpe) {
-			System.out.println(httpe.getMessage());
-			return ErrorCode.Error_Async_HttpConnectionFailed;
-		} catch (IOException ioe) {
-			System.out.println(ioe.getMessage());
-			return ErrorCode.Error_Async_HttpConnectionFailed;
-		}
-		
-		homeGet.releaseConnection();
-
-		return ErrorCode.Error_Global_NoError;
+        //find the post form id
+        // <input type="hidden" id="post_form_id" name="post_form_id"
+        // value="3414c0f2db19233221ad8c2374398ed6" />
+        String postFormIDPrefix = "<input type=\"hidden\" id=\"post_form_id\" name=\"post_form_id\" value=\"";
+        int formIdBeginPos = getMethodResponseBody.indexOf(postFormIDPrefix)
+                + postFormIDPrefix.length();
+        if (formIdBeginPos < postFormIDPrefix.length()){
+            System.out.println("Error: Can't find post form ID!");
+            return ErrorCode.Error_System_PostFormIDNotFound;
+        }
+        else {
+            post_form_id = getMethodResponseBody.substring(formIdBeginPos,
+                    formIdBeginPos + 32);
+            System.out.println("post_form_id: " + post_form_id);
+        }
+        
+        return ErrorCode.Error_Global_NoError;
 	}
 	
 	public static void PostMessage(String uid, String msg) {
@@ -359,31 +498,19 @@ public class Launcher {
 		System.out.println("msg:"+msg);
 		
 		String url = "http://www.facebook.com/ajax/chat/send.php";
-		PostMethod postMethod = new PostMethod(url);
 
 		// 填入各个表单域的值
-		NameValuePair[] data = {
-				new NameValuePair("msg_text", msg),
-				new NameValuePair("msg_id", new Random().nextInt(999999999)
-						+ ""),
-				new NameValuePair("client_time", new Date().getTime() + ""),
-				new NameValuePair("to", uid),
-				new NameValuePair("post_form_id", post_form_id) };
-		// 将表单的值放入postMethod中
-		postMethod.setRequestBody(data);
+		List <NameValuePair> nvps = new ArrayList <NameValuePair>();
+        nvps.add(new BasicNameValuePair("msg_text", (msg == null)? "":msg));
+        nvps.add(new BasicNameValuePair("msg_id", new Random().nextInt(999999999) + ""));
+        nvps.add(new BasicNameValuePair("client_time", new Date().getTime() + ""));
+        nvps.add(new BasicNameValuePair("to", uid));
+        nvps.add(new BasicNameValuePair("post_form_id", post_form_id));
+        
 		System.out.println("executeMethod ing...");
 		try {
 			// 执行postMethod
-			int statusCode;
-
-			statusCode = httpClient.executeMethod(postMethod);
-
-			String responseStr = postMethod.getResponseBodyAsString();
-			//TODO process the respons string
-			//if statusCode == 200: no error;(responsStr contains "errorDescription":"No error.")
-			//else retry?
-			System.out.println("Message posted(" + statusCode+"):" + responseStr);
-
+			String responseStr = facebookPostMethod("http://www.facebook.com", "/ajax/chat/send.php", nvps);
 			//for (;;);{"t":"continue"}
 			//for (;;);{"t":"refresh"}
 			//for (;;);{"t":"refresh", "seq":0}
@@ -393,117 +520,82 @@ public class Launcher {
 			// testHttpClient("http://www.facebook.com/home.php?");
 
 			ResponseParser.messagePostingResultParser(uid, msg, responseStr);
-		} catch (HttpException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private Long keepRequesting(){
-		PostMessage("1386786477", "Hello~I am using a facebook chat client!");
-		
-		seq = getSeq();
-		
-		//go seq
-		while(true){
-			//PostMessage("1190346972", "SEQ:"+seq);
-			long currentSeq = getSeq();
-			System.out.print("My seq:" + seq + " | Current seq:" + currentSeq + '\n');
-			if(seq > currentSeq)
-				seq = currentSeq;
-			
-			while(seq <= currentSeq){
-				//TODO get the old message between oldseq and seq
-				GetMethod get = new GetMethod(getMessageUrl(seq));				
-				try {
-					httpClient.executeMethod(get);
-					
-					String msgResponseBody = get.getResponseBodyAsString();
-					
-					System.out.println("=========msgResponseBody begin=========");
-					System.out.println(msgResponseBody);
-					System.out.println("+++++++++msgResponseBody end+++++++++");
-					
-					try {
-						ResponseParser.messageRequestResultParser(msgResponseBody);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-					seq++;
-				} catch (HttpException httpe) {
-					System.out.println(httpe.getMessage());
-				} catch (IOException ioe) {
-					System.out.println(ioe.getMessage());
-				}
-				
-				get.releaseConnection();
-			}
-		}
-	}
+	private void keepRequesting() throws Exception {
+        seq = getSeq();
+        
+        //go seq
+        while(true){
+            //PostMessage("1190346972", "SEQ:"+seq);
+            int currentSeq = getSeq();
+            System.out.println("My seq:" + seq + " | Current seq:" + currentSeq + '\n');
+            if(seq > currentSeq)
+                seq = currentSeq;
+            
+            while(seq <= currentSeq){
+                //get the old message between oldseq and seq
+                String msgResponseBody = facebookGetMethod(getMessageRequestingUrl(seq));
+                
+                System.out.println("=========msgResponseBody begin=========");
+                System.out.println(msgResponseBody);
+                System.out.println("+++++++++msgResponseBody end+++++++++");
+                
+                try {
+                    ResponseParser.messageRequestResultParser(msgResponseBody);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                seq++;
+            }
+        }
+    }
 	
-	private long getSeq() {
-		long tempSeq = -1;
-		while (tempSeq == -1) {
-			GetMethod get = new GetMethod(getMessageUrl(-1));
-			
-			try {
-				httpClient.executeMethod(get);
-				
-				String msgResponseBody = get.getResponseBodyAsString();
+	private int getSeq() {
+        int tempSeq = -1;
+        while (tempSeq == -1) {
+            //for (;;);{"t":"refresh", "seq":0}
+            String seqResponseBody;
+            try {
+                seqResponseBody = facebookGetMethod(getMessageRequestingUrl(-1));
+                tempSeq = parseSeq(seqResponseBody);
+                System.out.println("getSeq(): SEQ: " + tempSeq);
 
-				System.out.println("=========GetSeq: msgResponseBody begin===========");
-				System.out.println(msgResponseBody);
-				System.out.println("+++++++++GetSeq: msgResponseBody end+++++++++");
-				//for (;;);{"t":"refresh", "seq":0}
-				tempSeq = parseSeq(msgResponseBody);
-				System.out.println("getSeq(): SEQ: " + tempSeq);
-				
-				if(tempSeq >= 0){
-					return tempSeq;
-				}
-				try {
-					System.out.println("retrying to fetch the seq code...");
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			} catch (HttpException httpe) {
-				System.out.println(httpe.getMessage());
-			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
-			} catch (JSONException e) {
-				e.printStackTrace();
-				//org.json.JSONException: JSONObject["seq"] not found.
-				try {
-					Thread.sleep(5 * 1000);
-				} catch (InterruptedException ie) {
-					e.printStackTrace();
-				}
-			}
-			get.releaseConnection();
-		}
-		return tempSeq;
-	}
+                if(tempSeq >= 0){
+                    return tempSeq;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                System.out.println("retrying to fetch the seq code after 1 second...");
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return tempSeq;
+    }
 	
-	private long parseSeq(String msgResponseBody) throws JSONException{
-		if(msgResponseBody == null)
-			return -1;
-		String prefix = "for (;;);";
-		if(msgResponseBody.startsWith(prefix))
-			msgResponseBody = msgResponseBody.substring(prefix.length());
-		
-		//JSONObject body =(JSONObject) JSONValue.parse(msgResponseBody);
-		JSONObject body = new JSONObject(msgResponseBody);
-		if(body != null)
-			return (Long)body.getLong("seq");
-		else
-			return -1;
-	}
+	private int parseSeq(String msgResponseBody) throws JSONException{
+        if(msgResponseBody == null)
+            return -1;
+        String prefix = "for (;;);";
+        if(msgResponseBody.startsWith(prefix))
+            msgResponseBody = msgResponseBody.substring(prefix.length());
+        
+        //JSONObject body =(JSONObject) JSONValue.parse(msgResponseBody);
+        JSONObject body = new JSONObject(msgResponseBody);
+        if(body != null)
+            return body.getInt("seq");
+        else
+            return -1;
+    }
 	
-	private String getMessageUrl(long seq) {
+	private String getMessageRequestingUrl(long seq) {
 		//http://0.channel06.facebook.com/x/0/false/p_MYID=-1
 		String url = "http://0.channel" + channel + ".facebook.com/x/0/false/p_" + uid + "=" + seq;
 		System.out.println("request:" + url);
@@ -517,59 +609,105 @@ public class Launcher {
 	public static void getBuddyList(){
 		System.out.println("====== getBuddyList begin======");
 
-		String url = "http://www.facebook.com/ajax/presence/update.php";
-		PostMethod postMethod = new PostMethod(url);
-
-		// 填入各个表单域的值
-		NameValuePair[] data = {
-				new NameValuePair("buddy_list", "1"),
-				new NameValuePair("notifications", "1"),
-				new NameValuePair("force_render", "true"),
-				//new NameValuePair("popped_out", "false"),
-				new NameValuePair("post_form_id", post_form_id),
-				new NameValuePair("user", uid)};
-		// 将表单的值放入postMethod中
-		postMethod.setRequestBody(data);
-		System.out.println("executeMethod ing...");
-		try {
-			// 执行postMethod
-			int statusCode;
-
-			statusCode = httpClient.executeMethod(postMethod);
-
-			String responseStr = postMethod.getResponseBodyAsString();
-			//TODO process the respons string
-			//if statusCode == 200: no error;(responsStr contains "errorDescription":"No error.")
-			//else retry?
-			System.out.println("Got buddy list(" + statusCode+"):\n" + responseStr);
-			
-			//for (;;);{"error":0,"errorSummary":"","errorDescription":"No error.","payload":{"buddy_list":{"listChanged":true,"availableCount":1,"nowAvailableList":{"UID1":{"i":false}},"wasAvailableIDs":[],"userInfos":{"UID1":{"name":"Buddy 1","firstName":"Buddy","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","status":null,"statusTime":0,"statusTimeRel":""},"UID2":{"name":"Buddi 2","firstName":"Buddi","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","status":null,"statusTime":0,"statusTimeRel":""}},"forcedRender":true},"time":1209560380000}}  
-			//for (;;);{"error":0,"errorSummary":"","errorDescription":"No error.","payload":{"time":1214626375000,"buddy_list":{"listChanged":true,"availableCount":1,"nowAvailableList":{},"wasAvailableIDs":[],"userInfos":{"1386786477":{"name":"\u5341\u4e00","firstName":"\u4e00","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif","status":null,"statusTime":0,"statusTimeRel":""}},"forcedRender":null,"flMode":false,"flData":{}},"notifications":{"countNew":0,"count":1,"app_names":{"2356318349":"\u670b\u53cb"},"latest_notif":1214502420,"latest_read_notif":1214502420,"markup":"<div id=\"presence_no_notifications\" style=\"display:none\" class=\"no_notifications\">\u65e0\u65b0\u901a\u77e5\u3002<\/div><div class=\"notification clearfix notif_2356318349\" onmouseover=\"CSS.addClass(this, 'hover');\" onmouseout=\"CSS.removeClass(this, 'hover');\"><div class=\"icon\"><img src=\"http:\/\/static.ak.fbcdn.net\/images\/icons\/friend.gif?0:41046\" alt=\"\" \/><\/div><div class=\"notif_del\" onclick=\"return presenceNotifications.showHideDialog(this, 2356318349)\"><\/div><div class=\"body\"><a href=\"http:\/\/www.facebook.com\/profile.php?id=1190346972\"   >David Willer<\/a>\u63a5\u53d7\u4e86\u60a8\u7684\u670b\u53cb\u8bf7\u6c42\u3002 <span class=\"time\">\u661f\u671f\u56db<\/span><\/div><\/div>","inboxCount":"0"}},"bootload":[{"name":"js\/common.js.pkg.php","type":"js","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/pkg\/60\/106715\/js\/common.js.pkg.php"}]}
-			System.out.println("+++++++++ getBuddyList end +++++++++");
-			// testHttpClient("http://www.facebook.com/home.php?");
-			ResponseParser.buddylistParser(responseStr);
-
-		} catch (HttpException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		List <NameValuePair> nvps = new ArrayList <NameValuePair>();
+        nvps.add(new BasicNameValuePair("buddy_list", "1"));
+        nvps.add(new BasicNameValuePair("notifications", "1"));
+        nvps.add(new BasicNameValuePair("force_render", "true"));
+        //nvps.add(new BasicNameValuePair("popped_out", "false"));
+        nvps.add(new BasicNameValuePair("post_form_id", post_form_id));
+        nvps.add(new BasicNameValuePair("user", uid));
+        
+        try{
+            String responseStr = facebookPostMethod("http://www.facebook.com", "/ajax/presence/update.php", nvps);
+            
+            //for (;;);{"error":0,"errorSummary":"","errorDescription":"No error.","payload":{"buddy_list":{"listChanged":true,"availableCount":1,"nowAvailableList":{"UID1":{"i":false}},"wasAvailableIDs":[],"userInfos":{"UID1":{"name":"Buddy 1","firstName":"Buddy","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","status":null,"statusTime":0,"statusTimeRel":""},"UID2":{"name":"Buddi 2","firstName":"Buddi","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","status":null,"statusTime":0,"statusTimeRel":""}},"forcedRender":true},"time":1209560380000}}  
+            //for (;;);{"error":0,"errorSummary":"","errorDescription":"No error.","payload":{"time":1214626375000,"buddy_list":{"listChanged":true,"availableCount":1,"nowAvailableList":{},"wasAvailableIDs":[],"userInfos":{"1386786477":{"name":"\u5341\u4e00","firstName":"\u4e00","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif","status":null,"statusTime":0,"statusTimeRel":""}},"forcedRender":null,"flMode":false,"flData":{}},"notifications":{"countNew":0,"count":1,"app_names":{"2356318349":"\u670b\u53cb"},"latest_notif":1214502420,"latest_read_notif":1214502420,"markup":"<div id=\"presence_no_notifications\" style=\"display:none\" class=\"no_notifications\">\u65e0\u65b0\u901a\u77e5\u3002<\/div><div class=\"notification clearfix notif_2356318349\" onmouseover=\"CSS.addClass(this, 'hover');\" onmouseout=\"CSS.removeClass(this, 'hover');\"><div class=\"icon\"><img src=\"http:\/\/static.ak.fbcdn.net\/images\/icons\/friend.gif?0:41046\" alt=\"\" \/><\/div><div class=\"notif_del\" onclick=\"return presenceNotifications.showHideDialog(this, 2356318349)\"><\/div><div class=\"body\"><a href=\"http:\/\/www.facebook.com\/profile.php?id=1190346972\"   >David Willer<\/a>\u63a5\u53d7\u4e86\u60a8\u7684\u670b\u53cb\u8bf7\u6c42\u3002 <span class=\"time\">\u661f\u671f\u56db<\/span><\/div><\/div>","inboxCount":"0"}},"bootload":[{"name":"js\/common.js.pkg.php","type":"js","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/pkg\/60\/106715\/js\/common.js.pkg.php"}]}
+            System.out.println("+++++++++ getBuddyList end +++++++++");
+            // testHttpClient("http://www.facebook.com/home.php?");
+            ResponseParser.buddylistParser(responseStr);
+        } catch (JSONException e) {
+            System.out.println(e.getMessage());
+        }
 	}
 	
-	public void getNotifications(){
-		System.out.println("====== getNotifications begin======");
+	/**
+     * The general facebook post method.
+     * @param host the host
+     * @param urlPostfix the post fix of the URL
+     * @param data the parameter
+     * @return the response string
+     */
+    private static String facebookPostMethod(String host, String urlPostfix, List <NameValuePair> nvps){
+        System.out.println("@executing facebookPostMethod():" + host + urlPostfix);
+        String responseStr = null;
+        try {
+            HttpPost httpost = new HttpPost(host + urlPostfix);
+            httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
 
-		String url = "http://www.facebook.com/ajax/presence/update.php";
-		PostMethod postMethod = new PostMethod(url);
+            // execute postMethod
+            HttpResponse postResponse = httpClient.execute(httpost);
+            HttpEntity entity = postResponse.getEntity();
 
-		// 填入各个表单域的值
-		NameValuePair[] data = {
-				new NameValuePair("notifications", 1 + ""),
-				new NameValuePair("post_form_id", post_form_id),
-				new NameValuePair("user", uid)};
-		// 将表单的值放入postMethod中
-		postMethod.setRequestBody(data);
-	}
+            System.out.println("facebookPostMethod: " + postResponse.getStatusLine());
+            if (entity != null) {
+                responseStr = EntityUtils.toString(entity);
+                System.out.println(responseStr);
+                entity.consumeContent();
+            }
+            System.out.println("Post Method done(" + postResponse.getStatusLine().getStatusCode()+"), response string length: " + (responseStr==null? 0:responseStr.length()));
+        } catch (HttpException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (URISyntaxException e) {
+            System.out.println(e.getMessage());
+        }
+        //TODO process the respons string
+        //if statusCode == 200: no error;(responsStr contains "errorDescription":"No error.")
+        //else retry?
+        return responseStr;
+    }
+    /**
+     * The general facebook get method.
+     * @param url the URL of the page we wanna get
+     * @return the response string
+     */
+    private static String facebookGetMethod(String url){
+        System.out.println("@executing facebookGetMethod():" + url);
+        String responseStr = null;
+        
+        try {
+            HttpGet loginGet = new HttpGet(url);
+            HttpResponse response = httpClient.execute(loginGet);
+            HttpEntity entity = response.getEntity();
+            
+            System.out.println("facebookGetMethod: " + response.getStatusLine());
+            if (entity != null) {
+                responseStr = EntityUtils.toString(entity);
+                entity.consumeContent();
+            }
+            
+            int statusCode = response.getStatusLine().getStatusCode();
+
+            /**
+             * @fixme I am not sure of if 200 is the only code that 
+             *  means "success"
+             */
+            if(statusCode != 200){
+                //error occured
+                System.out.println("Error Occured! Status Code = " + statusCode);
+                responseStr = null;
+            }
+            System.out.println("Get Method done(" + statusCode+"), response string length: " + (responseStr==null? 0:responseStr.length()));
+        } catch (HttpException e) {
+            System.out.println("Failed to get the page: " + url);
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (URISyntaxException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return responseStr;
+    }
 }

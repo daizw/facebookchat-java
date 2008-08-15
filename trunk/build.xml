@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GB2312"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by DaiZW(shinysky) on Jul 2, 2008 22:00:00 PM-->
 
 <project name="Facebook Chat (Java)" default="ant-usage" basedir=".">
