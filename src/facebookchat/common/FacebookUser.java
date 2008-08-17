@@ -50,7 +50,7 @@ public class FacebookUser {
 	public String name;
 	public String firstName;
 	public String thumbSrc;
-	public Object status;
+	public String status;
 	public Number statusTime;
 	public String statusTimeRel;
 
@@ -63,7 +63,7 @@ public class FacebookUser {
 		name = (String) user.get("name");
 		firstName = (String) user.get("firstName");
 		thumbSrc = (String) user.get("thumbSrc");
-		status = user.get("status");
+		status = (String)user.get("status");
 		statusTime = (Number) user.get("statusTime");
 		statusTimeRel = (String) user.get("statusTimeRel");
 		

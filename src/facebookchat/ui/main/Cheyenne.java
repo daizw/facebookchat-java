@@ -92,10 +92,11 @@ public class Cheyenne extends NoxFrame {
 		}
 		
 		String name = FacebookBuddyList.me.name;
+		String sign = FacebookBuddyList.me.status + "(" + FacebookBuddyList.me.statusTimeRel + ")";
 		/**
 		 * mini profile 组件 含: 头像, 昵称, 状态, 签名
 		 */
-		profile = new MiniProfilePane(this, portrait, name, "");
+		profile = new MiniProfilePane(this, portrait, name, sign);
 		// profile.setBackground(new Color(0, 255, 0));
 		profile.setSize(new Dimension(WIDTH_DEFLT, 50));
 		profile.setPreferredSize(new Dimension(WIDTH_PREF, 50));

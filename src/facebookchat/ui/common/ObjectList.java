@@ -193,7 +193,7 @@ public class ObjectList extends JList {
 						+ new Date(item.lastSeen).toString()
 						+ "</Font></html>");
 	        else
-	        	otherInfo.setText("");
+	        	otherInfo.setText(item.status + "(" + item.statusTimeRel + ")");
 			
 
 			/*
