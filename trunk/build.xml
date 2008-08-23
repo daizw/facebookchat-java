@@ -80,7 +80,7 @@
 	<!-- Run                                                                 -->
 	<!-- =================================================================== -->
 	<target name="run-logging" depends="build" description="Run the Facebook Chat (Java)" if="java.util.logging.config.file">
-		<java classname="${APP}" failonerror="yes" fork="yes">
+		<java classname="facebookchat.common.Launcher" failonerror="no" fork="yes">
 			<classpath>
 				<!--fileset refid="facebookchat.files" /-->
 				<fileset refid="lib.files" />
@@ -91,7 +91,7 @@
 	</target>
 
 	<target name="run-default-logging" depends="build" description="Run the Facebook Chat (Java)" unless="java.util.logging.config.file">
-		<java classname="${APP}" failonerror="yes" fork="yes">
+		<java classname="facebookchat.common.Launcher" failonerror="no" fork="yes">
 			<classpath>
 				<!--fileset refid="facebookchat.files" /-->
 				<fileset refid="lib.files" />
@@ -102,6 +102,8 @@
 
 	<target name="run" description="Run the Facebook Chat (Java)" depends="run-logging,run-default-logging" />
 	
+	<target name="rebuild-run" description="Rebuild and run the Facebook Chat (Java)" depends="build,run" />
+		
 	<target name="facebookchat" depends="build" description="Run the Facebook Chat (Java) UI" if="java.util.logging.config.file">
 		<java classname="facebookchat.common.Launcher" failonerror="yes" fork="yes">
 			<classpath>
@@ -164,14 +166,22 @@
 	<!-- Creates the jar package(s)                                          -->
 	<!-- =================================================================== -->
 	<target name="jar" depends="build" description="Creates the jar package(s)">
-		<jar jarfile="${release.dir}/${application.name}.jar" basedir="${classes.dir}" manifest="./MANIFEST.MF" includes="**" />
+		<jar jarfile="${release.dir}/${application.name}.jar" basedir="${classes.dir}" manifest="./MANIFEST.MF" includes="**" >
+		<!-- zipfileset src="lib/json-1.0.jar" prefix=""/>
+		<zipfileset src="lib/httpclient-4.0-alpha5-SNAPSHOT.jar" prefix=""/>
+		<zipfileset src="lib/httpcore-4.0-beta2.jar" prefix=""/>
+		<zipfileset src="lib/commons-codec-1.3.jar" prefix=""/>
+		<zipfileset src="lib/commons-logging.jar" prefix=""/>
+		<zipfileset src="lib/jna.jar" prefix=""/>
+		<zipfileset src="lib/examples.jar" prefix=""/>
+		<zipfileset dir="resources" prefix="resources" /-->
+		</jar>
 	</target>
 
 	<!-- =================================================================== -->
 	<!-- Creates the release package                                         -->
 	<!-- =================================================================== -->
-	<target name="release" depends="build, source-zip, source-tgz" description="Creates the release package">
-		<jar jarfile="${release.dir}/${application.name}.jar" basedir="${classes.dir}" manifest="./MANIFEST.MF" includes="**" />
+	<target name="release" depends="build, jar, source-zip, source-tgz" description="Creates the release package">
 		<!-- create directories -->
 		<mkdir dir="${release.resrc.dir}" />
 		<mkdir dir="${release.lib.dir}" />

@@ -103,6 +103,24 @@ public class Cheyenne extends NoxFrame {
 		profile.setMaximumSize(new Dimension(WIDTH_MAX, 50));
 		profile.setMinimumSize(new Dimension(WIDTH_MIN, 50));
 	}
+	public void updateMyStatus() {
+		ImageIcon portrait;
+		try {
+			portrait = new ImageIcon(
+					new URL(FacebookBuddyList.me.thumbSrc));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			portrait = new ImageIcon(SystemPath.PORTRAIT_RESOURCE_PATH + "q_silhouette.gif");
+		}
+		
+		String name = FacebookBuddyList.me.name;
+		String sign = FacebookBuddyList.me.status + "(" + FacebookBuddyList.me.statusTimeRel + ")";
+		if(profile != null){
+			profile.setPortrait(portrait);
+			profile.setNickName(name);
+			profile.setSign(sign);
+		}
+	}
 	/**
 	 * request buddylist every 3 mins
 	 * @author shinysky
