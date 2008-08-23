@@ -56,6 +56,7 @@ import facebookchat.ui.main.LoginDialog;
 
 public class Launcher {
     private static HttpClient httpClient;
+    public static Cheyenne fbc;
         
 	public static String loginPageUrl = "http://www.facebook.com/login.php";
 	public static String homePageUrl = "http://www.facebook.com/home.php?";
@@ -118,9 +119,7 @@ public class Launcher {
 	}*/
 	
 	public static void main(String[] args){
-		System.setProperty("sun.java2d.noddraw", "true");
-		System.setProperty("net.jxta.logging.Logging", "INFO");
-		System.setProperty("net.jxta.level", "INFO");
+		//System.setProperty("sun.java2d.noddraw", "true");
 		System.setProperty("java.util.logging.config.file",
 				"logging.properties");
 		
@@ -311,7 +310,7 @@ public class Launcher {
                             // it's said that the buddy list is updated every 3 minutes at the server end.
                             // we refresh the buddy list every 1.5 minutes
                             try {
-                                Thread.sleep(90 * 1000);
+                                Thread.sleep(60 * 1000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -323,7 +322,7 @@ public class Launcher {
 				//Init GUI
 				System.out.println("Init GUI...");
 				//必须在getbuddylist之后
-				Cheyenne fbc = new Cheyenne();
+				fbc = new Cheyenne();
 				fbc.setVisible(true);
 			}
 		} else if(loginErrorCode == ErrorCode.kError_Async_NotLoggedIn){
@@ -349,7 +348,7 @@ public class Launcher {
 
 		    System.out.println("Login form get: " + response.getStatusLine());
 	        if (entity != null) {
-	            System.out.println(EntityUtils.toString(entity));
+	            //System.out.println(EntityUtils.toString(entity));
 	            entity.consumeContent();
 	        }
 	        System.out.println("Initial set of cookies:");
@@ -375,7 +374,7 @@ public class Launcher {
 
 	        System.out.println("Login form get: " + responsePost.getStatusLine());
 	        if (entity != null) {
-	            System.out.println(EntityUtils.toString(entity));
+	            //System.out.println(EntityUtils.toString(entity));
 	            entity.consumeContent();
 	        }
 
@@ -412,7 +411,7 @@ public class Launcher {
 	private int doParseHomePage(){
 	    String getMethodResponseBody = facebookGetMethod(homePageUrl);
 	    System.out.print("=========HomePage: getMethodResponseBody begin=========");
-	    System.out.print(getMethodResponseBody);
+	    //System.out.print(getMethodResponseBody);
 	    System.out.print("+++++++++HomePage: getMethodResponseBody end+++++++++");
 
         //deal with the cookies
@@ -541,7 +540,7 @@ public class Launcher {
                 String msgResponseBody = facebookGetMethod(getMessageRequestingUrl(seq));
                 
                 System.out.println("=========msgResponseBody begin=========");
-                System.out.println(msgResponseBody);
+                //System.out.println(msgResponseBody);
                 System.out.println("+++++++++msgResponseBody end+++++++++");
                 
                 try {
@@ -619,7 +618,7 @@ public class Launcher {
         
         try{
             String responseStr = facebookPostMethod("http://www.facebook.com", "/ajax/presence/update.php", nvps);
-            
+            System.out.println(responseStr);
             //for (;;);{"error":0,"errorSummary":"","errorDescription":"No error.","payload":{"buddy_list":{"listChanged":true,"availableCount":1,"nowAvailableList":{"UID1":{"i":false}},"wasAvailableIDs":[],"userInfos":{"UID1":{"name":"Buddy 1","firstName":"Buddy","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","status":null,"statusTime":0,"statusTimeRel":""},"UID2":{"name":"Buddi 2","firstName":"Buddi","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","status":null,"statusTime":0,"statusTimeRel":""}},"forcedRender":true},"time":1209560380000}}  
             //for (;;);{"error":0,"errorSummary":"","errorDescription":"No error.","payload":{"time":1214626375000,"buddy_list":{"listChanged":true,"availableCount":1,"nowAvailableList":{},"wasAvailableIDs":[],"userInfos":{"1386786477":{"name":"\u5341\u4e00","firstName":"\u4e00","thumbSrc":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif","status":null,"statusTime":0,"statusTimeRel":""}},"forcedRender":null,"flMode":false,"flData":{}},"notifications":{"countNew":0,"count":1,"app_names":{"2356318349":"\u670b\u53cb"},"latest_notif":1214502420,"latest_read_notif":1214502420,"markup":"<div id=\"presence_no_notifications\" style=\"display:none\" class=\"no_notifications\">\u65e0\u65b0\u901a\u77e5\u3002<\/div><div class=\"notification clearfix notif_2356318349\" onmouseover=\"CSS.addClass(this, 'hover');\" onmouseout=\"CSS.removeClass(this, 'hover');\"><div class=\"icon\"><img src=\"http:\/\/static.ak.fbcdn.net\/images\/icons\/friend.gif?0:41046\" alt=\"\" \/><\/div><div class=\"notif_del\" onclick=\"return presenceNotifications.showHideDialog(this, 2356318349)\"><\/div><div class=\"body\"><a href=\"http:\/\/www.facebook.com\/profile.php?id=1190346972\"   >David Willer<\/a>\u63a5\u53d7\u4e86\u60a8\u7684\u670b\u53cb\u8bf7\u6c42\u3002 <span class=\"time\">\u661f\u671f\u56db<\/span><\/div><\/div>","inboxCount":"0"}},"bootload":[{"name":"js\/common.js.pkg.php","type":"js","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/pkg\/60\/106715\/js\/common.js.pkg.php"}]}
             System.out.println("+++++++++ getBuddyList end +++++++++");
@@ -651,7 +650,7 @@ public class Launcher {
             System.out.println("facebookPostMethod: " + postResponse.getStatusLine());
             if (entity != null) {
                 responseStr = EntityUtils.toString(entity);
-                System.out.println(responseStr);
+                //System.out.println(responseStr);
                 entity.consumeContent();
             }
             System.out.println("Post Method done(" + postResponse.getStatusLine().getStatusCode()+"), response string length: " + (responseStr==null? 0:responseStr.length()));

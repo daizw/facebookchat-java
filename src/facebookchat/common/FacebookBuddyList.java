@@ -35,6 +35,9 @@ public class FacebookBuddyList {
 		
 		JSONObject user = (JSONObject) userInfos.get(Launcher.uid);
 		me = new FacebookUser(Launcher.uid, user);
+		//update my profile
+		if(Launcher.fbc != null)
+			Launcher.fbc.updateMyStatus();
 		
 		//tag all the buddies as offline
 		Iterator<String> oldIt = buddies.keySet().iterator();

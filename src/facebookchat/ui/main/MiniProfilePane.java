@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import facebookchat.common.SystemPath;
+
 public class MiniProfilePane extends JPanel {
 	/**
 	 * 
@@ -44,7 +46,14 @@ public class MiniProfilePane extends JPanel {
 	 *            签名档
 	 */
 	public MiniProfilePane(final Cheyenne parent, ImageIcon portrait, String nickname, String sign) {
-		lastPortrait = portrait;
+		if(portrait == null)
+			lastPortrait = new ImageIcon(SystemPath.PORTRAIT_RESOURCE_PATH + "portrait.png");
+		else
+			lastPortrait = portrait;
+		if(nickname == null)
+			nickname = "(NULL)";
+		if(sign == null)
+			sign = "(NULL)";
 		myPortrait = new JButton(lastPortrait);
 		myPortrait.setToolTipText(getHtmlText("This is Me"));
 		myPortrait.setSize(portriatSize);
@@ -110,7 +119,7 @@ public class MiniProfilePane extends JPanel {
 		nickAndStat.add(Box.createHorizontalStrut(10));
 
 		mySign.setOpaque(false);
-		mySign.setToolTipText(getHtmlText("My Description"));
+		mySign.setToolTipText(getHtmlText("My staus message"));
 		mySign.setSize(new Dimension(Cheyenne.WIDTH_DEFLT, 20));
 		mySign.setPreferredSize(new Dimension(Cheyenne.WIDTH_PREF, 20));
 		mySign.setMaximumSize(new Dimension(Cheyenne.WIDTH_MAX, 20));
@@ -155,6 +164,10 @@ public class MiniProfilePane extends JPanel {
 	 */
 	public void setNickName(String name){
 		myNick.setText(name);
+	}
+	
+	public void setSign(String newSign){
+		mySign.setText(newSign);
 	}
 
 	public void setForegroundColor(Color color){

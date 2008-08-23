@@ -60,10 +60,18 @@ public class FacebookUser {
 	
 	public FacebookUser(String id, JSONObject user) throws JSONException{
 		uid = id;
+		if(user == null)
+			throw new JSONException("Param user is null when init FacebookUser");
 		name = (String) user.get("name");
 		firstName = (String) user.get("firstName");
 		thumbSrc = (String) user.get("thumbSrc");
-		status = (String)user.get("status");
+		Object temp = user.get("status");
+		System.out.println(temp.toString());
+		System.out.println(temp.getClass());
+		if(!temp.equals(org.json.JSONObject.NULL))
+			status = (String)temp;
+		else
+			status = "";
 		statusTime = (Number) user.get("statusTime");
 		statusTimeRel = (String) user.get("statusTimeRel");
 		
