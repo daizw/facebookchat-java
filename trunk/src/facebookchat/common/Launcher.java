@@ -307,6 +307,8 @@ public class Launcher {
                             } catch (Exception e){
                                 e.printStackTrace();
                             }
+                            if(fbc != null)
+                                fbc.updateBuddyListPane();
                             // it's said that the buddy list is updated every 3 minutes at the server end.
                             // we refresh the buddy list every 1.5 minutes
                             try {
@@ -627,6 +629,32 @@ public class Launcher {
         } catch (JSONException e) {
             System.out.println(e.getMessage());
         }
+	}
+	
+	/**
+     * Set status message
+     * 
+     * @param statusMsg status message
+     */
+    public static void setStatusMessage(String statusMsg)
+    {
+        //post("www.facebook.com", "/updatestatus.php", "status=%s&post_form_id=%s");
+        //post("www.facebook.com", "/updatestatus.php", "clear=1&post_form_id=%s");
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        if(statusMsg.length() < 1)
+            nvps.add(new BasicNameValuePair("clear", "1"));
+        else
+            nvps.add(new BasicNameValuePair("status", statusMsg));
+        
+        nvps.add(new BasicNameValuePair("post_form_id", post_form_id));
+        System.out.println("@executeMethod setStatusMessage() ing ...");
+        // we don't care the response string now
+        facebookPostMethod("http://www.facebook.com", "/updatestatus.php", nvps);
+    }
+    
+	public static void shutdown(){
+	    httpClient.getConnectionManager().shutdown();
+	    httpClient = null;
 	}
 	
 	/**

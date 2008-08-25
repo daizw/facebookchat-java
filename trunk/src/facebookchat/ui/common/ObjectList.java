@@ -143,6 +143,7 @@ public class ObjectList extends JList {
 			addItem(fu);
 		}
 		this.repaint();
+		this.revalidate();
 	}
 	
 	public class NoxJListCellRender extends JPanel implements ListCellRenderer {
