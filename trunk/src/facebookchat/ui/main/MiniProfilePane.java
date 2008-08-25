@@ -129,6 +129,7 @@ public class MiniProfilePane extends JPanel {
 		mySignField.setEditable(false);
 		mySignField.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent arg0) {
+			    mySignField.setText(lastSignStr);
 				mySignField.setEditable(true);
 				mySignField.setOpaque(true);
 				if(mySignField.getForeground().equals(Color.WHITE))
