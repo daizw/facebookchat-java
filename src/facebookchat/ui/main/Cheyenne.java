@@ -36,7 +36,7 @@ public class Cheyenne extends NoxFrame {
 	public static final int HEIGHT_MAX = 2000;
 	public static final int HEIGHT_MIN = 300;
 	
-	public static final int InterStatusCheckingsSleepTime = 3 * 60 * 1000;
+	public static final int InterStatusCheckingsSleepTime = 60 * 1000;
 	/**
 	 * 各JPanel
 	 */
@@ -73,8 +73,8 @@ public class Cheyenne extends NoxFrame {
 		
 		setForegroundColor();
 		
-		onlineBuddyListChecker = new Thread(new NoOneLivesForeverExceptMe(), "OnlineBuddyListChecker");
-		onlineBuddyListChecker.start();
+		//onlineBuddyListChecker = new Thread(new NoOneLivesForeverExceptMe(), "OnlineBuddyListChecker");
+		//onlineBuddyListChecker.start();
 	}
 	/**
 	 * 初始化个人设置
@@ -113,18 +113,18 @@ public class Cheyenne extends NoxFrame {
 			portrait = new ImageIcon(SystemPath.PORTRAIT_RESOURCE_PATH + "q_silhouette.gif");
 		}
 		
-		String name = FacebookBuddyList.me.name;
-		String sign = FacebookBuddyList.me.status + "(" + FacebookBuddyList.me.statusTimeRel + ")";
-		if(profile != null){
+		if(profile != null && FacebookBuddyList.me != null){
 			profile.setPortrait(portrait);
-			profile.setNickName(name);
-			profile.setSign(sign);
+			profile.setNickName(FacebookBuddyList.me.name);
+			profile.setSign(FacebookBuddyList.me.status, FacebookBuddyList.me.statusTimeRel);
 		}
 	}
 	/**
 	 * request buddylist every 3 mins
+	 * 
+	 * 与Launcher中go()中的某个线程功能重复，故弃用
 	 * @author shinysky
-	 *
+	 * @deprecated
 	 */
 	private class NoOneLivesForeverExceptMe implements Runnable{
 		NoOneLivesForeverExceptMe(){
@@ -146,6 +146,9 @@ public class Cheyenne extends NoxFrame {
 		}
 	}
 	
+	public void updateBuddyListPane(){
+	    buddyListPane.refresh();
+	}
 	/**
 	 * 设置窗口前景颜色
 	 */

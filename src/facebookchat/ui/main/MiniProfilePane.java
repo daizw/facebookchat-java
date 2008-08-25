@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import facebookchat.common.Launcher;
 import facebookchat.common.SystemPath;
 
 public class MiniProfilePane extends JPanel {
@@ -29,7 +30,7 @@ public class MiniProfilePane extends JPanel {
 	JPanel miniProfilePane;
 	JPanel nickAndStat;
 	JLabel myNick;
-	JTextField mySign;
+	JTextField mySignField;
 	public static Dimension portriatSize = new Dimension(50, 50);
 	ImageIcon lastPortrait = null;
 	
@@ -53,7 +54,7 @@ public class MiniProfilePane extends JPanel {
 		if(nickname == null)
 			nickname = "(NULL)";
 		if(sign == null)
-			sign = "(NULL)";
+			sign = "";
 		myPortrait = new JButton(lastPortrait);
 		myPortrait.setToolTipText(getHtmlText("This is Me"));
 		myPortrait.setSize(portriatSize);
@@ -103,7 +104,7 @@ public class MiniProfilePane extends JPanel {
 		myNick.setToolTipText(getHtmlText("My nickname"));
 
 		// myStatus.setOpaque(false);
-		mySign = new JTextField(sign);
+		mySignField = new JTextField(sign);
 		
 		lastSignStr = sign;
 
@@ -118,25 +119,27 @@ public class MiniProfilePane extends JPanel {
 		nickAndStat.add(myNick);
 		nickAndStat.add(Box.createHorizontalStrut(10));
 
-		mySign.setOpaque(false);
-		mySign.setToolTipText(getHtmlText("My staus message"));
-		mySign.setSize(new Dimension(Cheyenne.WIDTH_DEFLT, 20));
-		mySign.setPreferredSize(new Dimension(Cheyenne.WIDTH_PREF, 20));
-		mySign.setMaximumSize(new Dimension(Cheyenne.WIDTH_MAX, 20));
-		mySign.setMinimumSize(new Dimension(Cheyenne.WIDTH_MIN, 20));
+		mySignField.setOpaque(false);
+		mySignField.setToolTipText(getHtmlText("My staus message"));
+		mySignField.setSize(new Dimension(Cheyenne.WIDTH_DEFLT, 20));
+		mySignField.setPreferredSize(new Dimension(Cheyenne.WIDTH_PREF, 20));
+		mySignField.setMaximumSize(new Dimension(Cheyenne.WIDTH_MAX, 20));
+		mySignField.setMinimumSize(new Dimension(Cheyenne.WIDTH_MIN, 20));
 		//mySign.setEnabled(false);
-		mySign.setEditable(false);
-		mySign.addFocusListener(new FocusListener(){
+		mySignField.setEditable(false);
+		mySignField.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent arg0) {
-				mySign.setEditable(true);
-				mySign.setOpaque(true);
-				if(mySign.getForeground().equals(Color.WHITE))
-						mySign.setForeground(Color.BLACK);
+				mySignField.setEditable(true);
+				mySignField.setOpaque(true);
+				if(mySignField.getForeground().equals(Color.WHITE))
+						mySignField.setForeground(Color.BLACK);
 			}
 			public void focusLost(FocusEvent arg0) {
-				mySign.setEditable(false);
-				mySign.setOpaque(false);
-				mySign.setForeground(myNick.getForeground());
+				mySignField.setEditable(false);
+				mySignField.setOpaque(false);
+				mySignField.setForeground(myNick.getForeground());
+				if(!mySignField.getText().trim().equals(lastSignStr.trim()))
+				    Launcher.setStatusMessage(mySignField.getText());
 			}
 		});
 		
@@ -144,7 +147,7 @@ public class MiniProfilePane extends JPanel {
 		miniProfilePane.setLayout(new BoxLayout(miniProfilePane,
 				BoxLayout.Y_AXIS));
 		miniProfilePane.add(nickAndStat);
-		miniProfilePane.add(mySign);
+		miniProfilePane.add(mySignField);
 		miniProfilePane.setOpaque(false);
 
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -166,13 +169,17 @@ public class MiniProfilePane extends JPanel {
 		myNick.setText(name);
 	}
 	
-	public void setSign(String newSign){
-		mySign.setText(newSign);
+	public void setSign(String newSign, String timeRel){
+	    if(newSign == null || newSign.trim().equals(""))
+	        mySignField.setText("");
+	    else
+	        mySignField.setText(newSign + "(" + timeRel + " )");
+		lastSignStr = newSign;
 	}
 
 	public void setForegroundColor(Color color){
 		myNick.setForeground(color);
-		mySign.setForeground(color);
+		mySignField.setForeground(color);
 	}
 	/**
 	 * 返回TooltipTxt的html形式

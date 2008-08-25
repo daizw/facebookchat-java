@@ -34,6 +34,7 @@ import javax.swing.event.ChangeListener;
 
 import com.sun.jna.examples.WindowUtils;
 
+import facebookchat.common.Launcher;
 import facebookchat.common.SystemPath;
 import facebookchat.ui.main.AboutDialog;
 
@@ -584,6 +585,7 @@ class Titlebar extends JPanel {
 				parent.setVisible(false);
 				if (IAmBase)// 如果是根窗口
 				{
+				    Launcher.shutdown();
 					System.exit(0);// .............
 				}
 			}
