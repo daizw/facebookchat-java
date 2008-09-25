@@ -1,7 +1,6 @@
 package facebookchat.common;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,7 +13,6 @@ import javax.swing.JOptionPane;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -141,10 +139,11 @@ public class Launcher {
 
         httpClient = createHttpClient();
 
+        /*
         HttpRequest req = createRequest();
         HttpEntity entity = null;
         try {
-            HttpResponse rsp = httpClient.execute(target, req, null);
+            HttpResponse rsp = httpClient.execute(target, req);
             entity = rsp.getEntity();
 
             System.out.println("========================================");
@@ -159,11 +158,6 @@ public class Launcher {
                 System.out.println(EntityUtils.toString(rsp.getEntity()));
             }
 
-        }
-        catch (HttpException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         catch (IOException e)
         {
@@ -182,12 +176,11 @@ public class Launcher {
                 }
                 catch (IOException e)
                 {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } // release connection gracefully
-            
-            System.out.println("------Constructor END-------");
         }
+        System.out.println("------Constructor END-------");
+        */
 	}
 	private final HttpClient createHttpClient() {
 
@@ -389,23 +382,12 @@ public class Launcher {
 	                System.out.println("- " + cookies.get(i).toString());
 	            }
 	        }
-		} catch (HttpException httpe) {
-			System.err.print("HttpException");
-			System.err.println(httpe.getMessage());
-			httpe.printStackTrace();
-			return ErrorCode.kError_Login_GenericError;
 		} catch (IOException ioe) {
 			System.err.print("IOException");
 			System.err.println(ioe.getMessage());
 			ioe.printStackTrace();
 			return ErrorCode.kError_Global_ValidationError;
-		} catch (URISyntaxException e)
-        {
-            System.err.print("IOException");
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-            return ErrorCode.kError_Global_ValidationError;
-        }
+		}
 
 		return ErrorCode.Error_Global_NoError;
 	}
@@ -682,11 +664,7 @@ public class Launcher {
                 entity.consumeContent();
             }
             System.out.println("Post Method done(" + postResponse.getStatusLine().getStatusCode()+"), response string length: " + (responseStr==null? 0:responseStr.length()));
-        } catch (HttpException e) {
-            System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (URISyntaxException e) {
             System.out.println(e.getMessage());
         }
         //TODO process the respons string
@@ -717,7 +695,7 @@ public class Launcher {
             int statusCode = response.getStatusLine().getStatusCode();
 
             /**
-             * @fixme I am not sure of if 200 is the only code that 
+             * @fixme I am not sure if 200 is the only code that 
              *  means "success"
              */
             if(statusCode != 200){
@@ -726,12 +704,7 @@ public class Launcher {
                 responseStr = null;
             }
             System.out.println("Get Method done(" + statusCode+"), response string length: " + (responseStr==null? 0:responseStr.length()));
-        } catch (HttpException e) {
-            System.out.println("Failed to get the page: " + url);
-            System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (URISyntaxException e) {
             System.out.println(e.getMessage());
         }
         
