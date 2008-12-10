@@ -454,7 +454,7 @@ class Titlebar extends JPanel {
 						about.setPreferredSize(new Dimension(500, 350));
 						about.setLocation(new Point(300, 150));
 						about.setVisible(true);
-						dec.startShake();// 对话框必须setModal (false)才可以抖动, 否则不行
+						dec.startNudging();// 对话框必须setModal (false)才可以抖动, 否则不行
 					}
 				});
 				m.add(new AbstractAction("Exit") {
