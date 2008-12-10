@@ -57,7 +57,7 @@ public class Launcher {
     public static Cheyenne fbc;
         
 	public static String loginPageUrl = "http://www.facebook.com/login.php";
-	public static String homePageUrl = "http://www.facebook.com/home.php?";
+	public static String homePageUrl = "http://www.facebook.com/home.php";
 	
 	public static String uid = null;
 	public static String channel = "15";
@@ -554,7 +554,7 @@ public class Launcher {
                 e.printStackTrace();
             }
             try {
-                System.out.println("retrying to fetch the seq code after 1 second...");
+                System.out.println("retrying to retrieve the seq code after 1 second...");
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -622,16 +622,29 @@ public class Launcher {
     {
         //post("www.facebook.com", "/updatestatus.php", "status=%s&post_form_id=%s");
         //post("www.facebook.com", "/updatestatus.php", "clear=1&post_form_id=%s");
+    	//new format:
+    	//profile_id=1190346972
+    	//&status=is%20hacking%20again
+    	//&home_tab_id=1
+    	//&test_name=INLINE_STATUS_EDITOR
+    	//&action=HOME_UPDATE
+    	//&post_form_id=3f1ee64144470cd29f28fb8b0354ef65
+    	//&_ecdc=false
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
         if(statusMsg.length() < 1)
             nvps.add(new BasicNameValuePair("clear", "1"));
         else
             nvps.add(new BasicNameValuePair("status", statusMsg));
         
+        nvps.add(new BasicNameValuePair("profile_id", uid));
+        nvps.add(new BasicNameValuePair("home_tab_id", "1"));
+        nvps.add(new BasicNameValuePair("test_name", "INLINE_STATUS_EDITOR"));
+        nvps.add(new BasicNameValuePair("action", "HOME_UPDATE"));
         nvps.add(new BasicNameValuePair("post_form_id", post_form_id));
-        System.out.println("@executeMethod setStatusMessage() ing ...");
+        System.out.println("@executeMethod setStatusMessage() ing ... : " + statusMsg);
         // we don't care the response string now
-        facebookPostMethod("http://www.facebook.com", "/updatestatus.php", nvps);
+        String respStr = facebookPostMethod("http://www.facebook.com", "/updatestatus.php", nvps);
+        System.out.println(respStr);
     }
     
 	public static void shutdown(){

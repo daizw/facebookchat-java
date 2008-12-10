@@ -144,14 +144,14 @@ public class ResponseParser {
 			kError_Platform_CallbackValidationFailure = 1349007,
 			kError_Platform_ApplicationResponseInvalid = 1349008;*/
 
-			Long errorCode = (Long)respObjs.getLong("error");
+			int errorCode = respObjs.getInt("error");
 			String errorString = "Error(" + errorCode + "): " 
 					+ (String)respObjs.get("errorSummary") + ";"
 					+ (String)respObjs.get("errorDescription");
 					
 			System.out.println(errorString);
 			
-			if(errorCode.equals(ErrorCode.Error_Global_NoError)){
+			if(errorCode == ErrorCode.Error_Global_NoError){
 				//do nothing
 			} else {
 				if(Launcher.isChatroomExist(uid))

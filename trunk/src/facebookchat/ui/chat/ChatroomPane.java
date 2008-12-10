@@ -104,8 +104,8 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	/**
 	 * 闪屏振动
 	 */
-	private JButton b_shake;
-	private static final String shakeMsg = "[F:999]"; 
+	private JButton b_nudge;
+	private static final String nudgeMsg = "[F:999]"; 
 
 	/**
 	 * 截屏按钮
@@ -297,7 +297,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		tp_input = new JTextPane();
 		// tp_msg.setText(sayHello);
 		tp_input
-		.setToolTipText(getHtmlText("Input your message and press \"Send\" <br>or press Ctrl+Enter"));
+		.setToolTipText(getHtmlText("Input your message and press \"Send\" <br>or press Enter"));
 
 		/**
 		 * 键盘事件监听器/事件处理
@@ -306,10 +306,11 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 			public void keyPressed(KeyEvent event) {
 				int keyCode = event.getKeyCode();
 				/**
-				 * 如果按键为Ctrl+Enter则发送信息
+				 * 如果按键为Enter则发送信息
+				 * 如果是Ctrl+Enter发送消息则 && event.isControlDown()
 				 */
-				if (keyCode == KeyEvent.VK_ENTER && event.isControlDown()) {
-					System.out.println("You press the combo-key : Ctrl+Enter");
+				if (keyCode == KeyEvent.VK_ENTER) {
+					System.out.println("You press the key : Enter");
 					sendMessage();
 				}
 			}
@@ -351,17 +352,17 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 				* FaceDialog.FACEROWS + 30);// 30为b_cr_cancel的高度
 		selFace.pack();
 
-		b_shake = new JButton(new ImageIcon(SystemPath.ICONS_RESOURCE_PATH + "shake.png"));
-		b_shake.setToolTipText(getHtmlText("Rock and Roll !"));
-		b_shake.setActionCommand("Shake");
-		b_shake.addActionListener(this);
-		b_shake.setSize(buttonSize);
-		b_shake.setPreferredSize(buttonSize);
-		b_shake.setMaximumSize(buttonSize);
-		b_shake.setMinimumSize(buttonSize);
+		b_nudge = new JButton(new ImageIcon(SystemPath.ICONS_RESOURCE_PATH + "shake.png"));
+		b_nudge.setToolTipText(getHtmlText("Give a nudge!"));
+		b_nudge.setActionCommand("Nudge");
+		b_nudge.addActionListener(this);
+		b_nudge.setSize(buttonSize);
+		b_nudge.setPreferredSize(buttonSize);
+		b_nudge.setMaximumSize(buttonSize);
+		b_nudge.setMinimumSize(buttonSize);
 
 		b_snapshot = new JButton(new ImageIcon(SystemPath.ICONS_RESOURCE_PATH + "snapshot.png"));
-		b_snapshot.setToolTipText(getHtmlText("Snap it !"));
+		b_snapshot.setToolTipText(getHtmlText("Snap it!"));
 		b_snapshot.setActionCommand("Snapshot");
 		b_snapshot.addActionListener(this);
 		b_snapshot.setSize(buttonSize);
@@ -464,7 +465,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		p_buttons.setOpaque(false);
 		p_buttons.setLayout(new BoxLayout(p_buttons, BoxLayout.X_AXIS));
 		p_buttons.add(b_emotion);
-		p_buttons.add(b_shake);
+		p_buttons.add(b_nudge);
 		p_buttons.add(b_snapshot);
 		p_buttons.add(b_snapconfig);
 		p_buttons.add(Box.createHorizontalGlue());
@@ -550,8 +551,8 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		System.out.println("playAudio()...");
 		Thread playThd = new Thread(new Runnable() {
 			public void run() {
-				if (strmsg != null && strmsg.equals(shakeMsg))
-					playShakeAudio();
+				if (strmsg != null && strmsg.equals(nudgeMsg))
+					playNudgeAudio();
 				else
 					playAudio();
 			}
@@ -602,7 +603,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 	/**
 	 * 接收/发送闪屏时播放提示音
 	 */
-	public void playShakeAudio() {
+	public void playNudgeAudio() {
 		final AudioClip msgBeep;
 		try {
 			// AudioClip audioClip = Applet.newAudioClip(completeURL)
@@ -659,12 +660,12 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		/**
 		 * 是否是闪屏振动消息
 		 */
-		if (msg != null && msg.equals(shakeMsg)) {
+		if (msg != null && msg.equals(nudgeMsg)) {
 			// 使用灰色标签
 			labelStyle = gray;
 
 			DialogEarthquakeCenter dec = new DialogEarthquakeCenter(parent);
-			dec.startShake();
+			dec.startNudging();
 			tp_historymsg.setEditable(true);
 			tp_historymsg.setCaretPosition(styledDoc.getLength());
 			styledDoc.setLogicalStyle(tp_historymsg.getCaretPosition(),
@@ -673,7 +674,7 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 			tp_historymsg.setCaretPosition(styledDoc.getLength());// !!!
 			styledDoc.setLogicalStyle(tp_historymsg.getCaretPosition(), italic);
 			tp_historymsg
-					.replaceSelection("YOU JUST RECEIVED A SHAKE EMOTION\n");
+					.replaceSelection("YOU JUST RECEIVED A NUDGE MESSAGE\n");
 			tp_historymsg.setEditable(false);
 			return;
 		}
@@ -851,13 +852,13 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		sender.start();
 	}
 
-	private void sendAShakeEmotion() {
+	private void sendANudge() {
 		/**
 		 * 格式化日期
 		 */
 		Date date = new Date();
 		// fmDate = new SimpleDateFormat("yyyy/MM/dd E HH:mm:ss");
-		String label = "Sending a Shake Emotion to " + parent.getRoomName()
+		String label = "Sending a nudge to " + parent.getRoomName()
 				+ "@" + fmDate.format(date) + ":";
 
 		//appendToHMsg(label, tp_input.getText(), null, true, true);
@@ -865,10 +866,10 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 		/**
 		 * 向对方发送消息 999:表示表情索引
 		 */
-		boolean succeed = parent.SendMsg(shakeMsg);
+		boolean succeed = parent.SendMsg(nudgeMsg);
 		if(!succeed){
 			//TODO tell user what happend.
-			showFailedSendingMsg("(It's a shake emotion actually.)");
+			showFailedSendingMsg("(It's a nudge actually.)");
 		}
 	}
 
@@ -920,15 +921,15 @@ public class ChatroomPane extends JSplitPane implements ActionListener// ,MouseL
 			 * face : " + selectedfaceIndex + ".gif");
 			 * appendFaceToInputPane(selectedface); }
 			 */
-		} else if (srcButton.getActionCommand().equals("Shake")) {
+		} else if (srcButton.getActionCommand().equals("Nudge")) {
 			DialogEarthquakeCenter dec = new DialogEarthquakeCenter(parent);
-			dec.startShake();// 对话框必须setModal (false)才可以抖动, 否则不行
+			dec.startNudging();// 对话框必须setModal (false)才可以抖动, 否则不行
 			//TODO 这里应该播放声音, 调试时禁止, 防止重叠, 冲突.
-			// playShakeAudio();
+			// playNudgeAudio();
 			/**
 			 * 发送一个闪屏振动
 			 */
-			sendAShakeEmotion();
+			sendANudge();
 		} else if (srcButton.getActionCommand().equals("SendPic")) {
 			
 		}  else if (srcButton.getActionCommand().equals("SendFile")) {

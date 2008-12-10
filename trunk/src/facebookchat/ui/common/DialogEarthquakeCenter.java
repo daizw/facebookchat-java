@@ -21,7 +21,7 @@ public class DialogEarthquakeCenter extends Object {
 		dialog = parent;
 	}
 
-	public void startShake() {
+	public void startNudging() {
 		naturalLocation = dialog.getLocation();
 		startTime = System.currentTimeMillis();
 		shakeTimer = new Timer(SHAKE_UPDATE, new ActionListener() {
